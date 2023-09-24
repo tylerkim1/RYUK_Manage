@@ -14,8 +14,8 @@ const Home = () => {
     const [inpval, setInpval] = useState({
         name: "",
         email: "",
-        date: "",
-        password: ""
+        password: "",
+        passwordagain: ""
     })
 
    
@@ -43,34 +43,34 @@ const Home = () => {
     const addData = (e) => {
         e.preventDefault();
 
-        const { name, email, date, password } = inpval;
+        const { name, email,  password, passwordagain } = inpval;
 
         if (name === "") {
-            toast.error(' name field is requred!',{
+            toast.error(' 이름을 입력해주세요',{
                 position: "top-center",
             });
         } else if (email === "") {
-             toast.error('email field is requred',{
+             toast.error('이메일을 입력해주세요',{
                 position: "top-center",
             });
         } else if (!email.includes("@")) {
              toast.error('plz enter valid email addres',{
                 position: "top-center",
             });
-        } else if (date === "") {
-             toast.error('date field is requred',{
-                position: "top-center",
-            });
         } else if (password === "") {
-             toast.error('password field is requred',{
+             toast.error('비밀번호를 입력해주세요',{
                 position: "top-center",
             });
         } else if (password.length < 5) {
-             toast.error('password length greater five',{
+             toast.error('5자 이상으로 비밀번호를 설정해주세요',{
+                position: "top-center",
+            });
+        } else if (password !== passwordagain){
+            toast.error('비밀번호가 일치하지 않습니다',{
                 position: "top-center",
             });
         } else {
-            console.log("data added succesfully");
+            console.log("성공적으로 회원가입되었습니다");
             history("/login")
             localStorage.setItem("useryoutube",JSON.stringify([...data,inpval]));
 
@@ -80,10 +80,10 @@ const Home = () => {
 
     return (
         <>
-            <div className="container mt-3">
+            <div className="container mt-5">
                 <section className='d-flex justify-content-between'>
-                    <div className="left_data mt-3 p-3" style={{ width: "100%" }}>
-                        <h3 className='text-center col-lg-6'>Sign Up</h3>
+                    <div className="left_data mt-5 p-5" style={{ width: "100%" }}>
+                        <h3 className='text-center col-lg-6'>회원가입</h3>
                         <Form >
                             <Form.Group className="mb-3 col-lg-6" controlId="formBasicEmail">
 
@@ -94,20 +94,21 @@ const Home = () => {
                                 <Form.Control type="email" name='email' onChange={getdata} placeholder="Enter email" />
                             </Form.Group>
 
-                            <Form.Group className="mb-3 col-lg-6" controlId="formBasicEmail">
-
-                                <Form.Control onChange={getdata} name='date' type="date" />
-                            </Form.Group>
-
                             <Form.Group className="mb-3 col-lg-6" controlId="formBasicPassword">
 
                                 <Form.Control type="password" name='password' onChange={getdata} placeholder="Password" />
                             </Form.Group>
+
+                            <Form.Group className="mb-3 col-lg-6" controlId="formBasicPassword">
+
+                                <Form.Control type="password" name='passwordagain' onChange={getdata} placeholder="Enter Your Password Again " />
+                            </Form.Group>
+
                             <Button variant="primary" className='col-lg-6' onClick={addData} style={{ background: "rgb(67, 185, 127)" }} type="submit">
                                 Submit
                             </Button>
                         </Form>
-                        <p className='mt-3'>Already Have an Account <span><NavLink to="/login">SignIn</NavLink></span> </p>
+                        <p className='mt-3'>이미 계정이 존재하시나요 <span><NavLink to="/login">로그인하기</NavLink></span> </p>
                     </div>
                     <SIgn_img />
                 </section>

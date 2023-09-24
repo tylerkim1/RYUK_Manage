@@ -50,6 +50,7 @@ const Details = () => {
 
     return (
         <>
+        <div className="container mt-5">
             {
                 logindata.length === 0 ? "errror" :
                     <>
@@ -77,7 +78,9 @@ const Details = () => {
                      
                     </>
             }
+            </div>
         </>
+        
     )
 }
 

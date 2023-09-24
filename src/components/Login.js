@@ -4,6 +4,8 @@ import Button from 'react-bootstrap/Button'
 import SIgn_img from './SIgn_img'
 import { useNavigate } from 'react-router-dom'
 import { ToastContainer, toast } from 'react-toastify';
+import { NavLink } from 'react-router-dom'
+
 import 'react-toastify/dist/ReactToastify.css';
 
 const Login = () => {
@@ -43,19 +45,19 @@ const Login = () => {
 
         const { email, password } = inpval;
         if (email === "") {
-            toast.error('email field is requred', {
+            toast.error('이메일을 입력해주세요', {
                 position: "top-center",
             });
         } else if (!email.includes("@")) {
-            toast.error('plz enter valid email addres', {
+            toast.error('이메일 형식을 맞춰 입력해주세요(@포함)', {
                 position: "top-center",
             });
         } else if (password === "") {
-            toast.error('password field is requred', {
+            toast.error('비밀번호를 입력해주세요', {
                 position: "top-center",
             });
         } else if (password.length < 5) {
-            toast.error('password length greater five', {
+            toast.error('5자 이상으로 비밀번호를 작성해주세요', {
                 position: "top-center",
             });
         } else {
@@ -69,7 +71,7 @@ const Login = () => {
                 if (userlogin.length === 0) {
                     alert("invalid details")
                 } else {
-                    console.log("user login succesfulyy");
+                    console.log("성공적으로 로그인되었습니다");
 
                     localStorage.setItem("user_login", JSON.stringify(userlogin))
 
@@ -82,10 +84,10 @@ const Login = () => {
 
     return (
         <>
-            <div className="container mt-3">
+            <div className="container mt-5">
                 <section className='d-flex justify-content-between'>
-                    <div className="left_data mt-3 p-3" style={{ width: "100%" }}>
-                        <h3 className='text-center col-lg-6'>Sign IN</h3>
+                    <div className="left_data mt-5 p-5" style={{ width: "100%" }}>
+                        <h3 className='text-center col-lg-6'>로그인</h3>
                         <Form >
 
                             <Form.Group className="mb-3 col-lg-6" controlId="formBasicEmail">
@@ -101,7 +103,8 @@ const Login = () => {
                                 Submit
                             </Button>
                         </Form>
-                        <p className='mt-3'>Already Have an Account <span>SignIn</span> </p>
+                        <p className='mt-3'>계정이 없으신가요 <span><NavLink to="../">회원가입</NavLink></span> </p>
+                        <p className='mt-3'>비밀번호를 까먹으셨나요  <span><NavLink to="./findPW">비밀번호 찾기</NavLink></span> </p>
                     </div>
                     <SIgn_img />
                 </section>
