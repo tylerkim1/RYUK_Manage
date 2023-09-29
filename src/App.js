@@ -9,7 +9,7 @@ import assignmentImage from './assets/assignment.png';
 function App() {
   return (
     <Router>
-      <div id="container" style={{ display: 'flex', height: '100vh', backgroundColor: '#F5FAE9' }}>
+      <div id="container" style={{ display: 'flex'}}>
         <div id="sidebar" style={{ display: 'flex', flexDirection: 'column', width: '15%', backgroundColor: '#FFFFFF' }}>
           <div id="title-wrapper" style={{ display: 'flex', flexDirection: 'column', flex: 1, paddingLeft: '1.25rem' }}>
             <div id="title" style={{ display: 'flex', flex: 2, alignItems: 'center' }}>
@@ -45,12 +45,15 @@ function App() {
             </Link>
           </div>
         </div>
-        <div id="main" style={{ display: 'flex', flexDirection: 'column', width: '85%'}}>
+        <div id="main" style={{ display: 'flex', flexDirection: 'column', width: '85%', backgroundColor: '#F5FAE9' }}>
           <Routes>
             <Route path="/menu-user" element={<MenuUser />} />
             <Route path="/menu-mission" element={<MenuMission />} />
             <Route path="*" element={<MenuUser />} />
           </Routes>
+          <div id="footer" style={{ display: 'flex', height: '10rem'}}>
+
+          </div>
         </div>
       </div>
     </Router>
