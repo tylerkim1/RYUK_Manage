@@ -9,9 +9,6 @@ import styled from 'styled-components';
 import LoginButton from './Header/LoginButton'
 import SignButton from './Header/SignButton'
 
-
-
-
 // 상단 고정, 그림자
 const Positioner = styled.div`
     display: flex;
@@ -26,14 +23,14 @@ const Positioner = styled.div`
 const WhiteBackground = styled.div`
     background: white;
     display: flex;
-    justify-content: center;
+    justify-content: start;
     height: auto;
 `;
 
 // 해더의 내용
 const HeaderContents = styled.div`
-    width: 1200px;
-    height: 55px;
+    width: 75rem;
+    height: 3.5rem;
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -68,22 +65,18 @@ const GradientBorder = styled.div`
     background: linear-gradient(to right, ${oc.teal[6]}, ${oc.cyan[5]});
 `;
 
-
-
-
-
 const Header = () => {
     return (
         <>
             <Positioner>
-                <whiteBackground>
+                <WhiteBackground>
                     <HeaderContents>
                         <Logo>NEETCOMPANY</Logo>
                         <Spacer/>
                         <LoginButton/>
                         <SignButton/>
                 </HeaderContents>
-                </whiteBackground>
+                </WhiteBackground>
             </Positioner>
         </>
     )

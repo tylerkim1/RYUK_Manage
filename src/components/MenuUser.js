@@ -1,7 +1,9 @@
 import React from 'react';
-import isCheckImage from './assets/check.png';
-import canSendMsgImage from './assets/send.png';
-import missionImage from './assets/sample.png';
+import checkImage from '../assets/check.png';
+import failImage from '../assets/fail.png';
+import cantSendMsgImage from '../assets/cant_send.png';
+import canSendMsgImage from '../assets/send.png';
+import missionImage from '../assets/sample.png';
 // , border: '1px solid black'
 
 const MenuUser = () => {
@@ -20,7 +22,7 @@ const MenuUser = () => {
                 </div>
                 <div id="menu-user-header-achieveLevel" style={{display: 'flex', flex: 3, alignItems: 'end'}}>
                     <span style={{fontSize: '3rem',}}>
-                        성취율: 75%
+                        성취율: 66%
                     </span>
                 </div>
             </div>
@@ -40,10 +42,10 @@ const MenuUser = () => {
                                     </span>
                                 </div>
                                 <div id="today-mission-isComplete" style={{display: 'flex', flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-                                    <img src={isCheckImage} alt="user" style={{ width: '1.2rem', height: '1.2rem' }} />
+                                    <img src={checkImage} alt="user" style={{ width: '1.2rem', height: '1.2rem' }} />
                                 </div>
                                 <div id="today-mission-sendMsg" style={{display: 'flex', flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-                                    <img src={canSendMsgImage} alt="user" style={{ width: '1.2rem', height: '1.2rem' }} />
+                                    <img src={cantSendMsgImage} alt="user" style={{ width: '1.2rem', height: '1.2rem' }} />
                                 </div>
                             </div>
                             <div id="today-mission-body" style={{display: 'flex', flexDirection: 'column', flex: 5}}>
@@ -65,10 +67,10 @@ const MenuUser = () => {
                                     </span>
                                 </div>
                                 <div id="today-mission-isComplete" style={{display: 'flex', flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-                                    <img src={isCheckImage} alt="user" style={{ width: '1.2rem', height: '1.2rem' }} />
+                                    <img src={checkImage} alt="user" style={{ width: '1.2rem', height: '1.2rem' }} />
                                 </div>
                                 <div id="today-mission-sendMsg" style={{display: 'flex', flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-                                    <img src={canSendMsgImage} alt="user" style={{ width: '1.2rem', height: '1.2rem' }} />
+                                    <img src={cantSendMsgImage} alt="user" style={{ width: '1.2rem', height: '1.2rem' }} />
                                 </div>
                             </div>
                             <div id="today-mission-body" style={{display: 'flex', flexDirection: 'column', flex: 5}}>
@@ -90,19 +92,16 @@ const MenuUser = () => {
                                     </span>
                                 </div>
                                 <div id="today-mission-isComplete" style={{display: 'flex', flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-                                    <img src={isCheckImage} alt="user" style={{ width: '1.2rem', height: '1.2rem' }} />
+                                    <img src={failImage} alt="user" style={{ width: '1.2rem', height: '1.2rem' }} />
                                 </div>
                                 <div id="today-mission-sendMsg" style={{display: 'flex', flex: 1, alignItems: 'center', justifyContent: 'center'}}>
                                     <img src={canSendMsgImage} alt="user" style={{ width: '1.2rem', height: '1.2rem' }} />
                                 </div>
                             </div>
                             <div id="today-mission-body" style={{display: 'flex', flexDirection: 'column', flex: 5}}>
-                                <div id="today-mission-img" style={{display: 'flex', flex: 2, marginBottom: '1rem'}}>
-                                    <img src={missionImage} alt="user" style={{ width: '100%', height: '100%' }} />
-                                </div>
-                                <div id="today-mission-desc" style={{display: 'flex', flex: 1}}>
+                                <div id="today-mission-desc" style={{display: 'flex', flex: 1, alignItems: 'center'}}>
                                     <span style={{fontSize: '1rem', fontWeight: '700'}}>
-                                        오늘 과일을 썰어 먹었어요!
+                                        아직 미션을 완료하지 않았습니다!
                                     </span>
                                 </div>
                             </div>

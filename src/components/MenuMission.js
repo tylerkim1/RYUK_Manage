@@ -1,5 +1,5 @@
 import React from 'react';
-import missionImage from './assets/sample.png';
+import missionImage from '../assets/sample.png';
 
 const MenuMission = () => {
   return (

@@ -75,7 +75,7 @@ const Login = () => {
 
                     localStorage.setItem("user_login", JSON.stringify(userlogin))
 
-                    history("/details")
+                    history("/mainpage")
                 }
             }
         }
