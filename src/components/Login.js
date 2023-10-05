@@ -4,7 +4,8 @@ import Button from 'react-bootstrap/Button'
 import SIgn_img from './SIgn_img'
 import { useNavigate } from 'react-router-dom'
 import { ToastContainer, toast } from 'react-toastify';
-import { NavLink } from 'react-router-dom'
+import { NavLink } from 'react-router-dom';
+import Header from './Header';
 
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -84,6 +85,7 @@ const Login = () => {
 
     return (
         <>
+            <Header />
             <div className="container mt-5">
                 <section className='d-flex justify-content-between'>
                     <div className="left_data mt-5 p-5" style={{ width: "100%" }}>

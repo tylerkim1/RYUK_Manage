@@ -2,8 +2,13 @@ import React from 'react';
 import { Link, Routes, Route, Outlet } from 'react-router-dom';
 import MenuUser from './MenuUser';
 import MenuMission from './MenuMission';
+import MenuTeam from './MenuTeam';
+import MenuPerson from './MenuPerson';
 import userImage from '../assets/user.png';
+import teamImage from '../assets/team.png';
 import assignmentImage from '../assets/assignment.png';
+import personImage from '../assets/person.png';
+import Header2 from './Header2';
 
 function Sidebar() {
     return (
@@ -49,6 +54,22 @@ function Sidebar() {
                         </span>
                     </div>
                 </Link>
+                <Link to="menu-team">
+                    <div id="by-team" style={{ display: 'flex', alignItems: 'center', margin: '0.6rem', paddingLeft: '0.6rem' }}>
+                        <img src={teamImage} alt="team" style={{ width: '2rem', height: '2rem' }} />
+                        <span style={{ fontSize: '1.1rem', fontWeight: '700', color: '#000000', paddingLeft: '0.6rem' }}>
+                            팀별 관리
+                        </span>
+                    </div>
+                </Link>
+                <Link to="menu-person">
+                    <div id="by-user" style={{ display: 'flex', alignItems: 'center', margin: '0.6rem', paddingLeft: '0.6rem' }}>
+                        <img src={personImage} alt="person" style={{ width: '2rem', height: '2rem' }} />
+                        <span style={{ fontSize: '1.1rem', fontWeight: '700', color: '#000000', paddingLeft: '0.6rem' }}>
+                            회원관리
+                        </span>
+                    </div>
+                </Link>
             </div>
         </div>
     );
@@ -56,7 +77,10 @@ function Sidebar() {
 
 function MainPage() {
     return (
+    
         <div id="container" style={{ display: 'flex' }}>
+            <Header2 />
+
             <Sidebar />
             <div id="main" style={{
                 display: 'flex',
@@ -69,6 +93,8 @@ function MainPage() {
                 <Routes>
                     <Route path="menu-user" element={<MenuUser />} />
                     <Route path="menu-mission" element={<MenuMission />} />
+                    <Route path="menu-team" element={<MenuTeam />} />
+                    <Route path="menu-person" element={<MenuPerson />} />
                     <Route path="*" element={<MenuUser />} />
                 </Routes>
                 <div id="footer" style={{ display: 'flex', height: '10rem' }} />

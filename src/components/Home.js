@@ -5,6 +5,7 @@ import SIgn_img from './SIgn_img'
 import { NavLink } from 'react-router-dom'
 import { useNavigate } from 'react-router-dom'
 import { ToastContainer, toast } from 'react-toastify';
+import Header from './Header';
   import 'react-toastify/dist/ReactToastify.css';
 
 const Home = () => {
@@ -15,7 +16,8 @@ const Home = () => {
         name: "",
         email: "",
         password: "",
-        passwordagain: ""
+        passwordagain: "",
+        manager_coe:""
     })
 
    
@@ -43,7 +45,7 @@ const Home = () => {
     const addData = (e) => {
         e.preventDefault();
 
-        const { name, email,  password, passwordagain } = inpval;
+        const { name, email,  password, passwordagain,manager_code } = inpval;
 
         if (name === "") {
             toast.error(' 이름을 입력해주세요',{
@@ -69,7 +71,11 @@ const Home = () => {
             toast.error('비밀번호가 일치하지 않습니다',{
                 position: "top-center",
             });
-        } else {
+        } else if (manager_code !== "neetcompany12#$"){
+            toast.error('관리자 코드가 맞지 않습니다',{
+                position: "top-center",
+            });
+        }else {
             console.log("성공적으로 회원가입되었습니다");
             history("/login")
             localStorage.setItem("useryoutube",JSON.stringify([...data,inpval]));
@@ -80,6 +86,7 @@ const Home = () => {
 
     return (
         <>
+            <Header />
             <div className="container mt-5">
                 <section className='d-flex justify-content-between'>
                     <div className="left_data mt-5 p-5" style={{ width: "100%" }}>
@@ -102,6 +109,11 @@ const Home = () => {
                             <Form.Group className="mb-3 col-lg-6" controlId="formBasicPassword">
 
                                 <Form.Control type="password" name='passwordagain' onChange={getdata} placeholder="Enter Your Password Again " />
+                            </Form.Group>
+
+                            <Form.Group className="mb-3 col-lg-6" controlId="formBasicPassword">
+
+                                <Form.Control type="password" name='manager_code' onChange={getdata} placeholder="Manager Code" />
                             </Form.Group>
 
                             <Button variant="primary" className='col-lg-6' onClick={addData} style={{ background: "rgb(67, 185, 127)" }} type="submit">

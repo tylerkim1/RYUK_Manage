@@ -2,12 +2,12 @@ import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
-import Header from './components/Header';
 import Home from './components/Home';
 import Login from './components/Login';
 import Details from './components/Details';
 import Errror from './components/Errror';
 import MainPage from './components/MainPage';
+import Header from './components/Header';
 
 function App() {
   return (
