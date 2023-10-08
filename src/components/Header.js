@@ -1,8 +1,4 @@
 import React from 'react'
-import Navbar from 'react-bootstrap/Navbar'
-import Container from 'react-bootstrap/Container'
-import Nav from 'react-bootstrap/Nav'
-import { NavLink } from 'react-router-dom'
 import { shadow, media } from '../lib/styleUtil';
 import oc from 'open-color';
 import styled from 'styled-components';
@@ -57,12 +53,6 @@ const Logo = styled.div`
 // 중간 여백
 const Spacer = styled.div`
     flex-grow: 1;
-`;
-
-// 하단 그래디언트 테두리
-const GradientBorder = styled.div`
-    height: 3px;
-    background: linear-gradient(to right, ${oc.teal[6]}, ${oc.cyan[5]});
 `;
 
 const Header = () => {
