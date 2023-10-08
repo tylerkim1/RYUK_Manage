@@ -1,0 +1,159 @@
+#menu-team-container {
+    width: 100%;
+    padding: 20px;
+}
+
+#menu-team-header {
+    font-size: 2rem;
+    margin-bottom: 20px;
+}
+
+.header-text {
+    font-weight: bold;
+}
+
+#menu-team-body {
+    width: 100%;
+}
+
+#team-list {
+    display: flex;
+    overflow-x: auto;
+    flex-wrap: nowrap; /* 이 부분이 줄바꿈을 방지합니다 */
+    gap: 2rem;
+}
+
+.team-block {
+    display: flex;
+    flex: 0 0 auto; /* 이 부분이 너비를 고정합니다 */
+    width: 350px;
+    flex-direction: column;
+    margin: 2rem;
+    padding: 1rem;
+    border-radius: 1rem;
+    background-color: #FFFFFF;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.team-block-header {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 10px;
+}
+
+.team-name {
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+.team-period {
+    font-size: 1rem;
+    color: gray;
+}
+
+.team-block-body {
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.team-member-list {
+    display: flex;
+    flex-direction: column;
+}
+
+.team-member {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    background-color: #ADFF0026;
+    border-radius: 1rem;
+    margin: 5px 0;
+}
+
+.member-info {
+    font-size: 1rem;
+}
+
+.delete-button {
+    margin-left: auto;
+    cursor: pointer;
+    width: 24px;
+    height: 30px;
+}
+
+.team-block-add-member-image {
+    margin-left: auto;
+    cursor: pointer;
+    width: 40px;
+    height: 30px;
+}
+
+.add-button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+}
+
+.team-add-block {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+#team-add {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 1rem;
+}
+
+#team-add-name {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+#team-add-term {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+#team-add-name input,
+#team-add-term input {
+    width: 80%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1rem;
+}
+
+#team-add-term span {
+    white-space: nowrap;
+    margin-right: 6px;
+  }
+
+#team-add-term input[type="date"] {
+    cursor: pointer;
+}
+
+#team-add-button {
+    background-color: #A6EB00;
+    color: white;
+    text-align: center;
+    border-radius: 1rem;
+    padding: 10px;
+    margin-top: 10px;
+    cursor: pointer;
+}
+
+.team-add-image {
+    margin-left: 10px;
+    cursor: pointer;
+    width: 40px;
+    height: 40px;
+}

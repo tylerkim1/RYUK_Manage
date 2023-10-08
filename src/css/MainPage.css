@@ -1,0 +1,19 @@
+/* MainPage styles */
+#container {
+    display: flex;
+  }
+  
+  #main {
+    display: flex;
+    flex-direction: column;
+    width: 85%;
+    background-color: #F5FAE9;
+    margin-top: 3.5rem;
+    margin-left: 15%;
+  }
+  
+  #footer {
+    display: flex;
+    height: 10rem;
+  }
+  

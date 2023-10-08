@@ -85,7 +85,7 @@ const MenuMission = () => {
               </div>
               <div id="common-mission-achieve-level" style={{ display: 'flex' }}>
                 <span style={{ fontSize: '1.2rem', fontWeight: '700' }}>
-                  달성률: 3/4
+                  달성률: 2/3
                 </span>
               </div>
             </div>
@@ -130,21 +130,6 @@ const MenuMission = () => {
                   <div id="common-mission-personal-desc" style={{ display: 'flex', flex: 2, alignItems: 'center' }}>
                     <span style={{ fontSize: '0.8rem' }}>
                       아직 미션을 완료하지 못했어요.
-                    </span>
-                  </div>
-                </div>
-                <div id="common-mission-personal" style={{ display: 'flex', flexDirection: 'column', width: '11rem', height: '15rem', backgroundColor: '#ADFF0026', borderRadius: '1rem', padding: '1rem' }}>
-                  <div id="common-mission-personal-name" style={{ display: 'flex', flex: 1, justifyContent: 'center' }}>
-                    <span style={{ fontSize: '1.2rem', fontWeight: '700'}}>
-                      쿵차님
-                    </span>
-                  </div>
-                  <div id="common-mission-personal-image" style={{ display: 'flex', flex: 2, marginBottom: '1rem' }}>
-                    <img src={missionImage} alt="user" style={{ width: '100%', height: '100%' }} />
-                  </div>
-                  <div id="common-mission-personal-desc" style={{ display: 'flex', flex: 2 }}>
-                    <span style={{ fontSize: '0.8rem' }}>
-                      오늘 과일을 썰어 먹었어요!
                     </span>
                   </div>
                 </div>
