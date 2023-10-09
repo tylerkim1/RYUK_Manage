@@ -11,9 +11,23 @@
 
 #title-wrapper {
   display: flex;
-  align-items: center;
+  flex-direction: column;
+  justify-content: center;
   flex: 1;
-  padding-left: 1.25rem;
+  margin-left: 20px;
+}
+
+#date {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  margin-bottom: 48px;
+}
+
+#date-text {
+  font-size: 40px;
+  font-weight: 800;
+  margin-right: 10px;
 }
 
 #user {
@@ -23,7 +37,7 @@
 }
 
 #user span {
-  font-size: 2rem;
+  font-size: 24px;
   color: #AAABA7;
 }
 
@@ -31,7 +45,7 @@
   display: flex;
   flex-direction: column;
   flex: 4;
-  padding-left: 1.25rem;
+  margin-left: 20px;
 }
 
 #menu-wrapper a {
