@@ -1,111 +1,73 @@
-import React from 'react';
+import React, { useState } from 'react';
 import checkImage from '../assets/check.png';
 import failImage from '../assets/fail.png';
 import cantSendMsgImage from '../assets/cant_send.png';
 import canSendMsgImage from '../assets/send.png';
 import missionImage from '../assets/sample.png';
-// , border: '1px solid black'
+import '../css/MenuUser.css';  // CSS 파일을 임포트합니다.
 
 const MenuUser = () => {
+    const teamMembers = ['Member 1', 'Member 2', 'Member 3'];
+    const [selectedMember, setSelectedMember] = useState(teamMembers[0]);
+
+    const todayMissions = [
+        { title: '미션 1', isComplete: true, canSendMsg: false, description: '오늘 과일을 썰어 먹었어요!', image: missionImage },
+        { title: '미션 2', isComplete: true, canSendMsg: false, description: '오늘 과일을 썰어 먹었어요!', image: missionImage },
+        { title: '미션 3', isComplete: false, canSendMsg: true, description: '아직 미션을 완료하지 않았습니다!', image: null }
+    ];
+
     return (
-        <div id="menu-user-container" style={{display: 'flex', flexDirection: 'column', height: '100%'}}>
-            <div id="menu-user-header" style={{display: 'flex', flex: 1, marginBottom: '3rem'}}>
-                <div id="menu-user-header-date" style={{display: 'flex', flex: 1.5, padding: '1rem 1rem 0 2rem', alignItems: 'end'}}>
-                    <span style={{fontSize: '3rem', fontWeight: '800'}}>
-                        9월 22일
-                    </span>
+        <div className="menu-user-container">
+            <div className="menu-user-team-member-list">
+                {teamMembers.map((member, index) => (
+                    <div
+                        key={index}
+                        className={`menu-user-team-member ${selectedMember === member ? 'selected-member' : ''}`}
+                        onClick={() => setSelectedMember(member)}
+                    >
+                        {member}
+                    </div>
+                ))}
+            </div>
+            <div className="menu-user-header">
+                <div className="menu-user-header-userName">
+                    <span>{selectedMember} 님의 미션현황</span>
                 </div>
-                <div id="menu-user-header-userName" style={{display: 'flex', flex: 3, alignItems: 'end'}}>
-                    <span style={{fontSize: '2rem'}}>
-                        '쿵짝' 님의 미션현황
-                    </span>
-                </div>
-                <div id="menu-user-header-achieveLevel" style={{display: 'flex', flex: 3, alignItems: 'end'}}>
-                    <span style={{fontSize: '3rem',}}>
-                        성취율: 66%
-                    </span>
+                <div className="menu-user-header-achieveLevel">
+                    <span>성취율: 66%</span>
                 </div>
             </div>
-            <div id="menu-user-body" style={{display: 'flex', flex: 7, paddingLeft: '2rem'}}>
-                <div id="today-mission">
-                    <div id="today-mission-desc" style={{marginBottom: '2rem'}}>
-                        <span style={{fontSize: '2rem', fontWeight: '800'}}>
-                            오늘 수행할 미션
-                        </span>
+            <div className="menu-user-body">
+                <div className="today-mission">
+                    <div className="today-mission-label">
+                        <span>오늘 수행할 미션</span>
                     </div>
-                    <div id="today-mission-list" style={{display: 'flex', overflowX: 'auto', whiteSpace: 'nowrap', gap: '2rem' }}> 
-                        <div id="today-mission" style={{display: 'flex', flexDirection: 'column', width: '20rem', height: '35rem', backgroundColor: '#FFFFFF', borderRadius: '1rem', padding: '0 1rem 0 1rem'}}>
-                            <div id="today-mission-header" style={{display: 'flex', flex: 1}}>
-                                <div id="today-mission-title" style={{display: 'flex', flex: 7, alignItems: 'center'}}>
-                                    <span style={{fontSize: '1.2rem', fontWeight: '800'}}>
-                                        미션 1
-                                    </span>
+                    <div className="today-mission-list">
+                        {todayMissions.map((mission, index) => (
+                            <div key={index} className="today-mission-card">
+                                <div className="today-mission-header">
+                                    <div className="today-mission-title">
+                                        <span>{mission.title}</span>
+                                    </div>
+                                    <div className="today-mission-isComplete">
+                                        <img src={mission.isComplete ? checkImage : failImage} alt="status" />
+                                    </div>
+                                    <div className="today-mission-sendMsg">
+                                        <img src={mission.canSendMsg ? canSendMsgImage : cantSendMsgImage} alt="message" />
+                                    </div>
                                 </div>
-                                <div id="today-mission-isComplete" style={{display: 'flex', flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-                                    <img src={checkImage} alt="user" style={{ width: '1.2rem', height: '1.2rem' }} />
-                                </div>
-                                <div id="today-mission-sendMsg" style={{display: 'flex', flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-                                    <img src={cantSendMsgImage} alt="user" style={{ width: '1.2rem', height: '1.2rem' }} />
-                                </div>
-                            </div>
-                            <div id="today-mission-body" style={{display: 'flex', flexDirection: 'column', flex: 5}}>
-                                <div id="today-mission-img" style={{display: 'flex', flex: 2, marginBottom: '1rem'}}>
-                                    <img src={missionImage} alt="user" style={{ width: '100%', height: '100%' }} />
-                                </div>
-                                <div id="today-mission-desc" style={{display: 'flex', flex: 1}}>
-                                    <span style={{fontSize: '1rem', fontWeight: '700'}}>
-                                        오늘 과일을 썰어 먹었어요!
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-                        <div id="today-mission" style={{display: 'flex', flexDirection: 'column', width: '20rem', height: '35rem', backgroundColor: '#FFFFFF', borderRadius: '1rem', padding: '0 1rem 0 1rem'}}>
-                            <div id="today-mission-header" style={{display: 'flex', flex: 1}}>
-                                <div id="today-mission-title" style={{display: 'flex', flex: 7, alignItems: 'center'}}>
-                                    <span style={{fontSize: '1.2rem', fontWeight: '800'}}>
-                                        미션 2
-                                    </span>
-                                </div>
-                                <div id="today-mission-isComplete" style={{display: 'flex', flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-                                    <img src={checkImage} alt="user" style={{ width: '1.2rem', height: '1.2rem' }} />
-                                </div>
-                                <div id="today-mission-sendMsg" style={{display: 'flex', flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-                                    <img src={cantSendMsgImage} alt="user" style={{ width: '1.2rem', height: '1.2rem' }} />
+                                <div className="today-mission-body">
+                                    {mission.image && (
+                                        <div className="today-mission-img">
+                                            <img src={mission.image} alt="mission" />
+                                        </div>
+                                    )}
+                                    <div className="today-mission-desc">
+                                        <span>{mission.description}</span>
+                                    </div>
                                 </div>
                             </div>
-                            <div id="today-mission-body" style={{display: 'flex', flexDirection: 'column', flex: 5}}>
-                                <div id="today-mission-img" style={{display: 'flex', flex: 2, marginBottom: '1rem'}}>
-                                    <img src={missionImage} alt="user" style={{ width: '100%', height: '100%' }} />
-                                </div>
-                                <div id="today-mission-desc" style={{display: 'flex', flex: 1}}>
-                                    <span style={{fontSize: '1rem', fontWeight: '700'}}>
-                                        오늘 과일을 썰어 먹었어요!
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-                        <div id="today-mission" style={{display: 'flex', flexDirection: 'column', width: '20rem', height: '35rem', backgroundColor: '#FFFFFF', borderRadius: '1rem', padding: '0 1rem 0 1rem'}}>
-                            <div id="today-mission-header" style={{display: 'flex', flex: 1}}>
-                                <div id="today-mission-title" style={{display: 'flex', flex: 7, alignItems: 'center'}}>
-                                    <span style={{fontSize: '1.2rem', fontWeight: '800'}}>
-                                        미션 3
-                                    </span>
-                                </div>
-                                <div id="today-mission-isComplete" style={{display: 'flex', flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-                                    <img src={failImage} alt="user" style={{ width: '1.2rem', height: '1.2rem' }} />
-                                </div>
-                                <div id="today-mission-sendMsg" style={{display: 'flex', flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-                                    <img src={canSendMsgImage} alt="user" style={{ width: '1.2rem', height: '1.2rem' }} />
-                                </div>
-                            </div>
-                            <div id="today-mission-body" style={{display: 'flex', flexDirection: 'column', flex: 5}}>
-                                <div id="today-mission-desc" style={{display: 'flex', flex: 1, alignItems: 'center'}}>
-                                    <span style={{fontSize: '1rem', fontWeight: '700'}}>
-                                        아직 미션을 완료하지 않았습니다!
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
+                        ))}
                     </div>
                 </div>
             </div>

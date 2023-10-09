@@ -50,10 +50,6 @@ const StyledTableCell = withStyles((theme) => ({
     createData('박쿵야','335','ii@kaist.ac.kr','lakaj','15'),
     createData('박쿵야','im345gfgkungya','ii@kaist.ac.kr','lakaj','1')
   ];
-
-  function createData2(name,id,email, password) {
-    return { name,id,email, password};
-  }
   
   const rows2 = [
     createData('박쿵야','imkungya','ii@kaist.ac.kr','lakaj'),
@@ -108,11 +104,6 @@ const AddButton = styled(Link)`
 const Spacer = styled.div`
     flex-grow: 1;
 `;
-
-const tableStyle = {
-    width: 1200,
-  };
-
 
 const MenuPerson = () => {
     return (
