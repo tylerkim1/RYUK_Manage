@@ -27,6 +27,8 @@ const MenuMission = () => {
 
   return (
     <div id="menu-mission-container">
+      <div id="menu-mission-header">
+      </div>
       <div id="menu-mission-body">
         <div id="common-mission-list">
           {missions.map((mission, missionIndex) => (
