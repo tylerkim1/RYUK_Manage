@@ -23,7 +23,7 @@ function MenuTeam() {
       if (xhr.readyState === 4 && xhr.status === 200) {
         const fetchedData = JSON.parse(xhr.responseText);
         setTeams(fetchedData.data); // 여기에서 teams도 설정
-        // console.log('team', fetchedData.data)
+        console.log('team', fetchedData.data)
       }
     };
     xhr.withCredentials = true;
@@ -137,9 +137,19 @@ function MenuTeam() {
     setNewTeamCategory('');
     setNewTeamIntroduce('');
 
-    const xhr = new XMLHttpRequest();
-    xhr.open('GET', `http://13.124.69.102:5000/team/add/?name=${newTeamName}&link=${newTeamLink}&category=${newTeamCategory}&introduce=${newTeamIntroduce}&master_id=${newTeamUserId}&start_day=${newTeamStartDate}&end_day=${newTeamEndDate}`, true);
+    const encodedName = encodeURIComponent(newTeamName);
+    const encodedLink = encodeURIComponent(newTeamLink);
+    const encodedCategory = encodeURIComponent(newTeamCategory);
+    const encodedIntroduce = encodeURIComponent(newTeamIntroduce);
+    const encodedUserId = encodeURIComponent(newTeamUserId);
+    const encodedStartDate = encodeURIComponent(newTeamStartDate);
+    const encodedEndDate = encodeURIComponent(newTeamEndDate);
 
+    const url = `http://13.124.69.102:5000/team/add/?name=${encodedName}&link=${encodedLink}&category=${encodedCategory}&introduce=${encodedIntroduce}&master_id=${encodedUserId}&start_day=${encodedStartDate}&end_day=${encodedEndDate}`;
+
+    const xhr = new XMLHttpRequest();
+    // xhr.open('GET', `http://13.124.69.102:5000/team/add/?name=${newTeamName}&link=${newTeamLink}&category=${newTeamCategory}&introduce=${newTeamIntroduce}&master_id=${newTeamUserId}&start_day=${newTeamStartDate}&end_day=${newTeamEndDate}`, true);
+    xhr.open('GET', url, true);
     xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
 
     xhr.onreadystatechange = function () {
@@ -148,42 +158,19 @@ function MenuTeam() {
         console.log('result', fetchedData.data)
       }
     };
-    xhr.withCredentials = true;
+    // xhr.withCredentials = true;
 
     xhr.send();
-    // API 요청
-    // const xhr = new XMLHttpRequest();
-    // const url = 'http://13.124.69.102:5000/team/add';
-    // xhr.open('GET', url, true);
-    // xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
-
-    // xhr.onreadystatechange = function () {
-    //   if (xhr.readyState === 4 && xhr.status === 200) {
-    //     const fetchedData = JSON.parse(xhr.responseText);
-    //     console.log('result', fetchedData.data);
-    //   }
-    // };
-
-    // xhr.send(JSON.stringify({
-    //   name: newTeamName,
-    //   link: newTeamLink,
-    //   category: newTeamCategory,
-    //   introduce: newTeamIntroduce,
-    //   master_id: newTeamUserId,
-    //   start_day: newTeamStartDate,
-    //   end_day: newTeamEndDate
-    // }));
-
   };
   const handleChangeStartDate = (e) => {
     const originalDate = e.target.value; // 2023-10-10
-    const modifiedDate = originalDate.replace(/-/g, '_'); // 2023_10_10
+    const modifiedDate = originalDate.replace(/-/g, ''); // 2023_10_10
     setNewTeamStartDate(modifiedDate);
   };
   
   const handleChangeEndDate = (e) => {
     const originalDate = e.target.value; // 2023-10-10
-    const modifiedDate = originalDate.replace(/-/g, '_'); // 2023_10_10
+    const modifiedDate = originalDate.replace(/-/g, ''); // 2023_10_10
     setNewTeamEndDate(modifiedDate);
   };
 
