@@ -109,7 +109,7 @@
     gap: 1rem;
 }
 
-#team-add-name {
+.team-add-input {
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -123,7 +123,7 @@
     justify-content: space-between;
 }
 
-#team-add-name input,
+.team-add-input input,
 #team-add-term input {
     width: 80%;
     padding: 8px;
