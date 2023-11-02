@@ -39,7 +39,7 @@ function MenuTeam() {
 
     teams.forEach(team => {
       const xhr = new XMLHttpRequest();
-      xhr.open('GET', `http://13.124.69.102:5000/user/get/?Team_id=${team.id}`, true);
+      xhr.open('GET', `http://13.124.69.102:5000/user/get/?teamId=${team.id}`, true);
       xhr.onreadystatechange = function () {
         if (xhr.readyState === 4 && xhr.status === 200) {
           const fetchedData = JSON.parse(xhr.responseText);
@@ -57,38 +57,7 @@ function MenuTeam() {
 
   // const xhr = new XMLHttpRequest();
 
-  // xhr.open('GET', `http://13.124.69.102:5000/user/get/?Team_id=${teams[0].id}`, true);
-  // xhr.onreadystatechange = function() {
-  //   if (xhr.readyState === 4 && xhr.status === 200) {
-  //     const fetchedData = JSON.parse(xhr.responseText);
-  //     // console.log('member', fetchedData.data)
-  //   }
-  // };
-
-  // xhr.send();
-
   // console.log(teams[0].id)
-
-  // const [teams, setTeams] = useState([
-  //   {
-  //     name: "팀 1",
-  //     period: "2023/01/01 ~ 2023/01/01",
-  //     members: [
-  //       { name: "팀원 1", age: 25, gender: "남" },
-  //       { name: "팀원 2", age: 22, gender: "여" },
-  //       { name: "팀원 3", age: 20, gender: "남" },
-  //       { name: "팀원 4", age: 21, gender: "여" },
-  //     ]
-  //   },
-  //   {
-  //     name: "팀 2",
-  //     period: "2023/02/02 ~ 2023/02/02",
-  //     members: [
-  //       { name: "팀원 1", age: 25, gender: "남" },
-  //       { name: "팀원 2", age: 22, gender: "여" },
-  //     ]
-  //   }
-  // ]);
 
   // const addMember = (teamIndex) => {
   //   const newMember = { name: "새 팀원", age: 0, gender: "-" };
@@ -102,19 +71,6 @@ function MenuTeam() {
   //   newTeams[teamIndex].members.splice(memberIndex, 1);
   //   setTeams(newTeams);
   // };
-
-  // const addTeam = () => {
-  //   const newTeam = {
-  //     name: newTeamName,
-  //     period: `${newTeamStartDate} ~ ${newTeamEndDate}`,
-  //     members: []
-  //   };
-  //   setTeams([...teams, newTeam]);
-  //   setNewTeamName('');
-  //   setNewTeamStartDate('');
-  //   setNewTeamEndDate('');
-  // };
-
 
   const addTeam = () => {
     const newTeam = {
@@ -137,18 +93,14 @@ function MenuTeam() {
     setNewTeamCategory('');
     setNewTeamIntroduce('');
 
-    const encodedName = encodeURIComponent(newTeamName);
-    const encodedLink = encodeURIComponent(newTeamLink);
-    const encodedCategory = encodeURIComponent(newTeamCategory);
-    const encodedIntroduce = encodeURIComponent(newTeamIntroduce);
-    const encodedUserId = encodeURIComponent(newTeamUserId);
-    const encodedStartDate = encodeURIComponent(newTeamStartDate);
-    const encodedEndDate = encodeURIComponent(newTeamEndDate);
-
-    const url = `http://13.124.69.102:5000/team/add/?name=${encodedName}&link=${encodedLink}&category=${encodedCategory}&introduce=${encodedIntroduce}&master_id=${encodedUserId}&start_day=${encodedStartDate}&end_day=${encodedEndDate}`;
+    const url = 
+    // `http://13.124.69.102:5000/team/add/?name=${encodedName}&link=${encodedLink}&category=${encodedCategory}&introduce=${encodedIntroduce}&masterId=${encodedUserId}&startDay=${encodedStartDate}&endDay=${encodedEndDate}`;
+    `http://13.124.69.102:5000/team/add/?name=${newTeamName}&link=${newTeamLink}&category=${newTeamCategory}&introduce=${newTeamIntroduce}&masterId=${newTeamUserId}&startDate=${newTeamStartDate}&endDate=${newTeamEndDate}`;
 
     const xhr = new XMLHttpRequest();
-    // xhr.open('GET', `http://13.124.69.102:5000/team/add/?name=${newTeamName}&link=${newTeamLink}&category=${newTeamCategory}&introduce=${newTeamIntroduce}&master_id=${newTeamUserId}&start_day=${newTeamStartDate}&end_day=${newTeamEndDate}`, true);
+    console.log(url)
+    console.log(xhr.status)
+    console.log(xhr.responseText)
     xhr.open('GET', url, true);
     xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
 
@@ -161,17 +113,6 @@ function MenuTeam() {
     // xhr.withCredentials = true;
 
     xhr.send();
-  };
-  const handleChangeStartDate = (e) => {
-    const originalDate = e.target.value; // 2023-10-10
-    const modifiedDate = originalDate.replace(/-/g, ''); // 2023_10_10
-    setNewTeamStartDate(modifiedDate);
-  };
-  
-  const handleChangeEndDate = (e) => {
-    const originalDate = e.target.value; // 2023-10-10
-    const modifiedDate = originalDate.replace(/-/g, ''); // 2023_10_10
-    setNewTeamEndDate(modifiedDate);
   };
 
   return (
@@ -213,38 +154,22 @@ function MenuTeam() {
                     )}
                   </div>
                 </div>
-                {/* <img src={addImage} alt="addMember" className="team-block-add-member-image" onClick={() => addMember(teamIndex)} /> */}
+                {/* <img src={addImage} alt="addMember" className="team-block-add-member-image" onClick={() => addMember(teamIndex)}/> */}
               </div>
             ))) : (
             <div>Loading...</div>
           )}
           <div className="team-block team-add-block">
-            {/* <div id="team-add">
-              <div id="team-add-name">
-                <span>팀 이름</span>
-                <input value={newTeamName} onChange={(e) => setNewTeamName(e.target.value)} />
-              </div>
-              <div id="team-add-term">
-                <span>기간</span>
-                <input type="date" value={newTeamStartDate} onChange={(e) => setNewTeamStartDate(e.target.value)} />
-                <span>~</span>
-                <input type="date" value={newTeamEndDate} onChange={(e) => setNewTeamEndDate(e.target.value)} />
-              </div>
-              <div id="team-add-button" onClick={() => addTeam()}>
-                <span>팀 만들기</span>
-                <img src={addTeamImage} alt="addTeam" className="team-add-image"/>
-              </div>
-            </div> */}
             <div id="team-add">
               <div class="team-add-input">
                 <span>팀 이름</span>
                 <input value={newTeamName} onChange={(e) => setNewTeamName(e.target.value)} />
               </div>
-              <div className="team-add-term">
+              <div class="team-add-term">
                 <span>기간</span>
-                <input type="date" value={newTeamStartDate} onChange={handleChangeStartDate} />
+                <input type="date" value={newTeamStartDate} onChange={(e) => setNewTeamStartDate(e.target.value)} />
                 <span>~</span>
-                <input type="date" value={newTeamEndDate} onChange={handleChangeEndDate} />
+                <input type="date" value={newTeamEndDate} onChange={(e) => setNewTeamEndDate(e.target.value)} />
               </div>
               <div class="team-add-input">
                 <span>링크</span>

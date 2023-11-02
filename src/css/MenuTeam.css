@@ -109,14 +109,8 @@
     gap: 1rem;
 }
 
-.team-add-input {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-}
-
-#team-add-term {
+.team-add-input,
+.team-add-term {
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -124,7 +118,15 @@
 }
 
 .team-add-input input,
-#team-add-term input {
+.team-add-term input {
+    width: 80%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1rem;
+}
+
+.team-add.input textarea {
     width: 80%;
     padding: 8px;
     border: 1px solid #ccc;
