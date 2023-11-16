@@ -64,15 +64,17 @@
   color: white;
 }
 
-
 .menu-item {
   display: flex;
   align-items: center;
-  margin: 0.6rem;
-  padding-left: 0.6rem;
+  margin: 10px;
+  padding-left: 10px;
   border-radius: 10px;
 }
 
+#sidebar-mission-category {
+  padding-left: 40px;
+}
 
 .menu-item img {
   width: 2rem;

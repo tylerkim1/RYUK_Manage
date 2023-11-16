@@ -20,27 +20,18 @@ const Home = () => {
         manager_coe:""
     })
 
-   
-
     const [data,setData] = useState([]);
-    
-    console.log(inpval);
-
+    // console.log(inpval);
     const getdata = (e) => {
         // console.log(e.target.value);
-
-
         const { value, name } = e.target;
         // console.log(value,name);
-
-
         setInpval(() => {
             return {
                 ...inpval,
                 [name]: value
             }
         })
-
     }
 
     const addData = (e) => {
@@ -86,7 +77,7 @@ const Home = () => {
     }
 
     return (
-        <>
+        <div>
             <Header />
             <div className="container mt-5">
                 <section className='d-flex justify-content-between'>
@@ -127,7 +118,7 @@ const Home = () => {
                 </section>
                 <ToastContainer />
             </div>
-        </>
+        </div>
     )
 }
 
