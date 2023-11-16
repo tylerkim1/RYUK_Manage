@@ -10,8 +10,6 @@ import MainPage from './components/MainPage';
 import Header from './components/Header';
 import Board from './components/Board';
 
-
-
 // const xhr = new XMLHttpRequest();
 //   xhr.open('GET', 'http://13.124.69.102:5000/team/all/', true);
 //   xhr.send();
@@ -24,7 +22,7 @@ import Board from './components/Board';
 
 function App() {
   return (
-    <>
+    <div>
       <Header />
       <Routes>
         <Route path='/' element={<Home />} />
@@ -34,7 +32,7 @@ function App() {
         <Route path='/board/*' element={<Board />} />
         <Route path='*' element={<Errror />} />
       </Routes>
-    </>
+    </div>
   );
 }
 

@@ -1,27 +1,19 @@
-import React, {useEffect, useState, useRef} from "react";
+import React, { useState, useRef} from "react";
 import Tr from './Tr';
 import Post from './Post';
 import Modal from './Modal';
 import Modal2 from './Modal2';
-import oc from 'open-color';
+import { TableRow, TableHead, TableCell } from "@mui/material";
 
-
-import { withStyles } from '@material-ui/core/styles';
-
-import TableCell from '@material-ui/core/TableCell';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
-
-
-const StyledTableCell = withStyles((theme) => ({
-    head: {
-      backgroundColor: oc.teal[9],
-      color: theme.palette.common.white,
-    },
-    body: {
-      fontSize: 14,
-    },
-  }))(TableCell);
+// const StyledTableCell = withStyles((theme) => ({
+//     head: {
+//       backgroundColor: oc.teal[9],
+//       color: theme.palette.common.white,
+//     },
+//     body: {
+//       fontSize: 14,
+//     },
+//   }))(TableCell);
       
 
 const MenuPerson = () => {
@@ -137,7 +129,7 @@ const MenuPerson = () => {
     const nextId = useRef(10);
 
     const handleSave=(dataa)=>{
-        if(dataa.is_manager==false) { //user
+        if(dataa.is_manager === false) { //user
             //data 수정하기
             if(dataa.id ){
                 setinfo(
@@ -246,14 +238,22 @@ const MenuPerson = () => {
                 <table className='min-w-full table-auto text-gray-800' style={{ marginTop: '30px' }}>
                     <TableHead>
                         <TableRow>
-                            <StyledTableCell>#</StyledTableCell>
+                            {/* <StyledTableCell>#</StyledTableCell>
                             <StyledTableCell>이름</StyledTableCell>
                             <StyledTableCell align="left">ID</StyledTableCell>
                             <StyledTableCell align="left">이메일</StyledTableCell>
                             <StyledTableCell align="left">비밀번호</StyledTableCell>
                             <StyledTableCell align="left">팀</StyledTableCell>
                             <StyledTableCell align="center">수정</StyledTableCell>
-                            <StyledTableCell align="center">삭제</StyledTableCell>
+                            <StyledTableCell align="center">삭제</StyledTableCell> */}
+                            <TableCell>#</TableCell>
+                            <TableCell>이름</TableCell>
+                            <TableCell align="left">ID</TableCell>
+                            <TableCell align="left">이메일</TableCell>
+                            <TableCell align="left">비밀번호</TableCell>
+                            <TableCell align="left">팀</TableCell>
+                            <TableCell align="center">수정</TableCell>
+                            <TableCell align="center">삭제</TableCell>
                         </TableRow>
                     </TableHead>
                     <Tr info={info} handleRemove={handleRemove} handleEdit={handleEdit}/>
@@ -264,13 +264,20 @@ const MenuPerson = () => {
                 <table className='min-w-full table-auto text-gray-800' style={{ marginTop: '30px' }}>
                 <TableHead>
                     <TableRow>
-                        <StyledTableCell>#</StyledTableCell>
+                        {/* <StyledTableCell>#</StyledTableCell>
                         <StyledTableCell>이름</StyledTableCell>
                         <StyledTableCell align="left">ID</StyledTableCell>
                         <StyledTableCell align="left">이메일</StyledTableCell>
                         <StyledTableCell align="left">비밀번호</StyledTableCell>
                         <StyledTableCell align="center">수정</StyledTableCell>
-                        <StyledTableCell align="center">삭제</StyledTableCell>
+                        <StyledTableCell align="center">삭제</StyledTableCell> */}
+                        <TableCell>#</TableCell>
+                        <TableCell>이름</TableCell>
+                        <TableCell align="left">ID</TableCell>
+                        <TableCell align="left">이메일</TableCell>
+                        <TableCell align="left">비밀번호</TableCell>
+                        <TableCell align="center">수정</TableCell>
+                        <TableCell align="center">삭제</TableCell>
                     </TableRow>
                 </TableHead>
                 <Tr info={info_ma} handleRemove={handleRemove} handleEdit={handleEdit}/>

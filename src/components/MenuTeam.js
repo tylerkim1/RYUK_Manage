@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import '../css/MenuTeam.css';
-import deleteImage from '../assets/delete.png';
-import addImage from '../assets/addMember.png';
+// import deleteImage from '../assets/delete.png';
+// import addImage from '../assets/addMember.png';
 import addTeamImage from '../assets/addTeam.png';
 
 function MenuTeam() {
   const [teams, setTeams] = useState(null);
   const [teamMembers, setTeamMembers] = useState({});
   const [newTeamName, setNewTeamName] = useState('');
-  const [newTeamStartDate, setNewTeamStartDate] = useState('');
-  const [newTeamEndDate, setNewTeamEndDate] = useState('');
+  const [newTeamStartDay, setNewTeamStartDay] = useState('');
+  const [newTeamEndDay, setNewTeamEndDay] = useState('');
   const [newTeamLink, setNewTeamLink] = useState('');
   const [newTeamUserId, setNewTeamUserId] = useState('');
   const [newTeamCategory, setNewTeamCategory] = useState('');
@@ -17,7 +17,7 @@ function MenuTeam() {
 
   useEffect(() => {
     const xhr = new XMLHttpRequest();
-    xhr.open('GET', 'http://13.124.69.102:5000/team/all/', true);
+    xhr.open('GET', 'http://13.125.10.254:5000/team/all/', true);
 
     xhr.onreadystatechange = function () {
       if (xhr.readyState === 4 && xhr.status === 200) {
@@ -39,7 +39,7 @@ function MenuTeam() {
 
     teams.forEach(team => {
       const xhr = new XMLHttpRequest();
-      xhr.open('GET', `http://13.124.69.102:5000/user/get/?teamId=${team.id}`, true);
+      xhr.open('GET', `http://13.125.10.254:5000/user/get/?teamId=${team.id}`, true);
       xhr.onreadystatechange = function () {
         if (xhr.readyState === 4 && xhr.status === 200) {
           const fetchedData = JSON.parse(xhr.responseText);
@@ -47,7 +47,7 @@ function MenuTeam() {
             ...prev,
             [team.id]: fetchedData.data,
           }));
-          // console.log(fetchedData.data)
+          console.log(fetchedData.data)
         }
       };
       xhr.withCredentials = true;
@@ -75,8 +75,8 @@ function MenuTeam() {
   const addTeam = () => {
     const newTeam = {
       name: newTeamName,
-      start_day: newTeamStartDate,
-      end_day: newTeamEndDate,
+      start_day: newTeamStartDay,
+      end_day: newTeamEndDay,
       link: newTeamLink,
       master_id: newTeamUserId,
       category: newTeamCategory,
@@ -86,21 +86,18 @@ function MenuTeam() {
     setTeams([...teams, newTeam]);
     // 다른 state들도 초기화
     setNewTeamName('');
-    setNewTeamStartDate('');
-    setNewTeamEndDate('');
+    setNewTeamStartDay('');
+    setNewTeamEndDay('');
     setNewTeamLink('');
     setNewTeamUserId('');
     setNewTeamCategory('');
     setNewTeamIntroduce('');
 
-    const url = 
-    // `http://13.124.69.102:5000/team/add/?name=${encodedName}&link=${encodedLink}&category=${encodedCategory}&introduce=${encodedIntroduce}&masterId=${encodedUserId}&startDay=${encodedStartDate}&endDay=${encodedEndDate}`;
-    `http://13.124.69.102:5000/team/add/?name=${newTeamName}&link=${newTeamLink}&category=${newTeamCategory}&introduce=${newTeamIntroduce}&masterId=${newTeamUserId}&startDate=${newTeamStartDate}&endDate=${newTeamEndDate}`;
+    const url = `http://13.125.10.254:5000/team/add/?name=${newTeamName}&link=${newTeamLink}&category=${newTeamCategory}&introduce=${newTeamIntroduce}&masterId=${newTeamUserId}&startDay=${newTeamStartDay}&endDay=${newTeamEndDay}`;
 
     const xhr = new XMLHttpRequest();
     console.log(url)
     console.log(xhr.status)
-    console.log(xhr.responseText)
     xhr.open('GET', url, true);
     xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
 
@@ -167,9 +164,9 @@ function MenuTeam() {
               </div>
               <div class="team-add-term">
                 <span>기간</span>
-                <input type="date" value={newTeamStartDate} onChange={(e) => setNewTeamStartDate(e.target.value)} />
+                <input type="date" value={newTeamStartDay} onChange={(e) => setNewTeamStartDay(e.target.value)} />
                 <span>~</span>
-                <input type="date" value={newTeamEndDate} onChange={(e) => setNewTeamEndDate(e.target.value)} />
+                <input type="date" value={newTeamEndDay} onChange={(e) => setNewTeamEndDay(e.target.value)} />
               </div>
               <div class="team-add-input">
                 <span>링크</span>

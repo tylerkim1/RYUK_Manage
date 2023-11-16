@@ -4,14 +4,15 @@ import userImage from '../assets/user.png';
 import teamImage from '../assets/team.png';
 import assignmentImage from '../assets/assignment.png';
 import personImage from '../assets/person.png';
+import selectTeamImage from '../assets/sidebar-team.png'
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import '../css/Sidebar.css';
 
 // 메뉴 아이템 컴포넌트
-const MenuItem = ({ to, image, label, isSelected, onClick }) => (
+const MenuItem = ({ to, image, label, isSelected, isMissionCategory, onClick }) => (
   <Link to={to} onClick={onClick}>
-    <div className={`menu-item ${isSelected ? "selected-tab" : ""}`}>
+    <div className={`menu-item ${isSelected ? "selected-tab" : ""}`} id={`${isMissionCategory ? "sidebar-mission-category" : ""}`}>
       <img src={image} alt={label} />
       <span>{label}</span>
     </div>
@@ -23,6 +24,11 @@ function Sidebar() {
   // 현재 위치 (URL)을 얻습니다.
   const location = useLocation();
   let currentPath = location.pathname;
+
+  // 드롭다운 상태 관리
+  const [selectedTeam, setSelectedTeam] = useState('');
+  // 팀 목록 - 실제로는 서버로부터 가져오거나 다른 상태 관리에서 가져올 수 있습니다.
+  const teams = ['TEAM 1', 'TEAM 2', 'TEAM 3'];
 
   // '/mainpage'로 시작하는 경우 해당 부분을 제거
   if (currentPath.startsWith('/mainpage')) {
@@ -79,8 +85,17 @@ function Sidebar() {
       </div>
       <div id="menu-wrapper">
         <span>메뉴</span>
-        <MenuItem to="menu-user" image={userImage} label="개인별" isSelected={selectedTab === "menu-user"} onClick={() => handleTabClick("menu-user")} />
-        <MenuItem to="menu-mission" image={assignmentImage} label="미션별" isSelected={selectedTab === "menu-mission"} onClick={() => handleTabClick("menu-mission")} />
+        {/* 드롭다운 추가 */}
+        <div className="menu-item">
+          <img src={selectTeamImage} />
+          <select value={selectedTeam} onChange={(e) => setSelectedTeam(e.target.value)}>
+            {teams.map(team => (
+              <option key={team} value={team}>{team}</option>
+            ))}
+          </select>
+        </div>
+        <MenuItem to="menu-user" image={userImage} label="개인별" isSelected={selectedTab === "menu-user"} isMissionCategory="1" onClick={() => handleTabClick("menu-user")} />
+        <MenuItem to="menu-mission" image={assignmentImage} label="미션별" isSelected={selectedTab === "menu-mission"} isMissionCategory="1" onClick={() => handleTabClick("menu-mission")} />
         <MenuItem to="menu-team" image={teamImage} label="팀별 관리" isSelected={selectedTab === "menu-team"} onClick={() => handleTabClick("menu-team")} />
         <MenuItem to="menu-person" image={personImage} label="회원관리" isSelected={selectedTab === "menu-person"} onClick={() => handleTabClick("menu-person")} />
       </div>

@@ -25,7 +25,7 @@ const MenuUser = (e) => {
     ];
     let todayMissions ;
 
-    if(id == 1) todayMissions = todayMissions1;
+    if(id === 1) todayMissions = todayMissions1;
     else todayMissions = todayMissions2;
 
     return (
