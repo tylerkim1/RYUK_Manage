@@ -26,66 +26,11 @@ const MenuMission = (e) => {
     }
   ];
 
-  const missions2 = [
-    {
-      title: '미션 2',
-      achieveLevel: '3/3',
-      participants: [
-        { name: '쿵짝님', image: missionImage, desc: '오늘 과일을 썰어 먹었어요!' },
-        { name: '쿵쿵님', image: missionImage, desc: '오늘 과일을 썰어 먹었어요!' },
-        { name: '쿵야님', image: missionImage, desc: '오늘 과일을 썰어 먹었어요!' }
-      ]
-    },
-    {
-      title: '미션 3',
-      achieveLevel: '2/3',
-      participants: [
-        { name: '쿵짝님', image: missionImage, desc: '오늘 과일을 썰어 먹었어요!' },
-        { name: '쿵쿵님', image: missionImage, desc: '오늘 과일을 썰어 먹었어요!' },
-        { name: '쿵야님', image: null, desc: '아직 미션을 완료하지 못했어요.' }
-      ]
-    }
-  ];
-  
-  let missions;
-  if(id === 1) missions = missions1;
-  else missions=missions2;
-
-  const [newMission, setNewMission] = useState({
-    title: '',
-    date: '',
-    group: '',
-    type: [],
-    form: '',
-    inCharge: '',
-  });
-
-  const handleInputChange = (event) => {
-    const { name, value, type } = event.target;
-    if (type === 'checkbox') {
-      setNewMission({
-        ...newMission,
-        [name]: newMission[type].includes(value)
-          ? newMission[type].filter((t) => t !== value)
-          : [...newMission[type], value],
-      });
-    } else {
-      setNewMission({ ...newMission, [name]: value });
-    }
-  };
-
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    // 여기에서 newMission을 이용하여 무언가를 할 수 있습니다.
-    // 예를 들면 서버에 데이터를 보내거나 상태를 업데이트하는 것 등입니다.
-    console.log(newMission);
-  };
-
   return (
     <div id="menu-mission-container">
       <div id="menu-mission-body">
         <div id="common-mission-list">
-          {missions.map((mission, missionIndex) => (
+          {missions1.map((mission, missionIndex) => (
             <div key={missionIndex} id="common-mission">
               <div id="common-mission-header">
                 <div id="common-mission-title">
@@ -118,28 +63,30 @@ const MenuMission = (e) => {
           ))}
         </div>
       </div>
-      <form onSubmit={handleSubmit}>
-        <label>
-          이름:
-          <input
-            type="text"
-            name="title"
-            value={newMission.title}
-            onChange={handleInputChange}
-          />
-        </label>
-        <label>
-          날짜:
-          <input
-            type="date"
-            name="date"
-            value={newMission.date}
-            onChange={handleInputChange}
-          />
-        </label>
-        {/* 그룹, 타입, 형태 등의 다른 필드들도 비슷한 방식으로 추가하실 수 있습니다. */}
+      {/* <form onSubmit={handleSubmit}>
+        <div className="menu-item">
+          <select value={selectedMissions} onChange={(e) => setSelectedTeam(e.target.value)}>
+            {missions.map(team => (
+              <option key={team} value={team}>{team}</option>
+            ))}
+          </select>
+        </div>
+        <div className="menu-item">
+          <select value={selectedTeams} onChange={(e) => setSelectedTeam(e.target.value)}>
+            {teams.map(team => (
+              <option key={team} value={team}>{team}</option>
+            ))}
+          </select>
+        </div>
+        <div className="menu-item">
+          <select value={selectedTeam} onChange={(e) => setSelectedTeam(e.target.value)}>
+            {teams.map(team => (
+              <option key={team} value={team}>{team}</option>
+            ))}
+          </select>
+        </div>
         <button type="submit">미션 추가하기</button>
-      </form>
+      </form> */}
     </div>
   );
 };

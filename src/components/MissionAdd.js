@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 // 사이드바 컴포넌트
-function Sidebar() {
+function MissionAdd() {
   return (
     <div>
         hello
@@ -9,4 +9,4 @@ function Sidebar() {
     );
 }
 
-export default Sidebar;
+export default MissionAdd;
