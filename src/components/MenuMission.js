@@ -2,9 +2,15 @@ import React, { useState } from 'react';
 import missionImage from '../assets/sample.png';
 import { Link, useLocation } from 'react-router-dom';
 import '../css/MenuMission.css'
+import { networkrequest } from './Header/XHR';
 
 const MenuMission = (e) => {
-  const id = parseInt(e.info,10);
+  const [missionPool, setMissionPool] = useState();
+  const [selectedMission, setSelectedMission] = useState();
+  const [selectedTeam, setSelectedTeam] = useState();
+  const [teamLists, setTeamLists] = useState();
+  if(teamLists === undefined) networkrequest('team/all/', {}, (data) => {setTeamLists(data.data);});
+
   // 미션 데이터 배열
   const missions1 = [
     {
@@ -26,6 +32,19 @@ const MenuMission = (e) => {
       ]
     }
   ];
+
+  if(missionPool === undefined) networkrequest('mission/all/', {}, (data) => (setMissionPool(data.data)))
+  
+  const handleAddMissionToTeam = (missionId, teamId) => {
+    console.log(missionId, teamId)
+    const req = {
+      missionId: missionId,
+      teamId: teamId,
+      date: "2023_11_16"
+    }
+    
+    networkrequest('mission/assign_team/', req, console.log)
+  }
 
   return (
     <div id="menu-mission-container">
@@ -64,32 +83,23 @@ const MenuMission = (e) => {
           ))}
         </div>
       </div>
-      {/* <form onSubmit={handleSubmit}>
-        <div className="menu-item">
-          <select value={selectedMissions} onChange={(e) => setSelectedTeam(e.target.value)}>
-            {missions.map(team => (
-              <option key={team} value={team}>{team}</option>
-            ))}
-          </select>
-        </div>
-        <div className="menu-item">
-          <select value={selectedTeams} onChange={(e) => setSelectedTeam(e.target.value)}>
-            {teams.map(team => (
-              <option key={team} value={team}>{team}</option>
-            ))}
-          </select>
-        </div>
-        <div className="menu-item">
-          <select value={selectedTeam} onChange={(e) => setSelectedTeam(e.target.value)}>
-            {teams.map(team => (
-              <option key={team} value={team}>{team}</option>
-            ))}
-          </select>
-        </div>
-        <button type="submit">미션 추가하기</button>
-      </form> */}
+      <div>
+        <span>미션을 고르세요</span>
+        <select value={selectedMission} onChange={(e) => setSelectedMission(e.target.value)}>
+          {missionPool ? missionPool.map(mission => (
+            <option key={mission.mission_id} value={mission.mission_id}>{mission.title}</option>
+          )) : <div></div>}
+        </select>
+        <span>팀을 고르세요</span>
+        <select value={selectedTeam} onChange={(e) => setSelectedTeam(e.target.value)}>
+          {teamLists ? teamLists.map(team => (
+            <option key={team.team_id} value={team.team_id}>{team.name}</option>
+          )) : ''}
+        </select>
+        <button onClick={() => handleAddMissionToTeam(selectedMission, selectedTeam)}>팀에 미션 추가하기</button>
+      </div>
       <Link to={'/mainpage/mission-add'}>
-        <button>미션추가</button>
+        <button>미션 풀 추가 페이지로 가기</button>
       </Link>
     </div>
   );
