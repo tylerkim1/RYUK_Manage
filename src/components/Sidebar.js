@@ -26,24 +26,18 @@ function Sidebar() {
   const [selectedTeam, setSelectedTeam] = useState('');
   // 팀 목록 - 실제로는 서버로부터 가져오거나 다른 상태 관리에서 가져올 수 있습니다.
   const [teamNameLists, setTeamNameLists] = useState({err:''});
-  const updateTeams = () => 
-  {
+
+  const updateTeams = () => {
     networkrequest('team/all/', {}, (data) => {
-      var namelist = [];
-      console.log(data.data)
-      data.data.map((team) => (
-        [...namelist, team.name]
-      ))
-      // console.log(namelist)
-      setTeamNameLists(namelist)
+      const namelist = data.data.map((team) => team.name);
+      console.log(namelist);
+      setTeamNameLists(namelist);
     });
   };
 
   // 현재 위치 (URL)을 얻습니다.
   const location = useLocation();
   let currentPath = location.pathname;
-
-
   
   // '/mainpage'로 시작하는 경우 해당 부분을 제거
   if (currentPath.startsWith('/mainpage')) {

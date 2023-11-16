@@ -37,6 +37,12 @@
 
 .team-block-header {
     display: flex;
+    flex-direction: row;
+    margin-bottom: 10px;
+}
+
+.team-block-header-text {
+    display: flex;
     flex-direction: column;
     margin-bottom: 10px;
 }
@@ -52,6 +58,7 @@
 }
 
 .team-block-body {
+    display: flex;
     width: 100%;
     margin-bottom: 10px;
 }
@@ -77,8 +84,8 @@
 .delete-button {
     margin-left: auto;
     cursor: pointer;
-    width: 24px;
-    height: 30px;
+    width: 28px;
+    height: 35px;
 }
 
 .team-block-add-member-image {

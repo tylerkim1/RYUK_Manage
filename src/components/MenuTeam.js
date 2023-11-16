@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import '../css/MenuTeam.css';
-// import deleteImage from '../assets/delete.png';
+import deleteImage from '../assets/delete.png';
 // import addImage from '../assets/addMember.png';
 import addTeamImage from '../assets/addTeam.png';
 
@@ -9,13 +9,15 @@ import { networkrequest}  from './Header/XHR.js';
 function MenuTeam() {
   const [teams, setTeams] = useState(null);
   const [teamMembers, setTeamMembers] = useState({});
-  const [newTeamName, setNewTeamName] = useState('');
-  const [newTeamStartDay, setNewTeamStartDay] = useState('');
-  const [newTeamEndDay, setNewTeamEndDay] = useState('');
-  const [newTeamLink, setNewTeamLink] = useState('');
-  const [newTeamUserId, setNewTeamUserId] = useState('');
-  const [newTeamCategory, setNewTeamCategory] = useState('');
-  const [newTeamIntroduce, setNewTeamIntroduce] = useState('');
+  const [newTeam, setNewTeam] = useState({
+    name: '',
+    startDay: '',
+    endDay: '',
+    link: '',
+    masterId: '',
+    category: '',
+    introduce: '',
+  });
 
   useEffect(() => {
     networkrequest('team/all/', {}, (data)=>setTeams(data.data));
@@ -62,58 +64,32 @@ function MenuTeam() {
   //   setTeams(newTeams);
   // };
 
-  const addTeam = () => {
-    var newTeam = {
-      name: newTeamName,
-      startDay: newTeamStartDay,
-      endDay: newTeamEndDay,
-      link: newTeamLink,
-      masterId: newTeamUserId,
-      category: newTeamCategory,
-      introduce: newTeamIntroduce,
-      members: []
-    };
-    setTeams([...teams, newTeam]);
-    // 다른 state들도 초기화
-    setNewTeamName('');
-    setNewTeamStartDay('');
-    setNewTeamEndDay('');
-    setNewTeamLink('');
-    setNewTeamUserId('');
-    setNewTeamCategory('');
-    setNewTeamIntroduce('');
-
-    var res = {};
-    for (let [key, value] of Object.entries(newTeam)) {
-      if(key != 'members')
-      {
-        res[key] = value.replace(/-/g, '_');
-      }
+  const addTeam = async () => {
+    // URL 파라미터를 생성하기 위해 '-'를 '_'로 변경
+    const req = { ...newTeam };
+    for (let key in req) {
+      req[key] = req[key].replace(/-/g, '_');
     }
 
-    networkrequest('team/add/', res, console.log);
-    // networkrequest('team/all/', {}, console.log);
+    await networkrequest('team/add/', req, console.log);
+    await networkrequest('team/all/', {}, (data)=>setTeams(data.data));
 
-    // const url = `http://13.125.10.254:5000/team/add/?name=${newTeamName}&link=${newTeamLink}&category=${newTeamCategory}&introduce=${newTeamIntroduce}&masterId=${newTeamUserId}&startDay=${newTeamStartDay}&endDay=${newTeamEndDay}`;
-    //http://13.125.10.254:5000/team/add/?name=gdz&startDay=2023_11_03&endDay=2023_11_15&link=2&masterId=2&category=2&introduce=2
-    //    http://13.125.10.254:5000/team/add/?name=gdz&link=2&category=2&introduce=2&masterId=2&startDay=2023_11_03&endDay=2023_11_15
-      
-    // const xhr = new XMLHttpRequest();
-    // console.log(url)
-    // console.log(xhr.status)
-    // xhr.open('GET', url, true);
-    // xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
+    // newTeam 상태 초기화
+    setNewTeam({
+      name: '',
+      startDay: '',
+      endDay: '',
+      link: '',
+      masterId: '',
+      category: '',
+      introduce: '',
+    });
 
-    // xhr.onreadystatechange = function () {
-    //   if (xhr.readyState === 4 && xhr.status === 200) {
-    //     const fetchedData = JSON.parse(xhr.responseText);
-    //     console.log('result', fetchedData.data)
-    //   }
-    // };
-    // // xhr.withCredentials = true;
-
-    // xhr.send();
   };
+
+  const handleDelete = (teamId) => {
+    networkrequest('team/delete/', {teamId: teamId}, console.log);
+  }
 
   return (
     <div id="menu-team-container">
@@ -129,12 +105,15 @@ function MenuTeam() {
             teams.map((team, teamIndex) => (
               <div key={teamIndex} className="team-block">
                 <div className="team-block-header">
-                  <span className="team-name">
-                    {team.name}
-                  </span>
-                  <span className="team-period">
-                    기간: {team.start_day} ~ {team.end_day}
-                  </span>
+                  <div className="team-block-header-text">
+                    <span className="team-name">
+                      {team.name}
+                    </span>
+                    <span className="team-period">
+                      기간: {team.start_day} ~ {team.end_day}
+                    </span>
+                  </div>
+                  <img className="delete-button" src={deleteImage} onClick={() => handleDelete(team.team_id)} />
                 </div>
                 <div className="team-block-body">
                   <div className="team-member-list">
@@ -163,29 +142,29 @@ function MenuTeam() {
             <div id="team-add">
               <div class="team-add-input">
                 <span>팀 이름</span>
-                <input value={newTeamName} onChange={(e) => setNewTeamName(e.target.value)} />
+                <input value={newTeam.name} onChange={(e) => setNewTeam({ ...newTeam, name: e.target.value })} />
               </div>
               <div class="team-add-term">
                 <span>기간</span>
-                <input type="date" value={newTeamStartDay} onChange={(e) => setNewTeamStartDay(e.target.value)} />
+                <input type="date" value={newTeam.startDay} onChange={(e) => setNewTeam({ ...newTeam, startDay: e.target.value })} />
                 <span>~</span>
-                <input type="date" value={newTeamEndDay} onChange={(e) => setNewTeamEndDay(e.target.value)} />
+                <input type="date" value={newTeam.endDay} onChange={(e) => setNewTeam({ ...newTeam, endDay: e.target.value })} />
               </div>
               <div class="team-add-input">
                 <span>링크</span>
-                <input value={newTeamLink} onChange={(e) => setNewTeamLink(e.target.value)} />
+                <input value={newTeam.link} onChange={(e) => setNewTeam({ ...newTeam, link: e.target.value })} />
               </div>
               <div class="team-add-input">
                 <span>만든 유저 ID</span>
-                <input value={newTeamUserId} onChange={(e) => setNewTeamUserId(e.target.value)} />
+                <input value={newTeam.masterId} onChange={(e) => setNewTeam({ ...newTeam, masterId: e.target.value })} />
               </div>
               <div class="team-add-input">
                 <span>카테고리</span>
-                <input value={newTeamCategory} onChange={(e) => setNewTeamCategory(e.target.value)} />
+                <input value={newTeam.category} onChange={(e) => setNewTeam({ ...newTeam, category: e.target.value })} />
               </div>
               <div class="team-add-input">
                 <span>소개글</span>
-                <textarea value={newTeamIntroduce} onChange={(e) => setNewTeamIntroduce(e.target.value)} />
+                <textarea value={newTeam.introduce} onChange={(e) => setNewTeam({ ...newTeam, introduce: e.target.value })} />
               </div>
               <div id="team-add-button" onClick={() => addTeam()}>
                 <span>팀 만들기</span>
