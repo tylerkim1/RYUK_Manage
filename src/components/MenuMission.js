@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import missionImage from '../assets/sample.png';
+import { Link, useLocation } from 'react-router-dom';
 import '../css/MenuMission.css'
 
 const MenuMission = (e) => {
@@ -87,6 +88,9 @@ const MenuMission = (e) => {
         </div>
         <button type="submit">미션 추가하기</button>
       </form> */}
+      <Link to={'/mainpage/mission-add'}>
+        <button>미션추가</button>
+      </Link>
     </div>
   );
 };
