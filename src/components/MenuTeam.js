@@ -18,19 +18,7 @@ function MenuTeam() {
   const [newTeamIntroduce, setNewTeamIntroduce] = useState('');
 
   useEffect(() => {
-    const xhr = new XMLHttpRequest();
-    xhr.open('GET', 'http://13.125.10.254:5000/team/all/', true);
-
-    xhr.onreadystatechange = function () {
-      if (xhr.readyState === 4 && xhr.status === 200) {
-        const fetchedData = JSON.parse(xhr.responseText);
-        setTeams(fetchedData.data); // 여기에서 teams도 설정
-        console.log('team', fetchedData.data)
-      }
-    };
-    xhr.withCredentials = true;
-    xhr.send();
-
+    networkrequest('team/all/', {}, (data)=>setTeams(data.data));
   }, []); // 빈 배열을 전달하여 컴포넌트가 마운트될 때만 실행되도록 함
 
   // 팀 멤버 정보 불러오기
