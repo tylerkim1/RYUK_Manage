@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import { networkrequest } from './Header/XHR';
 import userImage from '../assets/user.png';
 import teamImage from '../assets/team.png';
 import assignmentImage from '../assets/assignment.png';
@@ -21,15 +22,29 @@ const MenuItem = ({ to, image, label, isSelected, isMissionCategory, onClick }) 
 
 // 사이드바 컴포넌트
 function Sidebar() {
+  // 드롭다운 상태 관리
+  const [selectedTeam, setSelectedTeam] = useState('');
+  // 팀 목록 - 실제로는 서버로부터 가져오거나 다른 상태 관리에서 가져올 수 있습니다.
+  const [teamNameLists, setTeamNameLists] = useState({err:''});
+  const updateTeams = () => 
+  {
+    networkrequest('team/all/', {}, (data) => {
+      var namelist = [];
+      console.log(data.data)
+      data.data.map((team) => (
+        [...namelist, team.name]
+      ))
+      // console.log(namelist)
+      setTeamNameLists(namelist)
+    });
+  };
+
   // 현재 위치 (URL)을 얻습니다.
   const location = useLocation();
   let currentPath = location.pathname;
 
-  // 드롭다운 상태 관리
-  const [selectedTeam, setSelectedTeam] = useState('');
-  // 팀 목록 - 실제로는 서버로부터 가져오거나 다른 상태 관리에서 가져올 수 있습니다.
-  const teams = ['TEAM 1', 'TEAM 2', 'TEAM 3'];
 
+  
   // '/mainpage'로 시작하는 경우 해당 부분을 제거
   if (currentPath.startsWith('/mainpage')) {
     currentPath = currentPath.substring('/mainpage'.length);
@@ -68,6 +83,10 @@ function Sidebar() {
   const userLoginArray = JSON.parse(userLoginString);
   const userName = userLoginArray[0].name;
 
+  if(teamNameLists.err !== undefined) {
+    updateTeams();
+    return <div></div>
+  }
   return (
     <div id="sidebar">
       <div id="title-wrapper">
@@ -89,7 +108,7 @@ function Sidebar() {
         <div className="menu-item">
           <img src={selectTeamImage} />
           <select value={selectedTeam} onChange={(e) => setSelectedTeam(e.target.value)}>
-            {teams.map(team => (
+            {teamNameLists.map(team => (
               <option key={team} value={team}>{team}</option>
             ))}
           </select>

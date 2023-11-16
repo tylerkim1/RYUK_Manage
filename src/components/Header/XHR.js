@@ -2,9 +2,6 @@ export const networkrequest = (path, data, onReturn) =>
 {
     var requestURL = 'http://13.125.10.254:5000/' + path + '?';
 
-    console.log('eeeeeeee');
-    console.log(data);
-
     for (let [key, value] of Object.entries(data)) {
         requestURL += key;
         requestURL += '=';
