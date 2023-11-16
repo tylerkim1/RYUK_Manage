@@ -4,6 +4,8 @@ import '../css/MenuTeam.css';
 // import addImage from '../assets/addMember.png';
 import addTeamImage from '../assets/addTeam.png';
 
+import { networkrequest}  from './Header/XHR.js';
+
 function MenuTeam() {
   const [teams, setTeams] = useState(null);
   const [teamMembers, setTeamMembers] = useState({});
@@ -73,12 +75,12 @@ function MenuTeam() {
   // };
 
   const addTeam = () => {
-    const newTeam = {
+    var newTeam = {
       name: newTeamName,
-      start_day: newTeamStartDay,
-      end_day: newTeamEndDay,
+      startDay: newTeamStartDay,
+      endDay: newTeamEndDay,
       link: newTeamLink,
-      master_id: newTeamUserId,
+      masterId: newTeamUserId,
       category: newTeamCategory,
       introduce: newTeamIntroduce,
       members: []
@@ -93,23 +95,36 @@ function MenuTeam() {
     setNewTeamCategory('');
     setNewTeamIntroduce('');
 
-    const url = `http://13.125.10.254:5000/team/add/?name=${newTeamName}&link=${newTeamLink}&category=${newTeamCategory}&introduce=${newTeamIntroduce}&masterId=${newTeamUserId}&startDay=${newTeamStartDay}&endDay=${newTeamEndDay}`;
-
-    const xhr = new XMLHttpRequest();
-    console.log(url)
-    console.log(xhr.status)
-    xhr.open('GET', url, true);
-    xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
-
-    xhr.onreadystatechange = function () {
-      if (xhr.readyState === 4 && xhr.status === 200) {
-        const fetchedData = JSON.parse(xhr.responseText);
-        console.log('result', fetchedData.data)
+    var res = {};
+    for (let [key, value] of Object.entries(newTeam)) {
+      if(key != 'members')
+      {
+        res[key] = value.replace(/-/g, '_');
       }
-    };
-    // xhr.withCredentials = true;
+    }
 
-    xhr.send();
+    networkrequest('team/add/', res, console.log);
+    // networkrequest('team/all/', {}, console.log);
+
+    // const url = `http://13.125.10.254:5000/team/add/?name=${newTeamName}&link=${newTeamLink}&category=${newTeamCategory}&introduce=${newTeamIntroduce}&masterId=${newTeamUserId}&startDay=${newTeamStartDay}&endDay=${newTeamEndDay}`;
+    //http://13.125.10.254:5000/team/add/?name=gdz&startDay=2023_11_03&endDay=2023_11_15&link=2&masterId=2&category=2&introduce=2
+    //    http://13.125.10.254:5000/team/add/?name=gdz&link=2&category=2&introduce=2&masterId=2&startDay=2023_11_03&endDay=2023_11_15
+      
+    // const xhr = new XMLHttpRequest();
+    // console.log(url)
+    // console.log(xhr.status)
+    // xhr.open('GET', url, true);
+    // xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
+
+    // xhr.onreadystatechange = function () {
+    //   if (xhr.readyState === 4 && xhr.status === 200) {
+    //     const fetchedData = JSON.parse(xhr.responseText);
+    //     console.log('result', fetchedData.data)
+    //   }
+    // };
+    // // xhr.withCredentials = true;
+
+    // xhr.send();
   };
 
   return (
