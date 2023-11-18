@@ -1,10 +1,13 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import missionImage from '../assets/sample.png';
-import { Link, useLocation } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import { DemoContainer, DemoItem } from '@mui/x-date-pickers/internals/demo';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import Button from '@mui/material/Button';
 import List from '@mui/material/List';
@@ -22,6 +25,12 @@ const MenuMission = (e) => {
   if(teamLists === undefined) networkrequest('team/all/', {}, (data) => {setTeamLists(data.data);});
   const [open, setOpen] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
+
+  useEffect(() => {
+    if (teamLists && teamLists.length > 0 && !selectedTeam) {
+      setSelectedTeam(teamLists[0].name);
+    }
+  }, [teamLists]);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -77,7 +86,29 @@ const MenuMission = (e) => {
     
     <div id="menu-mission-container">
       <div id="menu-mission-header">
-        <span>{selectedTeam}</span>
+        <span onClick={handleClickOpen}>{selectedTeam}</span>
+        <div id="date">
+          {/* <span id="date-text">{startDate.toLocaleDateString('ko-KR', { month: 'long', day: 'numeric' })}</span>
+          <DatePicker
+            selected={startDate}
+            onChange={date => setStartDate(date)}
+            customInput={<button>📅</button>}
+          /> */}
+          {/* <DesktopDatePicker
+            label="날짜 선택"
+            inputFormat="MM/dd/yyyy"
+            value={selectedDate}
+            onChange={handleDateChange}
+            renderInput={(params) => <TextField {...params} />}
+          /> */}
+        <LocalizationProvider dateAdapter={AdapterDayjs}>
+          <DemoContainer components={['DesktopDateTimePicker']}>
+            <DemoItem>
+              <DesktopDatePicker />
+            </DemoItem>
+          </DemoContainer>
+        </LocalizationProvider>
+        </div>
       </div>
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>{"미션을 확인할 팀을 선택하세요."}</DialogTitle>
@@ -90,11 +121,7 @@ const MenuMission = (e) => {
           />
           <List>
             {filteredTeams().map((team, index) => (
-              <ListItem 
-                button 
-                key={index} 
-                onClick={() => { setSelectedTeam(team.name); handleClose(); }}
-              >
+              <ListItem button key={index} onClick={() => { setSelectedTeam(team.name); handleClose(); }}>
                 {team.name}
               </ListItem>
             ))}
