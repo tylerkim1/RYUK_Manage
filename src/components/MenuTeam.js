@@ -87,8 +87,8 @@ function MenuTeam() {
 
   };
 
-  const handleDelete = (teamId) => {
-    networkrequest('team/delete/', {teamId: teamId}, console.log);
+  const handleDelete = (masterId, teamId) => {
+    networkrequest('team/delete/', {callerId: masterId, teamId: teamId}, console.log);
   }
 
   return (
@@ -113,7 +113,7 @@ function MenuTeam() {
                       기간: {team.start_day} ~ {team.end_day}
                     </span>
                   </div>
-                  <img className="delete-button" src={deleteImage} onClick={() => handleDelete(team.team_id)} />
+                  <img className="delete-button" src={deleteImage} onClick={() => handleDelete(team.master_id, team.team_id)} />
                 </div>
                 <div className="team-block-body">
                   <div className="team-member-list">

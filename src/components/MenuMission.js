@@ -1,6 +1,16 @@
 import React, { useState } from 'react';
 import missionImage from '../assets/sample.png';
 import { Link, useLocation } from 'react-router-dom';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
+import Button from '@mui/material/Button';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import TextField from '@mui/material/TextField';
+
 import '../css/MenuMission.css'
 import { networkrequest } from './Header/XHR';
 
@@ -10,6 +20,17 @@ const MenuMission = (e) => {
   const [selectedTeam, setSelectedTeam] = useState();
   const [teamLists, setTeamLists] = useState();
   if(teamLists === undefined) networkrequest('team/all/', {}, (data) => {setTeamLists(data.data);});
+  const [open, setOpen] = useState(true);
+  const [searchTerm, setSearchTerm] = useState('');
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
 
   // 미션 데이터 배열
   const missions1 = [
@@ -46,8 +67,43 @@ const MenuMission = (e) => {
     networkrequest('mission/assign_team/', req, console.log)
   }
 
+  // 필터링된 팀 리스트를 반환하는 함수
+  const filteredTeams = () => {
+    if (!teamLists) return [];
+    return teamLists.filter(team => team.name.toLowerCase().includes(searchTerm.toLowerCase()));
+  };
+  
   return (
+    
     <div id="menu-mission-container">
+      <div id="menu-mission-header">
+        <span>{selectedTeam}</span>
+      </div>
+      <Dialog open={open} onClose={handleClose}>
+        <DialogTitle>{"미션을 확인할 팀을 선택하세요."}</DialogTitle>
+        <DialogContent>
+          <TextField 
+            label="팀 검색" 
+            variant="outlined" 
+            fullWidth 
+            onChange={(e) => setSearchTerm(e.target.value)}
+          />
+          <List>
+            {filteredTeams().map((team, index) => (
+              <ListItem 
+                button 
+                key={index} 
+                onClick={() => { setSelectedTeam(team.name); handleClose(); }}
+              >
+                {team.name}
+              </ListItem>
+            ))}
+          </List>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose}>취소</Button>
+        </DialogActions>
+      </Dialog>
       <div id="menu-mission-body">
         <div id="common-mission-list">
           {missions1.map((mission, missionIndex) => (
