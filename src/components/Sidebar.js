@@ -25,15 +25,8 @@ function Sidebar() {
   // 드롭다운 상태 관리
   const [selectedTeam, setSelectedTeam] = useState('');
   // 팀 목록 - 실제로는 서버로부터 가져오거나 다른 상태 관리에서 가져올 수 있습니다.
-  const [teamNameLists, setTeamNameLists] = useState({err:''});
-
-  const updateTeams = () => {
-    networkrequest('team/all/', {}, (data) => {
-      const namelist = data.data.map((team) => team.name);
-      console.log(namelist);
-      setTeamNameLists(namelist);
-    });
-  };
+  const [teamLists, setTeamLists] = useState();
+  if(teamLists === undefined) networkrequest('team/all/', {}, (data) => {setTeamLists(data.data);});
 
   // 현재 위치 (URL)을 얻습니다.
   const location = useLocation();
@@ -77,10 +70,6 @@ function Sidebar() {
   const userLoginArray = JSON.parse(userLoginString);
   const userName = userLoginArray[0].name;
 
-  if(teamNameLists.err !== undefined) {
-    updateTeams();
-    return <div></div>
-  }
   return (
     <div id="sidebar">
       <div id="title-wrapper">
@@ -102,13 +91,14 @@ function Sidebar() {
         <div className="menu-item">
           <img src={selectTeamImage} />
           <select value={selectedTeam} onChange={(e) => setSelectedTeam(e.target.value)}>
-            {teamNameLists.map(team => (
-              <option key={team} value={team}>{team}</option>
-            ))}
+            {teamLists ? teamLists.map(team => (
+              <option key={team.team_id} value={team.name}>{team.name}</option>
+            )) : ''}
           </select>
         </div>
-        <MenuItem to="menu-user" image={userImage} label="개인별" isSelected={selectedTab === "menu-user"} isMissionCategory="1" onClick={() => handleTabClick("menu-user")} />
-        <MenuItem to="menu-mission" image={assignmentImage} label="미션별" isSelected={selectedTab === "menu-mission"} isMissionCategory="1" onClick={() => handleTabClick("menu-mission")} />
+        <MenuItem to="menu-statistics" image={selectTeamImage} label="통계" isSelected={selectedTab === "menu-statistics"} onClick={() => handleTabClick("menu-statistics")} />
+        <MenuItem to="menu-user" image={userImage} label="개인별" isSelected={selectedTab === "menu-user"} onClick={() => handleTabClick("menu-user")} />
+        <MenuItem to="menu-mission" image={assignmentImage} label="미션별" isSelected={selectedTab === "menu-mission"} onClick={() => handleTabClick("menu-mission")} />
         <MenuItem to="menu-team" image={teamImage} label="팀별 관리" isSelected={selectedTab === "menu-team"} onClick={() => handleTabClick("menu-team")} />
         <MenuItem to="menu-person" image={personImage} label="회원관리" isSelected={selectedTab === "menu-person"} onClick={() => handleTabClick("menu-person")} />
       </div>

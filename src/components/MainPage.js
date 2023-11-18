@@ -8,6 +8,7 @@ import MenuPerson from './MenuPerson';
 import MissionAdd from './MissionAdd';
 import Header2 from './Header2';
 import Sidebar from './Sidebar';
+import MenuStatistics from './MenuStatistics';
 
 function MainPage() {
     return (
@@ -16,6 +17,7 @@ function MainPage() {
             <Sidebar />
             <div id="main">
                 <Routes>
+                    <Route path="menu-statistics" element={<MenuStatistics />} />
                     <Route path="menu-user" element={<MenuUser />} />
                     <Route path="menu-mission" element={<MenuMission />} />
                     <Route path="mission-add" element={<MissionAdd />} />
