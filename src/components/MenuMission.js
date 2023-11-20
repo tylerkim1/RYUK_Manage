@@ -13,8 +13,6 @@ import Button from '@mui/material/Button';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import TextField from '@mui/material/TextField';
-// import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-import DesktopDatePicker from '@mui/lab/DesktopDatePicker';
 
 import '../css/MenuMission.css'
 import { networkrequest } from './Header/XHR';
@@ -96,19 +94,6 @@ const MenuMission = (e) => {
       <div id="menu-mission-header">
         <span onClick={handleClickOpen}>{selectedTeam}</span>
         <div id="date">
-          {/* <span id="date-text">{startDate.toLocaleDateString('ko-KR', { month: 'long', day: 'numeric' })}</span>
-          <DatePicker
-            selected={startDate}
-            onChange={date => setStartDate(date)}
-            customInput={<button>📅</button>}
-          /> */}
-          {/* <DesktopDatePicker
-            label="날짜 선택"
-            inputFormat="MM/dd/yyyy"
-            value={selectedDate}
-            onChange={handleDateChange}
-            renderInput={(params) => <TextField {...params} />}
-          /> */}
         <LocalizationProvider dateAdapter={AdapterDayjs}>
           <DemoContainer components={['DesktopDateTimePicker']}>
             <DemoItem>
