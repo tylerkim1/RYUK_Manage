@@ -1,12 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { networkrequest } from './Header/XHR';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
-import Button from '@mui/material/Button';
 import userImage from '../assets/user.png';
 import teamImage from '../assets/team.png';
 import assignmentImage from '../assets/assignment.png';
@@ -28,28 +22,8 @@ const MenuItem = ({ to, image, label, isSelected, isMissionCategory, onClick }) 
 
 // 사이드바 컴포넌트
 function Sidebar() {
-  const [selectedTeam, setSelectedTeam] = useState();
   const [teamLists, setTeamLists] = useState();
   if(teamLists === undefined) networkrequest('team/all/', {}, (data) => {setTeamLists(data.data);});
-  const [open, setOpen] = useState(false);
-
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
-
-  const handleMove = ({ to, image, label, isSelected, isMissionCategory, onClick }) => {
-    <Link to={to} onClick={onClick}>
-      <div className={`menu-item ${isSelected ? "selected-tab" : ""}`} id={`${isMissionCategory ? "sidebar-mission-category" : ""}`}>
-        <img src={image} alt={label} />
-        <span>{label}</span>
-      </div>
-    </Link>
-    setOpen(false);
-  };
 
   // 현재 위치 (URL)을 얻습니다.
   const location = useLocation();
@@ -94,28 +68,20 @@ function Sidebar() {
   return (
     <div id="sidebar">
       <div id="title-wrapper">
-        <div id="date">
+        {/* <div id="date">
           <span id="date-text">{startDate.toLocaleDateString('ko-KR', { month: 'long', day: 'numeric' })}</span>
           <DatePicker
             selected={startDate}
             onChange={date => setStartDate(date)}
             customInput={<button>📅</button>}
           />
-        </div>
+        </div> */}
         <div id="user">
           <span>환영합니다, {userName}님.</span>
         </div>
       </div>
       <div id="menu-wrapper">
         <span>메뉴</span>
-        {/* <div className="menu-item">
-          <img src={selectTeamImage} />
-          <select value={selectedTeam} onChange={(e) => setSelectedTeam(e.target.value)}>
-            {teamLists ? teamLists.map(team => (
-              <option key={team.team_id} value={team.name}>{team.name}</option>
-            )) : ''}
-          </select>
-        </div> */}
         <MenuItem to="menu-statistics" image={selectTeamImage} label="통계" isSelected={selectedTab === "menu-statistics"} onClick={() => handleTabClick("menu-statistics")} />
         {/* <MenuItem to="menu-user" image={userImage} label="개인별" isSelected={selectedTab === "menu-user"} onClick={() => {
           handleTabClick("menu-user");

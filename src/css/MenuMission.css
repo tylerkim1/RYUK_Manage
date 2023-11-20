@@ -1,110 +1,122 @@
 /* MenuMission.css */
 
 #menu-mission-container {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    height: 100%;
-  }
-  
-  #menu-mission-header {
-    display: flex;
-    flex: 1;
-    margin-bottom: 3rem;
-  }
-  
-  #menu-mission-body {
-    display: flex;
-    flex: 7;
-    padding-left: 2rem;
-  }
-  
-  #common-mission-list {
-    display: flex;
-    flex-direction: column;
-    gap: 2rem;
-  }
-  
-  #common-mission {
-    display: flex;
-    flex-direction: column;
-    background-color: #FFFFFF;
-    border-radius: 1rem;
-    padding: 1rem;
-  }
-  
-  #common-mission-header {
-    display: flex;
-    flex: 1;
-    margin-bottom: 1rem;
-  }
-  
-  #common-mission-title {
-    display: flex;
-    margin-right: 3rem;
-  }
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+}
 
-  #common-mission-title span {
-    font-size: 1.2rem;
-    font-weight: 800;
-  }
-  
-  #common-mission-achieve-level {
-    display: flex;
-  }
+#menu-mission-header {
+  display: flex;
+  flex: 1;
+  margin-bottom: 3rem;
+}
 
-  #common-mission-personal-name span,
-  #common-mission-achieve-level span {
-    font-size: 1.2rem;
-    font-weight: 700;
-  }
-  
-  #common-mission-body {
-    display: flex;
-    flex: 3;
-  }
-  
-  #common-mission-personal-list {
-    display: flex;
-    overflow-x: auto;
-    white-space: nowrap;
-    gap: 2rem;
-  }
-  
-  #common-mission-personal {
-    display: flex;
-    flex-direction: column;
-    width: 11rem;
-    height: 15rem;
-    background-color: #ADFF0026;
-    border-radius: 1rem;
-    padding: 1rem;
-  }
-  
-  #common-mission-personal-name {
-    display: flex;
-    flex: 1;
-    justify-content: center;
-  }
-  
-  #common-mission-personal-image {
-    display: flex;
-    flex: 2;
-    margin-bottom: 1rem;
-  }
+#menu-mission-body {
+  display: flex;
+  flex: 7;
+  padding-left: 2rem;
+}
 
-  #common-mission-personal-image img {
-    width: 100%;
-    height: 100%;
-  }
-  
-  #common-mission-personal-desc {
-    display: flex;
-    flex: 2;
-    align-items: flex-start;
-  }
+#common-mission-list {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
 
-  #common-mission-personal-desc span {
-    font-size: 0.8rem;
-  }
-  
+#common-mission {
+  display: flex;
+  flex-direction: column;
+  background-color: #FFFFFF;
+  border-radius: 1rem;
+  padding: 1rem;
+}
+
+#common-mission-header {
+  display: flex;
+  flex: 1;
+  margin-bottom: 1rem;
+}
+
+#common-mission-title {
+  display: flex;
+  margin-right: 3rem;
+}
+
+#common-mission-title span {
+  font-size: 1.2rem;
+  font-weight: 800;
+}
+
+#common-mission-achieve-level {
+  display: flex;
+}
+
+#common-mission-personal-name span,
+#common-mission-achieve-level span {
+  font-size: 1.2rem;
+  font-weight: 700;
+}
+
+#common-mission-body {
+  display: flex;
+  flex: 3;
+}
+
+#common-mission-personal-list {
+  display: flex;
+  overflow-x: auto;
+  white-space: nowrap;
+  gap: 2rem;
+}
+
+#common-mission-personal {
+  display: flex;
+  flex-direction: column;
+  width: 11rem;
+  height: 15rem;
+  background-color: #ADFF0026;
+  border-radius: 1rem;
+  padding: 1rem;
+}
+
+#common-mission-personal-name {
+  display: flex;
+  flex: 1;
+  justify-content: center;
+}
+
+#common-mission-personal-image {
+  display: flex;
+  flex: 2;
+  margin-bottom: 1rem;
+}
+
+#common-mission-personal-image img {
+  width: 100%;
+  height: 100%;
+}
+
+#common-mission-personal-desc {
+  display: flex;
+  flex: 2;
+  align-items: flex-start;
+}
+
+#common-mission-personal-desc span {
+  font-size: 0.8rem;
+}
+
+#date {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  margin-bottom: 48px;
+}
+
+#date-text {
+  font-size: 40px;
+  font-weight: 800;
+  margin-right: 10px;
+}
