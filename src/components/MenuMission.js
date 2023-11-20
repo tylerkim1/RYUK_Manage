@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import missionImage from '../assets/sample.png';
-import { Link, useLocation } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import { DemoContainer, DemoItem } from '@mui/x-date-pickers/internals/demo';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
-import DatePicker from 'react-datepicker';
 import DialogTitle from '@mui/material/DialogTitle';
 import Button from '@mui/material/Button';
 import List from '@mui/material/List';
@@ -99,13 +102,20 @@ const MenuMission = (e) => {
             onChange={date => setStartDate(date)}
             customInput={<button>📅</button>}
           /> */}
-          <DesktopDatePicker
+          {/* <DesktopDatePicker
             label="날짜 선택"
             inputFormat="MM/dd/yyyy"
             value={selectedDate}
             onChange={handleDateChange}
             renderInput={(params) => <TextField {...params} />}
-          />
+          /> */}
+        <LocalizationProvider dateAdapter={AdapterDayjs}>
+          <DemoContainer components={['DesktopDateTimePicker']}>
+            <DemoItem>
+              <DesktopDatePicker />
+            </DemoItem>
+          </DemoContainer>
+        </LocalizationProvider>
         </div>
       </div>
       <Dialog open={open} onClose={handleClose}>
