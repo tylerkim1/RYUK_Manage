@@ -38,8 +38,8 @@ function Sidebar() {
   // 초기 탭을 현재 URL에 따라 설정
   let initialTab;
   switch (currentPath) {
-    case '/menu-user':
-      initialTab = 'menu-user';
+    case '/menu-statistics':
+      initialTab = 'menu-statistics';
       break;
     case '/menu-mission':
       initialTab = 'menu-mission';
@@ -47,11 +47,11 @@ function Sidebar() {
     case '/menu-team':
       initialTab = 'menu-team';
       break;
-    case '/menu-person':
-      initialTab = 'menu-person';
+    case '/menu-user':
+      initialTab = 'menu-user';
       break;
     default:
-      initialTab = 'menu-user';
+      initialTab = 'menu-statistics';
   }
   const [selectedTab, setSelectedTab] = useState(initialTab);
   // 탭을 클릭할 때 상태를 변경하는 함수
