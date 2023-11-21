@@ -26,7 +26,6 @@ const BorderedButton = styled(Link)`
         transform: translateY(3px);
     }
 
-
 `;
 
 const LogoutButton = () => (

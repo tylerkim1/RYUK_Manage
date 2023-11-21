@@ -13,7 +13,7 @@ import MenuStatistics from './MenuStatistics';
 function MainPage() {
     return (
         <div id="container">
-            <Header2 />
+            {/* <Header2 /> */}
             <Sidebar />
             <div id="main">
                 <Routes>

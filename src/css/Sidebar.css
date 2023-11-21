@@ -1,33 +1,25 @@
 #sidebar {
   display: flex;
   flex-direction: column;
-  width: 300px;
+  width: 250px;
   background-color: #FFFFFF;
   position: fixed;
   height: calc(100% - 3.5rem);
-  top: 3.5rem;
-  left: 0;
+  margin-top: 20px;
 }
 
-#sidebar-title-wrapper {
+#sidebar-header-wrapper {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  flex: 1;
-  margin-left: 20px;
-}
-
-#date {
-  display: flex;
-  flex: 1;
   align-items: center;
-  margin-bottom: 48px;
+  padding-bottom: 20px;
+  border-bottom: solid 1px #e5e5e5;
 }
 
-#date-text {
-  font-size: 40px;
-  font-weight: 800;
-  margin-right: 10px;
+#sidebar-logo {
+  width: 80%;
+  margin-bottom: 30px;
 }
 
 #sidebar-user {
@@ -37,15 +29,17 @@
 }
 
 #sidebar-user span {
-  font-size: 24px;
+  font-size: 20px;
+  font-weight: 800;
   color: #AAABA7;
 }
 
 #sidebar-menu-wrapper {
   display: flex;
   flex-direction: column;
-  flex: 4;
+  flex-grow: 1;
   margin-left: 20px;
+  padding-top: 20px;
 }
 
 #sidebar-menu-wrapper a {
@@ -53,22 +47,10 @@
   color: inherit;
 }
 
-#sidebar-menu-wrapper span {
-  font-size: 0.75rem;
-  font-style: italic;
-  color: #AAABA7;
-}
-
-.selected-tab {
-  background-color: #A6EB00;
-  color: white;
-}
-
 .menu-item {
   display: flex;
   align-items: center;
-  margin: 10px;
-  padding-left: 10px;
+  margin: 30px 0px 30px 20px;
   border-radius: 10px;
 }
 
@@ -77,12 +59,43 @@
 }
 
 .menu-item img {
-  width: 2rem;
-  height: 2rem;
+  width: 24px;
+  height: 24px;
 }
 
 #sidebar-menu-wrapper .menu-item span {
-  font-size: 1.1rem;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 700;
+  color: inherit;
+  padding-left: 0.6rem;
+}
+
+#sidebar-footer {
+  display: flex;
+  align-self: center;
+}
+
+#logout-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 50px;
+  width: 230px;
+  border: solid 2px #fac7c4;
+  border-radius: 2rem;
+  background-color: #fdf1f0;
+}
+
+#sidebar-footer a {
+  text-decoration: none;
+  color: inherit;
+}
+
+#logout-button span {
+  text-decoration: none;
+  font-size: 16px;
+  font-style: normal;
   font-weight: 700;
   color: inherit;
   padding-left: 0.6rem;
