@@ -6,6 +6,7 @@ import teamImage from '../assets/team.png';
 import assignmentImage from '../assets/assignment.png';
 import personImage from '../assets/person.png';
 import selectTeamImage from '../assets/sidebar-team.png'
+import logoImage from '../assets/Logo.png';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import '../css/Sidebar.css';
@@ -67,20 +68,13 @@ function Sidebar() {
 
   return (
     <div id="sidebar">
-      <div id="title-wrapper">
-        {/* <div id="date">
-          <span id="date-text">{startDate.toLocaleDateString('ko-KR', { month: 'long', day: 'numeric' })}</span>
-          <DatePicker
-            selected={startDate}
-            onChange={date => setStartDate(date)}
-            customInput={<button>📅</button>}
-          />
-        </div> */}
-        <div id="user">
+      <div id="sidebar-title-wrapper">
+        <div id="sidebar-user">
+          <img id="sidebar-logo" src={logoImage} />
           <span>환영합니다, {userName}님.</span>
         </div>
       </div>
-      <div id="menu-wrapper">
+      <div id="sidebar-menu-wrapper">
         <span>메뉴</span>
         <MenuItem to="menu-statistics" image={selectTeamImage} label="통계" isSelected={selectedTab === "menu-statistics"} onClick={() => handleTabClick("menu-statistics")} />
         {/* <MenuItem to="menu-user" image={userImage} label="개인별" isSelected={selectedTab === "menu-user"} onClick={() => {

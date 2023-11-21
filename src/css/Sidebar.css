@@ -9,7 +9,7 @@
   left: 0;
 }
 
-#title-wrapper {
+#sidebar-title-wrapper {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -30,30 +30,30 @@
   margin-right: 10px;
 }
 
-#user {
+#sidebar-user {
   display: flex;
   flex-direction: column;
   flex: 1;
 }
 
-#user span {
+#sidebar-user span {
   font-size: 24px;
   color: #AAABA7;
 }
 
-#menu-wrapper {
+#sidebar-menu-wrapper {
   display: flex;
   flex-direction: column;
   flex: 4;
   margin-left: 20px;
 }
 
-#menu-wrapper a {
+#sidebar-menu-wrapper a {
   text-decoration: none;
   color: inherit;
 }
 
-#menu-wrapper span {
+#sidebar-menu-wrapper span {
   font-size: 0.75rem;
   font-style: italic;
   color: #AAABA7;
@@ -81,7 +81,7 @@
   height: 2rem;
 }
 
-#menu-wrapper .menu-item span {
+#sidebar-menu-wrapper .menu-item span {
   font-size: 1.1rem;
   font-weight: 700;
   color: inherit;
