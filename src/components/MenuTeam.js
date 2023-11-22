@@ -4,7 +4,10 @@ import deleteImage from '../assets/delete.png';
 // import addImage from '../assets/addMember.png';
 import addTeamImage from '../assets/addTeam.png';
 
-import { networkrequest}  from './Header/XHR.js';
+import { TextField, IconButton, InputAdornment, Dialog, DialogTitle, DialogContent, DialogActions, Button } from '@mui/material';
+import SearchIcon from '@mui/icons-material/Search';
+import { networkrequest } from './Header/XHR.js';
+import { Grid } from '@mui/material';
 
 function MenuTeam() {
   const [teams, setTeams] = useState(null);
@@ -18,9 +21,11 @@ function MenuTeam() {
     category: '',
     introduce: '',
   });
+  const [searchTerm, setSearchTerm] = useState('');
+  const [open, setOpen] = useState(false);
 
   useEffect(() => {
-    networkrequest('team/all/', {}, (data)=>setTeams(data.data));
+    networkrequest('team/all/', {}, (data) => setTeams(data.data));
   }, []); // 빈 배열을 전달하여 컴포넌트가 마운트될 때만 실행되도록 함
 
   // 팀 멤버 정보 불러오기
@@ -47,6 +52,24 @@ function MenuTeam() {
     });
   }, [teams]);
 
+  const handleSearch = () => {
+    console.log('검색:', searchTerm);  // 검색 처리 로직
+  };
+
+  const handleKeyDown = (event) => {
+    if (event.key === 'Enter') {
+      handleSearch();
+    }
+  };
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
   // const xhr = new XMLHttpRequest();
 
   // console.log(teams[0].id)
@@ -72,7 +95,7 @@ function MenuTeam() {
     }
 
     await networkrequest('team/add/', req, console.log);
-    await networkrequest('team/all/', {}, (data)=>setTeams(data.data));
+    await networkrequest('team/all/', {}, (data) => setTeams(data.data));
 
     // newTeam 상태 초기화
     setNewTeam({
@@ -88,90 +111,96 @@ function MenuTeam() {
   };
 
   const handleDelete = (masterId, teamId) => {
-    networkrequest('team/delete/', {callerId: masterId, teamId: teamId}, console.log);
+    networkrequest('team/delete/', { callerId: masterId, teamId: teamId }, console.log);
   }
 
   return (
     <div id="menu-team-container">
       <div id="menu-team-header">
-        <span className="header-text">
-          현재 팀별 현황
-        </span>
+        <div id="menu-team-search">
+          <TextField label="검색" variant="outlined" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} onKeyDown={handleKeyDown} InputProps={{
+            endAdornment: (
+              <InputAdornment position="end">
+                <IconButton onClick={handleSearch}>
+                  <SearchIcon />
+                </IconButton>
+              </InputAdornment>
+            ),
+          }}
+          />
+        </div>
+        <div id="menu-team-add-button" onClick={handleClickOpen}>
+          <span>팀 추가</span>
+        </div>
       </div>
       <div id="menu-team-body">
-        <div id="team-list">
-          {/* {console.log(teams)} */}
-          {teams ? (
-            teams.map((team, teamIndex) => (
-              <div key={teamIndex} className="team-block">
-                <div className="team-block-header">
-                  <div className="team-block-header-text">
-                    <span className="team-name">
-                      {team.name}
-                    </span>
-                    <span className="team-period">
-                      기간: {team.start_day} ~ {team.end_day}
-                    </span>
+        <div className="menu-team-list">
+          <Grid container spacing={4}>
+            {teams ? (
+              teams.map((team, teamIndex) => (
+                <Grid item key={teamIndex} xs={4} className="team-block">
+                  <div className="team-block-header">
+                    <div className="team-block-header-text">
+                      <span className="team-name">
+                        {team.name}
+                      </span>
+                      <span className="team-period">
+                        기간: {team.start_day} ~ {team.end_day}
+                      </span>
+                    </div>
+                    <img className="delete-button" src={deleteImage} onClick={() => handleDelete(team.master_id, team.team_id)} />
                   </div>
-                  <img className="delete-button" src={deleteImage} onClick={() => handleDelete(team.master_id, team.team_id)} />
-                </div>
-                <div className="team-block-body">
-                  <div className="team-member-list">
-                    {teamMembers && teamMembers[team.id] ? (
-                      teamMembers[team.id].map((member, memberIndex) => (
-                        <div key={memberIndex} className="team-member">
+                  <div className="team-block-body">
+                    <div className="team-member-list">
+                      {teamMembers && teamMembers[team.id] ? (
+                        teamMembers[team.id].map((member, memberIndex) => (
+                          <div key={memberIndex} className="team-member">
+                            <span className="member-info">
+                              {member.user_name}
+                            </span>
+                          </div>
+                        ))
+                      ) : (
+                        <div>Loading...</div>
+                      )}
+                    </div>
+                  </div>
+                </Grid>
+              ))) : (
+              <div>Loading...</div>
+            )}
+          </Grid>
 
-                          {/* {console.log(member)} */}
-                          <span className="member-info">
-                            {member.user_name}
-                          </span>
-                          {/* <img src={deleteImage} alt="delete" className="delete-button" onClick={() => deleteMember(teamIndex, memberIndex)} /> */}
-                        </div>
-                      ))
-                    ) : (
-                      <div>Loading...</div>
-                    )}
-                  </div>
+          <Dialog open={open} onClose={handleClose}>
+            <DialogTitle>{"팀 추가"}</DialogTitle>
+            <DialogContent>
+              <TextField className="menu-team-add-textfield" label="팀 이름" variant="outlined" fullWidth value={newTeam.name} 
+                onChange={(e) => setNewTeam({ ...newTeam, name: e.target.value })}/>
+              <TextField className="menu-team-add-textfield" label="링크" variant="outlined" fullWidth value={newTeam.link} 
+                onChange={(e) => setNewTeam({ ...newTeam, link: e.target.value })}/>
+              <TextField className="menu-team-add-textfield" label="팀장 ID" variant="outlined" fullWidth value={newTeam.masterId} 
+                onChange={(e) => setNewTeam({ ...newTeam, link: e.target.value })}/>
+              <TextField className="menu-team-add-textfield" label="카테고리" variant="outlined" fullWidth value={newTeam.category} 
+                onChange={(e) => setNewTeam({ ...newTeam, link: e.target.value })}/>
+              <TextField className="menu-team-add-textfield" label="소개글" variant="outlined" fullWidth value={newTeam.introduce} 
+                onChange={(e) => setNewTeam({ ...newTeam, link: e.target.value })}/>
+              <div id="team-add">
+                <div class="team-add-term">
+                  <span>기간</span>
+                  <input type="date" value={newTeam.startDay} onChange={(e) => setNewTeam({ ...newTeam, startDay: e.target.value })} />
+                  <span>~</span>
+                  <input type="date" value={newTeam.endDay} onChange={(e) => setNewTeam({ ...newTeam, endDay: e.target.value })} />
                 </div>
-                {/* <img src={addImage} alt="addMember" className="team-block-add-member-image" onClick={() => addMember(teamIndex)}/> */}
+                <div id="team-add-button" onClick={() => addTeam()}>
+                  <span>팀 만들기</span>
+                  <img src={addTeamImage} alt="addTeam" className="team-add-image" />
+                </div>
               </div>
-            ))) : (
-            <div>Loading...</div>
-          )}
-          <div className="team-block team-add-block">
-            <div id="team-add">
-              <div class="team-add-input">
-                <span>팀 이름</span>
-                <input value={newTeam.name} onChange={(e) => setNewTeam({ ...newTeam, name: e.target.value })} />
-              </div>
-              <div class="team-add-term">
-                <span>기간</span>
-                <input type="date" value={newTeam.startDay} onChange={(e) => setNewTeam({ ...newTeam, startDay: e.target.value })} />
-                <span>~</span>
-                <input type="date" value={newTeam.endDay} onChange={(e) => setNewTeam({ ...newTeam, endDay: e.target.value })} />
-              </div>
-              <div class="team-add-input">
-                <span>링크</span>
-                <input value={newTeam.link} onChange={(e) => setNewTeam({ ...newTeam, link: e.target.value })} />
-              </div>
-              <div class="team-add-input">
-                <span>만든 유저 ID</span>
-                <input value={newTeam.masterId} onChange={(e) => setNewTeam({ ...newTeam, masterId: e.target.value })} />
-              </div>
-              <div class="team-add-input">
-                <span>카테고리</span>
-                <input value={newTeam.category} onChange={(e) => setNewTeam({ ...newTeam, category: e.target.value })} />
-              </div>
-              <div class="team-add-input">
-                <span>소개글</span>
-                <textarea value={newTeam.introduce} onChange={(e) => setNewTeam({ ...newTeam, introduce: e.target.value })} />
-              </div>
-              <div id="team-add-button" onClick={() => addTeam()}>
-                <span>팀 만들기</span>
-                <img src={addTeamImage} alt="addTeam" className="team-add-image" />
-              </div>
-            </div>
-          </div>
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={handleClose}>취소</Button>
+            </DialogActions>
+          </Dialog>
         </div>
       </div>
     </div>

@@ -1,19 +1,32 @@
 /* MainPage styles */
-#container {
+#mainpage-container {
   display: flex;
   flex-grow: 1;
   height: 100vh;
 }
 
-#main {
+#mainpage-main {
   display: flex;
   width: 100%;
   flex-direction: column;
-  background-color: #f6f6f6;
+  background-color: #ffffff;
   margin-left: 250px;
 }
 
-#footer {
+#mainpage-main-header {
+  width: 100%;
+  height: 10%;
+  padding-left: 30px;
+  padding-top: 20px;
+}
+
+#mainpage-main-header span {
+  font-size: 40px;
+  font-weight: 800;
+  color: #F3736D;
+}
+
+#mainpage-footer {
   display: flex;
   height: 1rem;
 }

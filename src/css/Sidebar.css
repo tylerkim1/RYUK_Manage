@@ -5,7 +5,8 @@
   background-color: #FFFFFF;
   position: fixed;
   height: 100vh;
-  margin-top: 20px;
+  padding-top: 20px;
+  border-right: solid 1px #e5e5e5;
 }
 
 #sidebar-header-wrapper {
@@ -19,7 +20,8 @@
 
 #sidebar-logo {
   width: 80%;
-  margin-bottom: 30px;
+  padding-top: 20px;
+  margin-bottom: 50px;
 }
 
 #sidebar-user {
@@ -52,10 +54,6 @@
   align-items: center;
   margin: 20px 0px 20px 20px;
   border-radius: 10px;
-}
-
-#sidebar-mission-category {
-  padding-left: 40px;
 }
 
 .menu-item img {
