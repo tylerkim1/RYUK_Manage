@@ -50,7 +50,7 @@
 .menu-item {
   display: flex;
   align-items: center;
-  margin: 30px 0px 30px 20px;
+  margin: 20px 0px 20px 20px;
   border-radius: 10px;
 }
 
@@ -74,7 +74,7 @@
 #sidebar-footer {
   display: flex;
   align-self: center;
-  margin-bottom: 30px;
+  margin-bottom: 40px;
 }
 
 #logout-button {
