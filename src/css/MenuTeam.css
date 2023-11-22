@@ -4,19 +4,24 @@
 }
 
 #menu-team-header {
-    font-size: 2rem;
-    margin-bottom: 20px;
+    margin-bottom: 30px;
 }
 
-.header-text {
-    font-weight: bold;
+#menu-team-search {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
 }
 
-#menu-team-body {
-    width: 100%;
+#menu-team-search span {
+    font-size: 20px;
 }
 
-#team-list {
+.menu-team-add-textfield {
+    margin-top: 10px !important;
+}
+
+.menu-team-list {
     display: flex;
     overflow-x: auto;
     flex-wrap: nowrap; /* 이 부분이 줄바꿈을 방지합니다 */
