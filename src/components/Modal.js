@@ -5,6 +5,9 @@ const Modal = ({selectedData, handleCancel, handleEditSubmit})=> {
     const [edited, setEdited] = useState(selectedData);
     const [changedFields, setChangedFields] = useState([]);
     const [name, setName] = useState([]);
+    const [teamLists, setTeamLists] = useState();
+
+    if(teamLists === undefined) networkrequest('team/all/', {}, (data) => {setTeamLists(data.data);});
 
     const onCancel = () => {
         handleCancel();
@@ -63,8 +66,22 @@ const Modal = ({selectedData, handleCancel, handleEditSubmit})=> {
                         <div>비밀번호: <input className='border-2 border-gray-100' type='password' name='password' 
                         value={edited.password} onChange={onEditChange}/>
                         </div>
-                        <div>팀: <input className='border-2 border-gray-100' type='text' name='team_id' 
-                        value={edited.team_id} onChange={onEditChange}/>
+                        <div>팀:
+                            
+                            <select
+                            className='border-2 border-gray-100'
+                            name='team_id'
+                            value={edited.team_id}
+                            onChange={onEditChange}
+                            >
+                            {teamLists && teamLists.map((team) => (
+                                <option key={team.id} value={team.id}>
+                                {team.name}
+                                </option>
+                            ))}
+                            </select> 
+                            {/* <input className='border-2 border-gray-100' type='text' name='team_id' 
+                        value={edited.team_id} onChange={onEditChange}/> */}
                         </div>
                     </div>
                     <div className = "flex justify-end items-center w-100 border-t p-3">
