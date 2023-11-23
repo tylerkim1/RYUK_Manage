@@ -4,6 +4,10 @@
 }
 
 #menu-team-header {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: space-between;
     margin-bottom: 30px;
 }
 
@@ -17,23 +21,40 @@
     font-size: 20px;
 }
 
-.menu-team-add-textfield {
-    margin-top: 10px !important;
+.menu-team-add-input {
+    margin-top: 15px !important;
+}
+
+.menu-team-add-button {
+    display: flex;
+    flex-direction: row;
+    width: 180px;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #F3736D;
+    margin-right: 40px;
+    border-radius: 2rem;
+    padding: 0px 30px 0px 30px;
+    cursor: pointer;
+}
+
+.menu-team-add-button img {
+    height: 40px;
+}
+
+.menu-team-add-button span {
+    font-size: 20px;
+    font-weight: 800;
+    color: #FFFFFF;
 }
 
 .menu-team-list {
     display: flex;
-    overflow-x: auto;
-    flex-wrap: nowrap; /* 이 부분이 줄바꿈을 방지합니다 */
-    gap: 2rem;
 }
 
 .team-block {
     display: flex;
-    flex: 0 0 auto; /* 이 부분이 너비를 고정합니다 */
-    width: 350px;
     flex-direction: column;
-    margin: 2rem;
     padding: 1rem;
     border-radius: 1rem;
     background-color: #FFFFFF;
@@ -93,81 +114,26 @@
     height: 35px;
 }
 
-.team-block-add-member-image {
-    margin-left: auto;
-    cursor: pointer;
-    width: 40px;
+#menu-team-add-dialog .menu-team-add-button {
+    justify-content: center;
+    width: 140px;
+    height: 40px;
+    margin-right: 0px;
+    border-radius: 1rem;
+}
+
+#menu-team-add-dialog .menu-team-add-button img {
     height: 30px;
 }
 
-.add-button {
-    background-color: #007bff;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    cursor: pointer;
+#menu-team-add-dialog .menu-team-add-button span {
+    font-size: 16px;
 }
 
-.team-add-block {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-}
-
-#team-add {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    gap: 1rem;
-}
-
-.team-add-input,
-.team-add-term {
+#menu-team-add-datepicker-wrapper {
     display: flex;
     flex-direction: row;
-    align-items: center;
     justify-content: space-between;
-}
-
-.team-add-input input,
-.team-add-term input {
-    width: 80%;
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    font-size: 1rem;
-}
-
-.team-add.input textarea {
-    width: 80%;
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    font-size: 1rem;
-}
-
-#team-add-term span {
-    white-space: nowrap;
-    margin-right: 6px;
-  }
-
-#team-add-term input[type="date"] {
-    cursor: pointer;
-}
-
-#team-add-button {
-    background-color: #A6EB00;
-    color: white;
-    text-align: center;
-    border-radius: 1rem;
-    padding: 10px;
-    margin-top: 10px;
-    cursor: pointer;
-}
-
-.team-add-image {
-    margin-left: 10px;
-    cursor: pointer;
-    width: 40px;
-    height: 40px;
+    align-items: center;
+    margin-top: 7px;
 }
