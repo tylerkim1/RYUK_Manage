@@ -4,17 +4,16 @@ import deleteImage from '../assets/delete.png';
 // import addImage from '../assets/addMember.png';
 import addTeamImage from '../assets/addTeam.png';
 import addTeamWhiteImage from '../assets/addTeam_white.png'
-import { TextField, IconButton, InputAdornment, Dialog, DialogTitle, DialogContent, DialogActions, Button } from '@mui/material';
+import { TextField, IconButton, InputAdornment, Dialog, DialogTitle, DialogContent, DialogActions, Button, Paper, styled, Typography } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import { networkrequest } from './Header/XHR.js';
 import { Grid } from '@mui/material';
-import { DatePicker, DesktopDatePicker, LocalizationProvider } from '@mui/x-date-pickers';
+import { DesktopDatePicker, LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DemoContainer, DemoItem } from '@mui/x-date-pickers/internals/demo/DemoContainer.js';
 
 function MenuTeam() {
   const [teams, setTeams] = useState(null);
-  const [teamMembers, setTeamMembers] = useState({});
   const [newTeam, setNewTeam] = useState({
     name: '',
     startDay: null,
@@ -25,35 +24,13 @@ function MenuTeam() {
     introduce: '',
   });
   const [searchTerm, setSearchTerm] = useState('');
-  const [open, setOpen] = useState(false);
+  const [openTeamAdd, setOpenTeamAdd] = useState(false);
+  const [openTeam, setOpenTeam] = useState(false);
+  const [selectedTeam, setSelectedTeam] = useState(null);
 
   useEffect(() => {
     networkrequest('team/all/', {}, (data) => setTeams(data.data));
   }, []); // 빈 배열을 전달하여 컴포넌트가 마운트될 때만 실행되도록 함
-
-  // 팀 멤버 정보 불러오기
-  useEffect(() => {
-    if (!teams || !teams[0] || typeof teams[0].id === 'undefined') {
-      return; // 아직 데이터를 불러오지 못했다면 종료
-    }
-
-    teams.forEach(team => {
-      const xhr = new XMLHttpRequest();
-      xhr.open('GET', `http://13.125.10.254:5000/user/get/?teamId=${team.id}`, true);
-      xhr.onreadystatechange = function () {
-        if (xhr.readyState === 4 && xhr.status === 200) {
-          const fetchedData = JSON.parse(xhr.responseText);
-          setTeamMembers(prev => ({
-            ...prev,
-            [team.id]: fetchedData.data,
-          }));
-          console.log(fetchedData.data)
-        }
-      };
-      xhr.withCredentials = true;
-      xhr.send();
-    });
-  }, [teams]);
 
   const initTeam = () => {
     setNewTeam({
@@ -77,13 +54,22 @@ function MenuTeam() {
     }
   };
 
-  const handleClickOpen = () => {
-    setOpen(true);
+  const handleClickOpenTeamAdd = () => {
+    setOpenTeamAdd(true);
   };
 
-  const handleClose = () => {
-    setOpen(false);
+  const handleCloseTeamAdd = () => {
+    setOpenTeamAdd(false);
     initTeam();
+  };
+
+  const handleClickOpenTeam = (team) => {
+    setSelectedTeam(team)
+    setOpenTeam(true);
+  };
+
+  const handleCloseTeam = () => {
+    setOpenTeam(false);
   };
 
   const addTeam = async () => {
@@ -101,7 +87,7 @@ function MenuTeam() {
   const handleDelete = (masterId, teamId) => {
     networkrequest('team/delete/', { callerId: masterId, teamId: teamId }, console.log);
   }
-  
+
   const handleStartDayChange = (newValue) => {
     setNewTeam({ ...newTeam, startDay: newValue });
   };
@@ -109,6 +95,14 @@ function MenuTeam() {
   const handleEndDayChange = (newValue) => {
     setNewTeam({ ...newTeam, endDay: newValue });
   };
+
+  const Item = styled(Paper)(({ theme }) => ({
+    backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
+    ...theme.typography.body2,
+    padding: theme.spacing(1),
+    // textAlign: 'center',
+    color: theme.palette.text.secondary,
+  }));
 
   return (
     <div id="menu-team-container">
@@ -125,72 +119,68 @@ function MenuTeam() {
           }}
           />
         </div>
-        <div className="menu-team-add-button" onClick={handleClickOpen}>
+        <div className="menu-team-add-button" onClick={handleClickOpenTeamAdd}>
           <img src={addTeamWhiteImage} />
           <span>팀 추가</span>
         </div>
       </div>
       <div id="menu-team-body">
         <div className="menu-team-list">
-          <Grid container spacing={1}>
+          <Grid container spacing={3}>
             {teams ? (
               teams.map((team, teamIndex) => (
-                <Grid item key={teamIndex} xs={3} className="team-block">
-                  <div className="team-block-header">
-                    <div className="team-block-header-text">
-                      <span className="team-name">
-                        {team.name}
-                      </span>
-                      <span className="team-period">
-                        기간: {team.start_day} ~ {team.end_day}
+                <Grid item key={teamIndex} xs={12} sm={12} md={6} lg={4} xl={3} onClick={() => handleClickOpenTeam(team)}>
+                  <Item>
+                    <div className="menu-team-block">
+                      <div className="menu-team-block-header">
+                        <span className="menu-team-block-title">
+                          {team.name}
+                        </span>
+                        <span>0명</span>
+                      </div>
+                      <span className="menu-team-block-desc">
+                        {team.introduce}
                       </span>
                     </div>
-                    <img className="delete-button" src={deleteImage} onClick={() => handleDelete(team.master_id, team.team_id)} />
-                  </div>
-                  {/* <div className="team-block-body">
-                    <div className="team-member-list">
-                      {teamMembers && teamMembers[team.id] ? (
-                        teamMembers[team.id].map((member, memberIndex) => (
-                          <div key={memberIndex} className="team-member">
-                            <span className="member-info">
-                              {member.user_name}
-                            </span>
-                          </div>
-                        ))
-                      ) : (
-                        <div>Loading...</div>
-                      )}
-                    </div>
-                  </div> */}
+                    {/* <img className="delete-button" src={deleteImage} onClick={() => handleDelete(team.master_id, team.team_id)} /> */}
+                  </Item>
                 </Grid>
               ))) : (
-              <div>Loading...</div>
+              <Grid item>Loading...</Grid>
             )}
           </Grid>
 
-          <Dialog id="menu-team-add-dialog" open={open} onClose={handleClose}>
+
+          <Dialog onClose={handleCloseTeam} aria-labelledby="team-dialog-title" open={openTeam}>
+            <DialogTitle id="team-dialog-title">{selectedTeam?.name}</DialogTitle>
+            <DialogContent>
+              <Typography variant="h6">팀 이름: {selectedTeam?.name}</Typography>
+              <Typography>기간: {selectedTeam?.start_day} - {selectedTeam?.end_day}</Typography>
+            </DialogContent>
+          </Dialog>
+          <Dialog id="menu-team-add-dialog" open={openTeamAdd} onClose={handleCloseTeamAdd}>
             <DialogTitle>{"팀 추가"}</DialogTitle>
             <DialogContent>
-              <TextField className="menu-team-add-input" label="팀 이름" variant="outlined" fullWidth value={newTeam.name} 
-                onChange={(e) => setNewTeam({ ...newTeam, name: e.target.value })}/>
-              <TextField className="menu-team-add-input" label="링크" variant="outlined" fullWidth value={newTeam.link} 
-                onChange={(e) => setNewTeam({ ...newTeam, link: e.target.value })}/>
-              <TextField className="menu-team-add-input" label="팀장 ID" variant="outlined" fullWidth value={newTeam.masterId} 
-                onChange={(e) => setNewTeam({ ...newTeam, masterId: e.target.value })}/>
-              <TextField className="menu-team-add-input" label="카테고리" variant="outlined" fullWidth value={newTeam.category} 
-                onChange={(e) => setNewTeam({ ...newTeam, category: e.target.value })}/>
-              <TextField className="menu-team-add-input" label="소개글" variant="outlined" fullWidth value={newTeam.introduce} 
-                onChange={(e) => setNewTeam({ ...newTeam, introduce: e.target.value })}/>
-                        
+              <TextField className="menu-team-add-input" label="팀 이름" variant="outlined" fullWidth value={newTeam.name}
+                onChange={(e) => setNewTeam({ ...newTeam, name: e.target.value })} />
+              <TextField className="menu-team-add-input" label="링크" variant="outlined" fullWidth value={newTeam.link}
+                onChange={(e) => setNewTeam({ ...newTeam, link: e.target.value })} />
+              <TextField className="menu-team-add-input" label="팀장 ID" variant="outlined" fullWidth value={newTeam.masterId}
+                onChange={(e) => setNewTeam({ ...newTeam, masterId: e.target.value })} />
+              <TextField className="menu-team-add-input" label="카테고리" variant="outlined" fullWidth value={newTeam.category}
+                onChange={(e) => setNewTeam({ ...newTeam, category: e.target.value })} />
+              <TextField className="menu-team-add-input" label="소개글" variant="outlined" fullWidth value={newTeam.introduce}
+                onChange={(e) => setNewTeam({ ...newTeam, introduce: e.target.value })} />
+
               <div id="menu-team-add-datepicker-wrapper">
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                   <DemoContainer components={['DesktopDateTimePicker']}>
                     <DemoItem >
-                      <DesktopDatePicker 
+                      <DesktopDatePicker
                         label="시작 날짜"
                         value={newTeam.startDay}
                         onChange={handleStartDayChange}
-                        renderInput={(params) => <TextField {...params} error={false}/>}/>
+                        renderInput={(params) => <TextField {...params} error={false} />} />
                     </DemoItem>
                   </DemoContainer>
                 </LocalizationProvider>
@@ -198,21 +188,21 @@ function MenuTeam() {
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                   <DemoContainer components={['DesktopDateTimePicker']}>
                     <DemoItem >
-                      <DesktopDatePicker 
+                      <DesktopDatePicker
                         label="종료 날짜"
                         value={newTeam.endDay}
                         onChange={handleEndDayChange}
-                        renderInput={(params) => <TextField {...params} error={false}/>}/>
+                        renderInput={(params) => <TextField {...params} error={false} />} />
                     </DemoItem>
                   </DemoContainer>
                 </LocalizationProvider>
               </div>
             </DialogContent>
             <DialogActions>
-              <div className="menu-team-add-button" onClick={addTeam}>
+              <div className="menu-team-add-button" onClick={() => { addTeam(); handleCloseTeamAdd() }}>
                 <span>팀 만들기</span>
               </div>
-              <Button onClick={handleClose}>취소</Button>
+              <Button onClick={handleCloseTeamAdd}>취소</Button>
             </DialogActions>
           </Dialog>
         </div>
