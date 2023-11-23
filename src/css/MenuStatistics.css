@@ -1,0 +1,41 @@
+#menu-stat-root {
+    width: 100%;
+    height: 100%;
+    background-color: lightblue;
+}
+
+#ms-upper {
+    height: 15%;
+
+    display: block;
+    background-color: lightgray;
+}
+#ms-lower {
+    height: 85%;
+    background-color: lightcoral;
+}
+
+#ms-datebar {
+    height: 70%;
+    padding-left: 10%;
+    padding-right: 10%;
+    width: 34%;
+}
+#ms-optionbar {
+    height: 25%;
+}
+
+.graphbar-bg{
+    width: 100%;
+    height: 30px;
+
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+
+    border-bottom: solid 1px;
+}
+.graphbar-item{
+    height: 80%;
+    background-color: greenyellow;
+}
