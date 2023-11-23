@@ -25,37 +25,23 @@ import { withStyles, TableRow, TableCell } from "@mui/material";
 //     },
 //   }))(TableRow);
 
-const Td = ({item,handleRemove, handleEdit}) => {
+const Td = ({key,item,handleRemove, handleEdit}) => {
+    // console.log('td',item);
     const onRemove = () => {
-        handleRemove(item.id)
+        handleRemove(item.user_id);
     }
     const onEdit=() => {
       handleEdit(item);
     }
-    if(item.is_manager ===false){
+    if(item.is_manager ===0){
       return ( 
         <>
-        {/* <TableBody> */}
-            {/* <StyledTableRow key={item.id}>
-            <StyledTableCell align="left">{item.id}</StyledTableCell>
-            <StyledTableCell align="left">{item.user_name}</StyledTableCell>
-            <StyledTableCell align="left">{item.user_id}</StyledTableCell>
-            <StyledTableCell align="left">{item.email}</StyledTableCell>
-            <StyledTableCell align="left">  </StyledTableCell>
-            <StyledTableCell align="left">{item.team_id}</StyledTableCell>
-            <td onClick={onEdit} className='text-center text-black-400 cursor-pointer show-modal'>
-                <FontAwesomeIcon icon={faPenToSquare} />
-            </td>
-            <td onClick={onRemove} className='text-center text-black-400 cursor-pointer'>
-                <FontAwesomeIcon icon={faTrashCan} />
-            </td>    
-            </StyledTableRow> */}
-            <TableRow key={item.id}>
-            <TableCell align="left">{item.id}</TableCell>
-            <TableCell align="left">{item.user_name}</TableCell>
+            <TableRow key={item.user_id}>
             <TableCell align="left">{item.user_id}</TableCell>
+            <TableCell align="left">{item.user_name}</TableCell>
+            <TableCell align="left">{item.login_id}</TableCell>
             <TableCell align="left">{item.email}</TableCell>
-            <TableCell align="left">  </TableCell>
+            {/* <TableCell align="left">  </TableCell> */}
             <TableCell align="left">{item.team_id}</TableCell>
             <td onClick={onEdit} className='text-center text-black-400 cursor-pointer show-modal'>
                 <FontAwesomeIcon icon={faPenToSquare} />
@@ -71,26 +57,13 @@ const Td = ({item,handleRemove, handleEdit}) => {
     else {
       return ( 
         <>
-        {/* <TableBody> */}
-            {/* <StyledTableRow key={item.id}>
-            <StyledTableCell align="left">{item.id}</StyledTableCell>
-            <StyledTableCell align="left">{item.user_name}</StyledTableCell>
-            <StyledTableCell align="left">{item.user_id}</StyledTableCell>
-            <StyledTableCell align="left">{item.email}</StyledTableCell>
-            <StyledTableCell align="left">  </StyledTableCell>
-            <td onClick={onEdit} className='text-center text-black-400 cursor-pointer show-modal'>
-                <FontAwesomeIcon icon={faPenToSquare} />
-            </td>
-            <td onClick={onRemove} className='text-center text-black-400 cursor-pointer'>
-                <FontAwesomeIcon icon={faTrashCan} />
-            </td>    
-            </StyledTableRow> */}
-            <TableRow key={item.id}>
-            <TableCell align="left">{item.id}</TableCell>
-            <TableCell align="left">{item.user_name}</TableCell>
+
+            <TableRow key={item.user_id}>
             <TableCell align="left">{item.user_id}</TableCell>
+            <TableCell align="left">{item.user_name}</TableCell>
+            <TableCell align="left">{item.login_id}</TableCell>
             <TableCell align="left">{item.email}</TableCell>
-            <TableCell align="left">  </TableCell>
+            {/* <TableCell align="left">  </TableCell> */}
             <td onClick={onEdit} className='text-center text-black-400 cursor-pointer show-modal'>
                 <FontAwesomeIcon icon={faPenToSquare} />
             </td>

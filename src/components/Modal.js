@@ -1,7 +1,10 @@
 import React, {useState} from 'react';
+import { networkrequest}  from './Header/XHR.js';
 
 const Modal = ({selectedData, handleCancel, handleEditSubmit})=> {
     const [edited, setEdited] = useState(selectedData);
+    const [changedFields, setChangedFields] = useState([]);
+    const [name, setName] = useState([]);
 
     const onCancel = () => {
         handleCancel();
@@ -11,11 +14,27 @@ const Modal = ({selectedData, handleCancel, handleEditSubmit})=> {
         setEdited({
             ...edited,
             [e.target.name]: e.target.value
-        })
+        });
+
+        if (!name.includes(e.target.name)) {
+            setName((prevNames) => [...prevNames, e.target.name]);
+          }
     }
     
     const onSubmitEdit = (e) => {
         e.preventDefault();
+                
+        // const n = name[i];
+        var res = {
+            userId : edited.user_id,
+            password: edited.password,
+            user_name : edited.user_name,
+            nickname: edited.nickname,
+            email : edited.email
+        }
+        networkrequest('user/changeInfo/', res, console.log);
+        console.log('end');
+
         handleEditSubmit(edited);
     }
 
@@ -28,21 +47,21 @@ const Modal = ({selectedData, handleCancel, handleEditSubmit})=> {
                 </div>
                 <form onSubmit ={onSubmitEdit}>
                     <div class='p-3'>
-                        <div>num : {edited.id}</div>
+                        <div># : {edited.user_id}</div>
                         <div>이름: <input className='border-2 border-gray-100' type='text' name='user_name' 
                         value={edited.user_name} onChange={onEditChange}/>
                         </div>
                         <div>닉네임: <input className='border-2 border-gray-100' type='text' name='nickname' 
                         value={edited.nickname} onChange={onEditChange}/>
                         </div>
-                        <div>ID: <input className='border-2 border-gray-100' type='text' name='user_id' 
-                        value={edited.user_id} onChange={onEditChange}/>
+                        <div>ID: <input className='border-2 border-gray-100' type='text' name='login_id' 
+                        value={edited.login_id} onChange={onEditChange}/>
                         </div>
                         <div>이메일: <input className='border-2 border-gray-100' type='email' name='email' 
                         value={edited.email} onChange={onEditChange}/>
                         </div>
                         <div>비밀번호: <input className='border-2 border-gray-100' type='password' name='password' 
-                        value={edited.passwor} onChange={onEditChange}/>
+                        value={edited.password} onChange={onEditChange}/>
                         </div>
                         <div>팀: <input className='border-2 border-gray-100' type='text' name='team_id' 
                         value={edited.team_id} onChange={onEditChange}/>
