@@ -50,68 +50,37 @@
 
 .menu-team-list {
     display: flex;
+    margin-top: 50px;
+    margin-left: 20px;
 }
 
-.team-block {
+.menu-team-block {
     display: flex;
     flex-direction: column;
-    padding: 1rem;
-    border-radius: 1rem;
-    background-color: #FFFFFF;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 10px;
 }
 
-.team-block-header {
+.menu-team-block-header {
     display: flex;
     flex-direction: row;
-    margin-bottom: 10px;
+    justify-content: space-between;
 }
 
-.team-block-header-text {
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 10px;
-}
-
-.team-name {
-    font-size: 1.2rem;
+.menu-team-block-title {
+    font-size: 24px;
     font-weight: bold;
-}
-
-.team-period {
-    font-size: 1rem;
-    color: gray;
-}
-
-.team-block-body {
-    display: flex;
-    width: 100%;
     margin-bottom: 10px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
-.team-member-list {
-    display: flex;
-    flex-direction: column;
-}
-
-.team-member {
-    display: flex;
-    align-items: center;
-    padding: 10px;
-    background-color: #ADFF0026;
-    border-radius: 1rem;
-    margin: 5px 0;
-}
-
-.member-info {
-    font-size: 1rem;
-}
-
-.delete-button {
-    margin-left: auto;
-    cursor: pointer;
-    width: 28px;
-    height: 35px;
+.menu-team-block-desc {
+    font-size: 16px;
+    color: gray;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 #menu-team-add-dialog .menu-team-add-button {
