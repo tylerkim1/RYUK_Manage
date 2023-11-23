@@ -1,18 +1,23 @@
 import React from 'react';
-import { Dialog, DialogTitle, DialogContent, TextField, DialogActions, Button } from '@mui/material';
+import { TextField, Dialog, DialogTitle, DialogContent, DialogActions, Button,FormControl, FormLabel, RadioGroup, FormControlLabel, Radio } from '@mui/material';
+import { DesktopDatePicker, LocalizationProvider } from '@mui/x-date-pickers';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { DemoContainer, DemoItem } from '@mui/x-date-pickers/internals/demo/DemoContainer.js';
 
 const TeamAddDialog = ({ open, handleClose, newTeam, setNewTeam, addTeam }) => {
+  const categories = ['매일하력', '시도해력', '마음봄력', '유유자력', '레벨업력'];
   // Dialog 내부의 form elements와 로직은 여기에 포함됩니다.
-  const [openTeamAdd, setOpenTeamAdd] = useState(false);
-  const handleClickOpenTeamAdd = () => {
-    setOpenTeamAdd(true);
-  };
+  // const [openTeamAdd, setOpenTeamAdd] = useState(false);
 
-  const handleCloseTeamAdd = () => {
-    setOpenTeamAdd(false);
-    initTeam();
-  };
-  
+  // const handleClickOpenTeamAdd = () => {
+  //   setOpenTeamAdd(true);
+  // };
+
+  // const handleCloseTeamAdd = () => {
+  //   setOpenTeamAdd(false);
+  //   initTeam();
+  // };
+
   const handleStartDayChange = (newValue) => {
     setNewTeam({ ...newTeam, startDay: newValue });
   };
@@ -22,7 +27,7 @@ const TeamAddDialog = ({ open, handleClose, newTeam, setNewTeam, addTeam }) => {
   };
 
   return (
-    <Dialog id="menu-team-add-dialog" open={openTeamAdd} onClose={handleCloseTeamAdd}>
+    <Dialog id="menu-team-add-dialog" open={open} onClose={handleClose}>
             <DialogTitle>{"팀 추가"}</DialogTitle>
             <DialogContent>
               <TextField className="menu-team-add-input" label="팀 이름" variant="outlined" fullWidth value={newTeam.name}
@@ -84,10 +89,10 @@ const TeamAddDialog = ({ open, handleClose, newTeam, setNewTeam, addTeam }) => {
               </div>
             </DialogContent>
             <DialogActions>
-              <div className="menu-team-add-button" onClick={() => { addTeam(); handleCloseTeamAdd() }}>
+              <div className="menu-team-add-button" onClick={() => { addTeam(); handleClose(); }}>
                 <span>팀 만들기</span>
               </div>
-              <Button onClick={handleCloseTeamAdd}>취소</Button>
+              <Button onClick={handleClose}>취소</Button>
             </DialogActions>
           </Dialog>
   );

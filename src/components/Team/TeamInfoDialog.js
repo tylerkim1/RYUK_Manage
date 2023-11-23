@@ -1,11 +1,11 @@
 import React from 'react';
-import { Dialog, DialogTitle, DialogContent, TextField, DialogActions, Button } from '@mui/material';
+import { Dialog, DialogTitle, DialogContent, DialogActions, Button } from '@mui/material';
 
 const TeamInfoDialog = ({ open, handleClose, selectedTeam }) => {
   // Dialog 내부의 form elements와 로직은 여기에 포함됩니다.
 
   return (
-    <Dialog onClose={handleCloseTeam} aria-labelledby="team-dialog-title" open={openTeam}>
+    <Dialog onClose={handleClose} aria-labelledby="team-dialog-title" open={open}>
       <DialogTitle id="menu-team-member-dialog">팀 멤버</DialogTitle>
       <DialogContent>
         <div id="menu-team-member-dialog-body">
@@ -14,6 +14,9 @@ const TeamInfoDialog = ({ open, handleClose, selectedTeam }) => {
           <span>소개: {selectedTeam?.introduce}</span>
         </div>
       </DialogContent>
+      <DialogActions>
+        <Button onClick={handleClose}>취소</Button>
+      </DialogActions>
     </Dialog>
   );
 };

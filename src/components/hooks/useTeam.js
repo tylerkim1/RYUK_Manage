@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { networkrequest } from '../path/to/Header/XHR';
+import { networkrequest } from '../components/Header/XHR';
 
 const useTeam = () => {
   const [teams, setTeams] = useState([]);
@@ -45,7 +45,7 @@ const useTeam = () => {
     networkrequest('team/delete/', { callerId: masterId, teamId: teamId }, console.log);
   };
 
-  return { teams, initTeam, addTeam, deleteTeam };
+  return { teams, newTeam, setNewTeam, initTeam, addTeam, deleteTeam };
 };
 
 export default useTeam;

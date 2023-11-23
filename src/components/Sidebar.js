@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { networkrequest } from './Header/XHR';
 import teamImage from '../assets/team.png';
@@ -26,44 +26,41 @@ const MenuItem = ({ to, image, selectedImage, label, isSelected, onClick }) => (
 // 사이드바 컴포넌트
 function Sidebar() {
   const [teamLists, setTeamLists] = useState();
+  const [selectedTab, setSelectedTab] = useState(null);
+  const location = useLocation();
+  const userName = JSON.parse(localStorage.getItem('user_login')).user_name;
   if(teamLists === undefined) networkrequest('team/all/', {}, (data) => {setTeamLists(data.data);});
 
-  // 현재 위치 (URL)을 얻습니다.
-  const location = useLocation();
-  let currentPath = location.pathname;
-  // '/mainpage'로 시작하는 경우 해당 부분을 제거
-  if (currentPath.startsWith('/mainpage')) {
-    currentPath = currentPath.substring('/mainpage'.length);
-  }
-  // 초기 탭을 현재 URL에 따라 설정
-  let initialTab;
-  switch (currentPath) {
-    case '/menu-statistics':
-      initialTab = 'menu-statistics';
-      break;
-    case '/menu-mission':
-      initialTab = 'menu-mission';
-      break;
-    case '/menu-team':
-      initialTab = 'menu-team';
-      break;
-    case '/menu-user':
-      initialTab = 'menu-user';
-      break;
-    default:
-      initialTab = 'menu-statistics';
-  }
-  const [selectedTab, setSelectedTab] = useState(initialTab);
+  useEffect(() => {
+    // 네트워크 요청은 컴포넌트가 마운트될 때 한 번만 실행됩니다.
+    networkrequest('team/all/', {}, (data) => {
+      setTeamLists(data.data);
+    });
+
+    // 현재 경로를 기반으로 초기 탭을 설정합니다.
+    let currentPath = location.pathname.replace('/mainpage', '');
+    switch (currentPath) {
+      case '/menu-statistics':
+        setSelectedTab('menu-statistics');
+        break;
+      case '/menu-mission':
+        setSelectedTab('menu-mission');
+        break;
+      case '/menu-team':
+        setSelectedTab('menu-team');
+        break;
+      case '/menu-user':
+        setSelectedTab('menu-user');
+        break;
+      default:
+        setSelectedTab('menu-statistics');
+    }
+  }, [location.pathname]); // location.pathname가 변경될 때만 이 효과를 실행합니다.
+  
   // 탭을 클릭할 때 상태를 변경하는 함수
   const handleTabClick = (tabName) => {
     setSelectedTab(tabName);
   };
-
-  // 로컬 스토리지에서 사용자 정보를 가져옵니다.
-  const userLoginString = localStorage.getItem('user_login');
-  console.log(userLoginString);
-  const userLoginArray = JSON.parse(userLoginString);
-  const userName = userLoginArray.user_name;
 
   return (
     <div id="sidebar">
