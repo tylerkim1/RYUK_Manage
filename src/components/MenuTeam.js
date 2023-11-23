@@ -4,7 +4,7 @@ import deleteImage from '../assets/delete.png';
 // import addImage from '../assets/addMember.png';
 import addTeamImage from '../assets/addTeam.png';
 import addTeamWhiteImage from '../assets/addTeam_white.png'
-import { TextField, IconButton, InputAdornment, Dialog, DialogTitle, DialogContent, DialogActions, Button, Paper, styled, Typography } from '@mui/material';
+import { TextField, IconButton, InputAdornment, Dialog, DialogTitle, DialogContent, DialogActions, Button, Paper, styled, Typography, FormControl, InputLabel, Select, FormLabel, RadioGroup, FormControlLabel, Radio } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import { networkrequest } from './Header/XHR.js';
 import { Grid } from '@mui/material';
@@ -27,6 +27,7 @@ function MenuTeam() {
   const [openTeamAdd, setOpenTeamAdd] = useState(false);
   const [openTeam, setOpenTeam] = useState(false);
   const [selectedTeam, setSelectedTeam] = useState(null);
+  const categories = ['매일하력', '시도해력', '마음봄력', '유유자력', '레벨업력'];
 
   useEffect(() => {
     networkrequest('team/all/', {}, (data) => setTeams(data.data));
@@ -152,10 +153,13 @@ function MenuTeam() {
 
 
           <Dialog onClose={handleCloseTeam} aria-labelledby="team-dialog-title" open={openTeam}>
-            <DialogTitle id="team-dialog-title">{selectedTeam?.name}</DialogTitle>
+            <DialogTitle id="menu-team-member-dialog">팀 멤버</DialogTitle>
             <DialogContent>
-              <Typography variant="h6">팀 이름: {selectedTeam?.name}</Typography>
-              <Typography>기간: {selectedTeam?.start_day} - {selectedTeam?.end_day}</Typography>
+              <div id="menu-team-member-dialog-body">
+                <span>기간: {selectedTeam?.start_day} ~ {selectedTeam?.end_day}</span>
+                <span>카테고리: {selectedTeam?.category}</span>
+                <span>소개: {selectedTeam?.introduce}</span>
+              </div>
             </DialogContent>
           </Dialog>
           <Dialog id="menu-team-add-dialog" open={openTeamAdd} onClose={handleCloseTeamAdd}>
@@ -167,8 +171,29 @@ function MenuTeam() {
                 onChange={(e) => setNewTeam({ ...newTeam, link: e.target.value })} />
               <TextField className="menu-team-add-input" label="팀장 ID" variant="outlined" fullWidth value={newTeam.masterId}
                 onChange={(e) => setNewTeam({ ...newTeam, masterId: e.target.value })} />
-              <TextField className="menu-team-add-input" label="카테고리" variant="outlined" fullWidth value={newTeam.category}
-                onChange={(e) => setNewTeam({ ...newTeam, category: e.target.value })} />
+              {/* <TextField className="menu-team-add-input" label="카테고리" variant="outlined" fullWidth value={newTeam.category}
+                onChange={(e) => setNewTeam({ ...newTeam, category: e.target.value })} /> */}
+
+              <FormControl component="fieldset" className="menu-team-add-input">
+                <FormLabel component="legend">카테고리</FormLabel>
+                <RadioGroup
+                  row
+                  aria-label="category"
+                  name="category"
+                  value={newTeam.category}
+                  onChange={(e) => setNewTeam({ ...newTeam, category: e.target.value })}
+                >
+                  {categories.map((category, index) => (
+                    <FormControlLabel
+                      id='menu-team-add-category-text'
+                      key={index}
+                      value={category}
+                      control={<Radio />}
+                      label={category}
+                    />
+                  ))}
+                </RadioGroup>
+              </FormControl>
               <TextField className="menu-team-add-input" label="소개글" variant="outlined" fullWidth value={newTeam.introduce}
                 onChange={(e) => setNewTeam({ ...newTeam, introduce: e.target.value })} />
 

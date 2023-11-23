@@ -106,3 +106,12 @@
     align-items: center;
     margin-top: 7px;
 }
+
+#menu-team-detail-dialog-body {
+    display: flex;
+    flex-direction: column;
+}
+
+#menu-team-add-category-text span {
+    font-size: 15px;
+}
