@@ -65,8 +65,9 @@ function Sidebar() {
 
   // 로컬 스토리지에서 사용자 정보를 가져옵니다.
   const userLoginString = localStorage.getItem('user_login');
+  console.log(userLoginString);
   const userLoginArray = JSON.parse(userLoginString);
-  const userName = userLoginArray[0].name;
+  const userName = userLoginArray.user_name;
 
   return (
     <div id="sidebar">

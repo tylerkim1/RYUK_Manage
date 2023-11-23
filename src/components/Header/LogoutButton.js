@@ -4,6 +4,8 @@ import oc from 'open-color';
 import { Link } from 'react-router-dom';
 import { shadow } from '../../lib/styleUtil';
 
+
+
 const BorderedButton = styled(Link)`
     font-weight: 600;
     color: ${oc.cyan[6]};
@@ -14,6 +16,7 @@ const BorderedButton = styled(Link)`
     border-radius: 2px;
     text-decoration: none;
     transition: .2s all;
+    margin-left: 0px;
 
     &:hover {
         background: ${oc.cyan[6]};
@@ -30,9 +33,9 @@ const BorderedButton = styled(Link)`
 `;
 
 const LogoutButton = () => (
-    <BorderedButton to="../login">
-        로그아웃
-    </BorderedButton>
+        <BorderedButton to="../login">
+            로그아웃
+        </BorderedButton>
 );
 
 
