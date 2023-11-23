@@ -3,203 +3,44 @@ import { DemoContainer, DemoItem } from '@mui/x-date-pickers/internals/demo';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
+import { TextField } from '@mui/material';
 import '../css/MenuStatistics.css';
 
 import { GraphBar } from './GraphBar';
+import { networkrequest } from './Header/XHR';
 
 function MenuStatistics() {
   const [unittime, setUnitTime] = useState("daily");
   const [unitsubject, setUnitSubjecct] = useState("individual");
-  const [graphdata, setGraphData] = useState({data:{
-    usrid_1231:{
-      name:"honggild",
-      mission_date:"202013201",
-      num_mission:4,
-      num_success:2,
-      percentage:50
-    },
-    usrid_8501:{
-      name:"emu",
-      mission_date:"202013201",
-      num_mission:100,
-      num_success:42,
-      percentage:42
-    },
-    usrid_8277:{
-      name:"cat",
-      mission_date:"202013201",
-      num_mission:30,
-      num_success:29,
-      percentage:97
-    },
-    usrid_8278:{
-      name:"nono",
-      mission_date:"202013201",
-      num_mission:30,
-      num_success:1,
-      percentage:3
-    },
-    usrid_8291:{
-      name:"nono",
-      mission_date:"202013201",
-      num_mission:30,
-      num_success:1,
-      percentage:3
-    },
-    usrid_8290:{
-      name:"nono",
-      mission_date:"202013201",
-      num_mission:30,
-      num_success:1,
-      percentage:3
-    },
-    usrid_8295:{
-      name:"nono",
-      mission_date:"202013201",
-      num_mission:30,
-      num_success:1,
-      percentage:3
-    },
-    usrid_8299:{
-      name:"nono",
-      mission_date:"202013201",
-      num_mission:30,
-      num_success:1,
-      percentage:3
-    },
-    usrid_8197:{
-      name:"nono",
-      mission_date:"202013201",
-      num_mission:30,
-      num_success:1,
-      percentage:3
-    },
-    usrid_8177:{
-      name:"nono",
-      mission_date:"202013201",
-      num_mission:30,
-      num_success:1,
-      percentage:3
-    },
-    usrid_8297:{
-      name:"nono",
-      mission_date:"202013201",
-      num_mission:30,
-      num_success:1,
-      percentage:3
-    },
-    usrid_8287:{
-      name:"nono",
-      mission_date:"202013201",
-      num_mission:30,
-      num_success:1,
-      percentage:3
-    },
-    usrid_7278:{
-      name:"nono",
-      mission_date:"202013201",
-      num_mission:30,
-      num_success:1,
-      percentage:3
-    },
-    usrid_7291:{
-      name:"nono",
-      mission_date:"202013201",
-      num_mission:30,
-      num_success:1,
-      percentage:3
-    },
-    usrid_7290:{
-      name:"nono",
-      mission_date:"202013201",
-      num_mission:30,
-      num_success:1,
-      percentage:3
-    },
-    usrid_7295:{
-      name:"nono",
-      mission_date:"202013201",
-      num_mission:30,
-      num_success:1,
-      percentage:3
-    },
-    usrid_7299:{
-      name:"nono",
-      mission_date:"202013201",
-      num_mission:30,
-      num_success:1,
-      percentage:3
-    },
-    usrid_7197:{
-      name:"nono",
-      mission_date:"202013201",
-      num_mission:30,
-      num_success:1,
-      percentage:3
-    },
-    usrid_7177:{
-      name:"nono",
-      mission_date:"202013201",
-      num_mission:30,
-      num_success:1,
-      percentage:3
-    },
-    usrid_7297:{
-      name:"nono",
-      mission_date:"202013201",
-      num_mission:30,
-      num_success:1,
-      percentage:3
-    },
-    usrid_7287:{
-      name:"nono",
-      mission_date:"202013201",
-      num_mission:30,
-      num_success:1,
-      percentage:3
-    },
-    usrid_6299:{
-      name:"nono",
-      mission_date:"202013201",
-      num_mission:30,
-      num_success:1,
-      percentage:3
-    },
-    usrid_6197:{
-      name:"nono",
-      mission_date:"202013201",
-      num_mission:30,
-      num_success:1,
-      percentage:3
-    },
-    usrid_6177:{
-      name:"nono",
-      mission_date:"202013201",
-      num_mission:30,
-      num_success:1,
-      percentage:3
-    },
-    usrid_6297:{
-      name:"nono",
-      mission_date:"202013201",
-      num_mission:30,
-      num_success:1,
-      percentage:3
-    },
-    usrid_6287:{
-      name:"nono",
-      mission_date:"202013201",
-      num_mission:30,
-      num_success:1,
-      percentage:3
-    }
-  }});
+
+  const [targetdate, setTargetDate] = useState("2023_11_16");
+
+  const [graphdata, setGraphData] = useState({
+    status:'ok',
+    data:[
+      {
+        nickname:'1',
+        num_mission:30,
+        num_success:10,
+        percentage:33
+      }
+    ],
+    isloaded:'no'
+  });
+
+  console.log(graphdata);
 
   const loadGraphData = () => {
-
+    networkrequest('stats/allDaily', {date:targetdate}, setGraphData);
+    alert("load: " + targetdate);
   }
 
-  if(graphdata.data == 'none')
+  const targetdateChange = (new_targ) => {
+    graphdata['isloaded'] = 'no';
+    setTargetDate(new_targ.format("YYYY_MM_DD"));
+  }
+
+  if(graphdata.isloaded == 'no')
   {
     loadGraphData();
   }
@@ -213,7 +54,12 @@ function MenuStatistics() {
             <LocalizationProvider dateAdapter={AdapterDayjs}>
               <DemoContainer components={['DesktopDateTimePicker']}>
                 <DemoItem>
-                  <DesktopDatePicker onChange={loadGraphData} />
+                  <DesktopDatePicker
+                    label="--"
+                    value={targetdate}
+                    onChange={targetdateChange}
+                    renderInput={(params) => <TextField {...params} error={false} />} />
+                  {/* <DesktopDatePicker onChange={loadGraphData} /> */}
                 </DemoItem>
               </DemoContainer>
             </LocalizationProvider>
@@ -246,7 +92,7 @@ function MenuStatistics() {
       </div>
       <div id="ms-lower">
         {
-          Object.entries(graphdata.data).map(([usr_id,info]) => GraphBar(info.name, info.num_success, info.num_mission, info.percentage))
+          graphdata.data.filter(it => it.num_mission != 0).map((it) => GraphBar(it.nickname, it.num_success, it.num_mission, it.percentage))
         }
       </div>
     </div>
