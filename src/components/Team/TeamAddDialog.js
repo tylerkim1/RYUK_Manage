@@ -7,16 +7,6 @@ import { DemoContainer, DemoItem } from '@mui/x-date-pickers/internals/demo/Demo
 const TeamAddDialog = ({ open, handleClose, newTeam, setNewTeam, addTeam }) => {
   const categories = ['매일하력', '시도해력', '마음봄력', '유유자력', '레벨업력'];
   // Dialog 내부의 form elements와 로직은 여기에 포함됩니다.
-  // const [openTeamAdd, setOpenTeamAdd] = useState(false);
-
-  // const handleClickOpenTeamAdd = () => {
-  //   setOpenTeamAdd(true);
-  // };
-
-  // const handleCloseTeamAdd = () => {
-  //   setOpenTeamAdd(false);
-  //   initTeam();
-  // };
 
   const handleStartDayChange = (newValue) => {
     setNewTeam({ ...newTeam, startDay: newValue });
@@ -36,9 +26,6 @@ const TeamAddDialog = ({ open, handleClose, newTeam, setNewTeam, addTeam }) => {
                 onChange={(e) => setNewTeam({ ...newTeam, link: e.target.value })} />
               <TextField className="menu-team-add-input" label="팀장 ID" variant="outlined" fullWidth value={newTeam.masterId}
                 onChange={(e) => setNewTeam({ ...newTeam, masterId: e.target.value })} />
-              {/* <TextField className="menu-team-add-input" label="카테고리" variant="outlined" fullWidth value={newTeam.category}
-                onChange={(e) => setNewTeam({ ...newTeam, category: e.target.value })} /> */}
-
               <FormControl component="fieldset" className="menu-team-add-input">
                 <FormLabel component="legend">카테고리</FormLabel>
                 <RadioGroup

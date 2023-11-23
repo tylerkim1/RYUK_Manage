@@ -66,10 +66,9 @@ function MenuTeam() {
   return (
     <div id="menu-team-container">
       <div id="menu-team-header">
-        <div id="menu-team-search">
+        <div id="menu-team-search" autoComplete="chrome-off">
           <TextField
             label="검색"
-            autoComplete="off"
             variant="outlined"
             value={searchTerm}
             onChange={handleSearchChange}
@@ -82,7 +81,12 @@ function MenuTeam() {
                   </IconButton>
                 </InputAdornment>
               ),
+              autocomplete: 'off',
+              form: {
+                autocomplete: 'off',
+              },
             }}
+            autoComplete="off"
           />
         </div>
         <div className="menu-team-add-button" onClick={toggleOpenTeamAdd}>

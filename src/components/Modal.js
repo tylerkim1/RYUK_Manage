@@ -26,6 +26,7 @@ const Modal = ({selectedData, handleCancel, handleEditSubmit})=> {
     
     const onSubmitEdit = (e) => {
         e.preventDefault();
+        console.log(edited)
                 
         // const n = name[i];
         var res = {
@@ -33,7 +34,8 @@ const Modal = ({selectedData, handleCancel, handleEditSubmit})=> {
             password: edited.password,
             user_name : edited.user_name,
             nickname: edited.nickname,
-            email : edited.email
+            email : edited.email,
+            teamId : edited.team_id
         }
         networkrequest('user/changeInfo/', res, console.log);
         console.log('end');
@@ -71,11 +73,11 @@ const Modal = ({selectedData, handleCancel, handleEditSubmit})=> {
                             <select
                             className='border-2 border-gray-100'
                             name='team_id'
-                            value={edited.team_id}
+                            value={edited.teamId}
                             onChange={onEditChange}
                             >
                             {teamLists && teamLists.map((team) => (
-                                <option key={team.id} value={team.id}>
+                                <option key={team.team_id} value={team.team_id}>
                                 {team.name}
                                 </option>
                             ))}
