@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
 import SIgn_img from './SIgn_img'
@@ -6,21 +6,41 @@ import { NavLink } from 'react-router-dom'
 import { useNavigate } from 'react-router-dom'
 import { ToastContainer, toast } from 'react-toastify';
 import Header from './Header';
-  import 'react-toastify/dist/ReactToastify.css';
+import 'react-toastify/dist/ReactToastify.css';
+import { networkrequest}  from './Header/XHR.js';
+import { networkrequest2}  from './Header/XHR2.js';
+
 
 const Home = () => {
+    
 
     const history = useNavigate();
 
     const [inpval, setInpval] = useState({
+        id: "",
         name: "",
+        nickname: "",
         email: "",
         password: "",
         passwordagain: "",
         manager_coe:""
     })
+    const [data,setData] =  useState(null); // 초기값을 null로 설정
 
-    const [data,setData] = useState([]);
+    useEffect(() => {
+        const xhr = new XMLHttpRequest();
+        xhr.open('GET', 'http://13.125.10.254:5000/user/all/', true);
+        
+        xhr.onreadystatechange = function() {
+          if (xhr.readyState === 4 && xhr.status === 200) {
+              const fetchedData = JSON.parse(xhr.responseText);
+              setData(fetchedData.data);
+              console.log('list', fetchedData.data)
+          }
+        };
+        xhr.withCredentials = true;
+        xhr.send();
+      }, []); // 빈 배열을 전달하여 컴포넌트가 마운트될 때만 실행되도록 함
     // console.log(inpval);
     const getdata = (e) => {
         // console.log(e.target.value);
@@ -37,10 +57,18 @@ const Home = () => {
     const addData = (e) => {
         e.preventDefault();
 
-        const { name, email,  password, passwordagain,manager_code } = inpval;
+        const { id,name, nickname, email,  password, passwordagain,manager_code } = inpval;
 
-        if (name === "") {
+        if (id === "") {
+            toast.error(' 아이디를 입력해주세요',{
+                position: "top-center",
+            });
+        }else if (name === "") {
             toast.error(' 이름을 입력해주세요',{
+                position: "top-center",
+            });
+        } else if (nickname === "") {
+            toast.error(' 닉네임을 입력해주세요',{
                 position: "top-center",
             });
         } else if (email === "") {
@@ -68,6 +96,82 @@ const Home = () => {
                 position: "top-center",
             });
         }else {
+
+            var newPerson = {
+                login_id: inpval.id,
+                password: inpval.password,
+                user_name: inpval.name,
+                nickname: inpval.nickname,
+                email: inpval.email
+              };
+            var res = {};
+            for (let [key, value] of Object.entries(newPerson)) {
+
+                res[key] = value.replace(/-/g, '_');
+            }
+            networkrequest2('user/add/', res,console.log)
+            .then((result) => {
+                console.log('Success:', result);
+                var res1 = {};
+                res1['userId']=  result.data.user_id;
+                networkrequest('user/makeManager',res1,console.log);
+                var addD = {
+                    user_id : result.data.user_id, 
+                    login_id : inpval.id, 
+                    password : inpval.password, 
+                    user_name : inpval.name, 
+                    nickname : inpval.nickname, 
+                    email : inpval.email, 
+                    team_id : null, 
+                    is_manager : 1
+                }
+                setData((prevData) => [...prevData, addD]);
+                console.log('setData after', data);
+                // if (result.data !== false){
+                //     setinfo_ma(info_ma => info_ma.concat(
+                //         {
+                //             user_id : result.data.user_id,
+                //             login_id : inpval.login_id, 
+                //             password : inpval.password, 
+                //             user_name : inpval.user_name, 
+                //             nickname : inpval.nickname, 
+                //             email : inpval.email, 
+                //             team_id : inpval.team_id, 
+                //             is_manager : inpval.is_manager
+                //         }
+                //     ))
+                // }
+                // a = result.user_id;
+            })
+            .catch((error) => {
+                console.error('Error:', error.message);
+            });
+            // var newPerson = {
+            //     login_id: inpval.id,
+            //     password: inpval.password,
+            //     user_name: inpval.name,
+            //     nickname: inpval.nickname,
+            //     email: inpval.email,
+            //   };
+            // var res = {};
+            // for (let [key, value] of Object.entries(newPerson)) {
+
+            //     res[key] = value.replace(/-/g, '_');
+            // }
+            // networkrequest('user/add/', res, console.log);
+
+
+            // var change = {
+            //     userId : inpval.id
+            // }
+            // var res1 = {};
+            // for (let [key, value] of Object.entries(change)) {
+
+            //     res1[key] = value.replace(/-/g, '_');
+            // }
+            // console.log(res1)
+            // networkrequest('user/add/', res, console.log);
+            // networkrequest('user/makeManager',res1,console.log);
             console.log("성공적으로 회원가입되었습니다");
             history("/login")
             localStorage.setItem("useryoutube",JSON.stringify([...data,inpval]));
@@ -84,9 +188,17 @@ const Home = () => {
                     <div className="left_data mt-5 p-5" style={{ width: "100%" }}>
                         <h3 className='text-center col-lg-6'>회원가입</h3>
                         <Form >
-                            <Form.Group className="mb-3 col-lg-6" controlId="formBasicEmail">
+                            <Form.Group className="mb-3 col-lg-6" controlId="formBasicId">
+
+                            <Form.Control type="text" name='id' onChange={getdata} placeholder="Enter Your ID" />
+                            </Form.Group>
+                            <Form.Group className="mb-3 col-lg-6" controlId="formBasicName">
 
                                 <Form.Control type="text" name='name' onChange={getdata} placeholder="Enter Your Name" />
+                            </Form.Group>
+                            <Form.Group className="mb-3 col-lg-6" controlId="formBasicNickName">
+
+                                <Form.Control type="text" name='nickname' onChange={getdata} placeholder="Enter Your Nickname" />
                             </Form.Group>
                             <Form.Group className="mb-3 col-lg-6" controlId="formBasicEmail">
 

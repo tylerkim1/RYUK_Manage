@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
 import SIgn_img from './SIgn_img'
@@ -10,6 +10,37 @@ import Header from './Header';
 import 'react-toastify/dist/ReactToastify.css';
 
 const Login = () => {
+    const [d, setData] = useState(null); // 초기값을 null로 설정
+
+    useEffect(() => {
+        const xhr = new XMLHttpRequest();
+        xhr.open('GET', 'http://13.125.10.254:5000/user/all/', true);
+        
+        xhr.onreadystatechange = function() {
+          if (xhr.readyState === 4 && xhr.status === 200) {
+              const fetchedData = JSON.parse(xhr.responseText);
+              setData(fetchedData.data);
+              console.log('list', fetchedData.data)
+          }
+        };
+        xhr.withCredentials = true;
+        xhr.send();
+      }, []);
+
+      useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await fetch('http://13.125.10.254:5000/user/all/');
+                const result = await response.json();
+                setData(result.data);
+                console.log('list1', result.data);
+            } catch (error) {
+                console.error('Error fetching data:', error);
+            }
+        };
+
+        fetchData();
+    }, []);
 
     const history = useNavigate();
 
@@ -18,7 +49,6 @@ const Login = () => {
         password: ""
     })
 
-    console.log(inpval);
 
     const getdata = (e) => {
         // console.log(e.target.value);
@@ -41,7 +71,7 @@ const Login = () => {
         e.preventDefault();
 
         const getuserArr = localStorage.getItem("useryoutube");
-        console.log(getuserArr);
+        console.log('getuserArr',getuserArr);
 
         const { email, password } = inpval;
         if (email === "") {
@@ -62,22 +92,28 @@ const Login = () => {
             });
         } else {
 
-            if (getuserArr && getuserArr.length) {
-                const userdata = JSON.parse(getuserArr);
-                const userlogin = userdata.filter((el, k) => {
-                    return el.email === email && el.password === password
-                });
+            // if (getuserArr && getuserArr.length) {
+            // const userdata = JSON.parse(getuserArr);
+            // console.log(inpval.email);
+            // 주어진 배열에서 email과 password가 일치하는 항목 찾기
+            console.log(d);
+            const userlogin = d.find(item => item.email === inpval.email && item.password === inpval.password);
 
-                if (userlogin.length === 0) {
-                    alert("invalid details")
-                } else {
-                    console.log("성공적으로 로그인되었습니다");
+            // const userlogin = userdata.filter((d, k) => {
+            //     return d.email === email && d.password === password  // is_manager 추가해야함.
+            // });
+            console.log('userlogin',userlogin);
 
-                    localStorage.setItem("user_login", JSON.stringify(userlogin))
+            if (userlogin=== undefined) {
+                alert("invalid details")
+            } else {
+                console.log("성공적으로 로그인되었습니다");
+                console.log(JSON.stringify(userlogin))
+                localStorage.setItem("user_login", JSON.stringify(userlogin))
 
-                    history("/mainpage")
-                }
+                history("/mainpage")
             }
+            // }
         }
 
     }
@@ -98,14 +134,14 @@ const Login = () => {
 
                             <Form.Group className="mb-3 col-lg-6" controlId="formBasicPassword">
 
-                                <Form.Control type="password" name='password' onChange={getdata} placeholder="Password" />
+                                <Form.Control type="password" name='password' onChange={getdata} placeholder="Eneter Password" />
                             </Form.Group>
                             <Button variant="primary" className='col-lg-6' onClick={addData} style={{ background: "rgb(67, 185, 127)" }} type="submit">
                                 Submit
                             </Button>
                         </Form>
                         <p className='mt-3'>계정이 없으신가요 <span><NavLink to="../">회원가입</NavLink></span> </p>
-                        <p className='mt-3'>비밀번호를 까먹으셨나요  <span><NavLink to="./findPW">비밀번호 찾기</NavLink></span> </p>
+                        {/* <p className='mt-3'>비밀번호를 까먹으셨나요  <span><NavLink to="./findPW">비밀번호 찾기</NavLink></span> </p> */}
                     </div>
                     <SIgn_img />
                 </section>

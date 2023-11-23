@@ -30,9 +30,11 @@ const HeaderContents = styled.div`
     display: flex;
     flex-direction: row;
     align-items: center;
+    justify-content: flex-end;
 
     padding-right: 1rem;
     padding-left: 1rem;
+    
     ${media.wide`
         width: 992px;
     `}
