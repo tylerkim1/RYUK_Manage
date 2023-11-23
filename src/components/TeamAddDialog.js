@@ -12,6 +12,14 @@ const TeamAddDialog = ({ open, handleClose, newTeam, setNewTeam, addTeam }) => {
     setOpenTeamAdd(false);
     initTeam();
   };
+  
+  const handleStartDayChange = (newValue) => {
+    setNewTeam({ ...newTeam, startDay: newValue });
+  };
+
+  const handleEndDayChange = (newValue) => {
+    setNewTeam({ ...newTeam, endDay: newValue });
+  };
 
   return (
     <Dialog id="menu-team-add-dialog" open={openTeamAdd} onClose={handleCloseTeamAdd}>

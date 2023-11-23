@@ -11,39 +11,41 @@ import { Grid } from '@mui/material';
 import { DesktopDatePicker, LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DemoContainer, DemoItem } from '@mui/x-date-pickers/internals/demo/DemoContainer.js';
+import useTeam from '../hooks/useTeam.js';
 
 function MenuTeam() {
-  const [teams, setTeams] = useState(null);
-  const [newTeam, setNewTeam] = useState({
-    name: '',
-    startDay: null,
-    endDay: null,
-    link: '',
-    masterId: '',
-    category: '',
-    introduce: '',
-  });
+  // const [teams, setTeams] = useState(null);
+  // const [newTeam, setNewTeam] = useState({
+  //   name: '',
+  //   startDay: null,
+  //   endDay: null,
+  //   link: '',
+  //   masterId: '',
+  //   category: '',
+  //   introduce: '',
+  // });
+  const {teams, initTeam, addTeam, deleteTeam} = useTeam();
   const [searchTerm, setSearchTerm] = useState('');
   const [openTeamAdd, setOpenTeamAdd] = useState(false);
   const [openTeam, setOpenTeam] = useState(false);
   const [selectedTeam, setSelectedTeam] = useState(null);
   const categories = ['매일하력', '시도해력', '마음봄력', '유유자력', '레벨업력'];
 
-  useEffect(() => {
-    networkrequest('team/all/', {}, (data) => setTeams(data.data));
-  }, []); // 빈 배열을 전달하여 컴포넌트가 마운트될 때만 실행되도록 함
+  // useEffect(() => {
+  //   networkrequest('team/all/', {}, (data) => setTeams(data.data));
+  // }, []); // 빈 배열을 전달하여 컴포넌트가 마운트될 때만 실행되도록 함
 
-  const initTeam = () => {
-    setNewTeam({
-      name: '',
-      startDay: null,
-      endDay: null,
-      link: '',
-      masterId: '',
-      category: '',
-      introduce: '',
-    });
-  }
+  // const initTeam = () => {
+  //   setNewTeam({
+  //     name: '',
+  //     startDay: null,
+  //     endDay: null,
+  //     link: '',
+  //     masterId: '',
+  //     category: '',
+  //     introduce: '',
+  //   });
+  // }
 
   const handleSearch = () => {
     console.log('검색:', searchTerm);  // 검색 처리 로직
@@ -73,21 +75,21 @@ function MenuTeam() {
     setOpenTeam(false);
   };
 
-  const addTeam = async () => {
-    // URL 파라미터를 생성하기 위해 '-'를 '_'로 변경
-    console.log(newTeam)
-    const req = { ...newTeam };
-    for (let key in req) {
-      if (key === 'startDay' || key === 'endDay') req[key] = req[key].format("YYYY_MM_DD")
-    }
+  // const addTeam = async () => {
+  //   // URL 파라미터를 생성하기 위해 '-'를 '_'로 변경
+  //   console.log(newTeam)
+  //   const req = { ...newTeam };
+  //   for (let key in req) {
+  //     if (key === 'startDay' || key === 'endDay') req[key] = req[key].format("YYYY_MM_DD")
+  //   }
 
-    await networkrequest('team/add/', req, console.log);
-    initTeam();
-  };
+  //   await networkrequest('team/add/', req, console.log);
+  //   initTeam();
+  // };
 
-  const handleDelete = (masterId, teamId) => {
-    networkrequest('team/delete/', { callerId: masterId, teamId: teamId }, console.log);
-  }
+  // const deleteTeam = (masterId, teamId) => {
+  //   networkrequest('team/delete/', { callerId: masterId, teamId: teamId }, console.log);
+  // }
 
   const handleStartDayChange = (newValue) => {
     setNewTeam({ ...newTeam, startDay: newValue });
@@ -143,7 +145,7 @@ function MenuTeam() {
                         {team.introduce}
                       </span>
                     </div>
-                    {/* <img className="delete-button" src={deleteImage} onClick={() => handleDelete(team.master_id, team.team_id)} /> */}
+                    {/* <img className="delete-button" src={deleteImage} onClick={() => deleteTeam(team.master_id, team.team_id)} /> */}
                   </Item>
                 </Grid>
               ))) : (
