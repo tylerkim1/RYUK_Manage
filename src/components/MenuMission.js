@@ -23,10 +23,12 @@ const MenuMission = (e) => {
   const [selectedMission, setSelectedMission] = useState();
   const [selectedTeam, setSelectedTeam] = useState();
   const [teamLists, setTeamLists] = useState([]);
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
+  const [selectedCategory, setSelectedCategory] = useState(null);
   const [startDate, setStartDate] = useState(new Date());
   const [selectedDate, setSelectedDate] = useState(new Date());
+  const categories = ['매일하력', '시도해력', '마음봄력', '유유자력', '레벨업력'];
 
   useEffect(() => {
     networkrequest('team/all/', {}, (data) => { setTeamLists(data.data); });
@@ -95,8 +97,8 @@ const MenuMission = (e) => {
   return (
     <div id="menu-mission-container">
       <div id="menu-mission-header">
-        <FormControl id="menu-mission-team-select">
-          <InputLabel id="menu-mission-team-select-label">팀 선택</InputLabel>
+        <FormControl className="menu-mission-select"  id="menu-mission-team-select">
+          <InputLabel className="menu-mission-select-label"  id="menu-mission-team-select-label">팀 선택</InputLabel>
           <Select
             labelId="team-select-label"
             value={selectedTeam}
@@ -110,10 +112,25 @@ const MenuMission = (e) => {
             ))}
           </Select>
         </FormControl>
+        <FormControl className="menu-mission-select" id="menu-mission-category-select">
+          <InputLabel className="menu-mission-select-label" id="menu-mission-category-select-label">카테고리 선택</InputLabel>
+          <Select
+            labelId="category-select-label"
+            value={selectedCategory}
+            label="카테고리 선택"
+            onChange={(e) => setSelectedCategory(e.target.value)}
+          >
+            {categories && categories.map((category, index) => (
+              <MenuItem key={index} value={index}>
+                {category}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
         <LocalizationProvider dateAdapter={AdapterDayjs}>
           <DemoContainer components={['DesktopDateTimePicker']}>
             <DemoItem>
-              <DesktopDatePicker id="menu-mission-date-picker"/>
+              <DesktopDatePicker id="menu-mission-date-picker" />
             </DemoItem>
           </DemoContainer>
         </LocalizationProvider>

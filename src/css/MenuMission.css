@@ -121,13 +121,21 @@
   margin-right: 10px;
 }
 
-#menu-mission-team-select {
-  width: 200px;
+.menu-mission-select {
+  padding-top: 8px;
+  margin-right: 10px;
+}
+
+.menu-mission-select-label {
   padding-top: 8px;
 }
 
-#menu-mission-team-select-label {
-  padding-top: 8px;
+#menu-mission-team-select {
+  width: 200px;
+}
+
+#menu-mission-category-select {
+  width: 150px;
 }
 
 #menu-mission-date-picker {
