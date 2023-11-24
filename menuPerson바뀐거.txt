@@ -1,2 +1,7 @@
 변수
 d => userData
+
+함수
+setData => setUserData
+setinfo => setInfo
+setinfo_ma => setInfo_ma

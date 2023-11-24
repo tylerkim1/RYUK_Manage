@@ -17,17 +17,43 @@ const WhiteBackground = styled.div`
 
 function MenuPerson() {
     const nextId = useRef(10);
-    const [userData, setData] = useState(null); // 초기값을 null로 설정
+    const [userData, setUserData] = useState(null); // 초기값을 null로 설정
+    const [info, setInfo] = useState([]);
+    const [info_ma, setInfo_ma] = useState([]);
+    const [selected, setselected] = useState(null);
+    const [modalOn, setmodalon] = useState(false);
+    
+    // useEffect(() => {
+    //     const fetchData = async () => {
+    //         try {
+    //             const response = await networkrequest('user/all/');
+    //             if (response.status === 200) {
+    //                 const data = response.data.data;
+    //                 setUserData(data);
+    //                 setInfo(data.filter(item => item.is_manager === 0));
+    //                 setInfoMa(data.filter(item => item.is_manager === 1));
+    //             }
+    //         } catch (error) {
+    //             console.error('Error fetching user data:', error);
+    //         }
+    //     };
+
+    //     fetchData();
+    // }, []);
 
     useEffect(() => {
-        networkrequest('user/all/', {}, (data) => setData(data.data))
+        networkrequest('user/all/', {}, (data) => {
+            setUserData(data.data);
+            setInfo(data.data.filter(item => item.is_manager === 0));
+            setInfo_ma(data.data.filter(item => item.is_manager === 1));
+        })
         // const xhr = new XMLHttpRequest();
         // xhr.open('GET', 'http://13.125.10.254:5000/user/all/', true);
 
         // xhr.onreadystatechange = function () {
         //     if (xhr.readyState === 4 && xhr.status === 200) {
         //         const fetchedData = JSON.parse(xhr.responseText);
-        //         setData(fetchedData.data);
+        //         setUserData(fetchedData.data);
         //         console.log('list', fetchedData.data)
         //     }
         // };
@@ -35,38 +61,34 @@ function MenuPerson() {
         // xhr.send();
     }, []); // 빈 배열을 전달하여 컴포넌트가 마운트될 때만 실행되도록 함
 
-    let data_manager = [];
-    let data = [];
+    // let data_manager = [];
+    // let data = [];
 
-    if (userData !== null) {
-        data_manager = userData.filter(item => item.is_manager === 1);
-        data = userData.filter(item => item.is_manager === 0);
-    }
+    // if (userData !== null) {
+    //     data_manager = userData.filter(item => item.is_manager === 1);
+    //     data = userData.filter(item => item.is_manager === 0);
+    // }
 
-    useEffect(() => {
-        let data_manager = [];
-        let data_filtered = [];
+    // useEffect(() => {
+    //     let data_manager = [];
+    //     let data_filtered = [];
 
-        if (userData !== null) {
-            data_manager = userData.filter(item => item.is_manager === 1);
-            data_filtered = userData.filter(item => item.is_manager === 0);
-        }
+    //     if (userData !== null) {
+    //         data_manager = userData.filter(item => item.is_manager === 1);
+    //         data_filtered = userData.filter(item => item.is_manager === 0);
+    //     }
 
-        setinfo(data_filtered);
-        setinfo_ma(data_manager);
-    }, [userData]); // d가 변경될 때마다 실행
+    //     setInfo(data_filtered);
+    //     setInfo_ma(data_manager);
+    // }, [userData]); // d가 변경될 때마다 실행
 
-    const [info, setinfo] = useState(data);
-    const [info_ma, setinfo_ma] = useState(data_manager);
-    const [selected, setselected] = useState('');
-    const [modalOn, setmodalon] = useState(false);
 
     const handleSave = (dataa) => {
         console.log("heelo", dataa)
         if (dataa.is_manager === 0) { //user
             //data 수정하기
             if (dataa.user_id) {
-                setinfo(
+                setInfo(
                     info.map(row => dataa.user_id === row.user_id ? {
                         user_id: dataa.user_id,
                         login_id: dataa.login_id,
@@ -97,7 +119,7 @@ function MenuPerson() {
                     .then((result) => {
                         console.log('Success:', result);
                         if (result.data !== false) {
-                            setinfo(info => info.concat(
+                            setInfo(info => info.concat(
                                 {
                                     user_id: result.data.user_id,
                                     login_id: dataa.login_id,
@@ -120,7 +142,7 @@ function MenuPerson() {
         else { //manager
             //data 수정하기
             if (dataa.user_id) {
-                setinfo_ma(
+                setInfo_ma(
                     info_ma.map(row => dataa.user_id === row.user_id ? {
                         user_id: dataa.user_id,
                         login_id: dataa.login_id,
@@ -153,7 +175,7 @@ function MenuPerson() {
                         res1['userId'] = result.data.user_id;
                         networkrequest('user/makeManager', res1, console.log);
                         if (result.data !== false) {
-                            setinfo_ma(info_ma => info_ma.concat(
+                            setInfo_ma(info_ma => info_ma.concat(
                                 {
                                     user_id: result.data.user_id,
                                     login_id: dataa.login_id,
@@ -186,8 +208,8 @@ function MenuPerson() {
         // }
         // console.log(res);
         networkrequest('user/delete/', res, console.log);
-        setinfo(info => info.filter(item => item.user_id !== user_id));
-        setinfo_ma(info_ma => info_ma.filter(item => item.user_id !== user_id));
+        setInfo(info => info.filter(item => item.user_id !== user_id));
+        setInfo_ma(info_ma => info_ma.filter(item => item.user_id !== user_id));
     }
 
     const handleEdit = (item) => {
