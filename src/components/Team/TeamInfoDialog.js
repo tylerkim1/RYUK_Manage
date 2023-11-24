@@ -8,11 +8,11 @@ const TeamInfoDialog = ({ open, handleClose, selectedTeam, members }) => {
     <Dialog onClose={handleClose} aria-labelledby="team-dialog-title" open={open}>
       <DialogTitle id="menu-team-member-dialog">팀 멤버</DialogTitle>
       <DialogContent>
-        <div id="menu-team-member-dialog-body">
+        {/* <div id="menu-team-member-dialog-body">
           <span>기간: {selectedTeam?.start_day} ~ {selectedTeam?.end_day}</span>
           <span>카테고리: {selectedTeam?.category}</span>
           <span>소개: {selectedTeam?.introduce}</span>
-        </div>
+        </div> */}
         <List>
           {members ? members.map((member, index) => (
             <ListItem key={index}>
