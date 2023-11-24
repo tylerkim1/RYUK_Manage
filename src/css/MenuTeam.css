@@ -57,7 +57,7 @@
 .menu-team-block {
     display: flex;
     flex-direction: column;
-    margin-bottom: 10px;
+    cursor: pointer;
 }
 
 .menu-team-block-header {
@@ -114,4 +114,20 @@
 
 #menu-team-add-category-text span {
     font-size: 15px;
+}
+
+#menu-team-info-dialog-header {
+    display: flex;
+    width: 400px;
+    justify-content: space-between;
+}
+
+#menu-team-info-dialog-delete-button {
+    display: flex;
+    cursor: pointer;
+}
+
+#menu-team-info-dialog-delete-button span {
+    font-size: 15px;
+    color: #FF0000;
 }

@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { networkrequest } from '../Header/XHR';
 
-const useTeam = () => {
+const useTeam = (isNumbers = false) => {
   const [teams, setTeams] = useState([]);
   const [members, setMembers] = useState([]);
   const [newTeam, setNewTeam] = useState({
@@ -13,10 +13,22 @@ const useTeam = () => {
     category: '',
     introduce: '',
   });
+  const [teamNums, setTeamNums] = useState([]);
 
   useEffect(() => {
     networkrequest('team/all/', {}, (data) => setTeams(data.data));
   }, []);
+
+  useEffect(() => {
+    networkrequest('team/getNum/', {}, (data) => {
+      const numbersByTeamId = data.data.reduce((acc, item) => {
+        acc[item.team_id] = item.team_member_num;
+        return acc;
+      }, {});
+      setTeamNums(numbersByTeamId);
+    })
+  }, [teams]);
+
 
   const initTeam = () => {
     setNewTeam({
@@ -31,14 +43,12 @@ const useTeam = () => {
   }
 
   const addTeam = async () => {
-    // URL 파라미터를 생성하기 위해 '-'를 '_'로 변경
-    console.log(newTeam)
     const req = { ...newTeam };
     for (let key in req) {
       if (key === 'startDay' || key === 'endDay') req[key] = req[key].format("YYYY_MM_DD")
     }
 
-    await networkrequest('team/add/', req, console.log);
+    networkrequest('team/add/', req, (data) => setTeams([...teams, data.data]));
     initTeam();
   };
 
@@ -50,7 +60,8 @@ const useTeam = () => {
     networkrequest('user/get/', {teamId: teamId}, (data) => setMembers(data.data));
   }
 
-  return { teams, members, newTeam, setNewTeam, initTeam, addTeam, deleteTeam, getMembers };
+  if (isNumbers) return teamNums
+  else return { teams, members, newTeam, setNewTeam, initTeam, addTeam, deleteTeam, getMembers };
 };
 
 export default useTeam;

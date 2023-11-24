@@ -16,27 +16,31 @@ import TextField from '@mui/material/TextField';
 
 import '../css/MenuMission.css'
 import { networkrequest } from './Header/XHR';
+import { FormControl, InputLabel, MenuItem, Select } from '@mui/material';
 
 const MenuMission = (e) => {
   const [missionPool, setMissionPool] = useState();
   const [selectedMission, setSelectedMission] = useState();
   const [selectedTeam, setSelectedTeam] = useState();
-  const [teamLists, setTeamLists] = useState();
-  if(teamLists === undefined) networkrequest('team/all/', {}, (data) => {setTeamLists(data.data);});
+  const [teamLists, setTeamLists] = useState([]);
   const [open, setOpen] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
   const [startDate, setStartDate] = useState(new Date());
   const [selectedDate, setSelectedDate] = useState(new Date());
 
-  const handleDateChange = (newValue) => {
-    setSelectedDate(newValue);
-  };
+  useEffect(() => {
+    networkrequest('team/all/', {}, (data) => { setTeamLists(data.data); });
+  }, []);
 
   useEffect(() => {
     if (teamLists && teamLists.length > 0 && !selectedTeam) {
-      setSelectedTeam(teamLists[0].name);
+      setSelectedTeam(teamLists[0].team_id); // 첫 번째 팀의 ID를 기본값으로 설정
     }
   }, [teamLists]);
+
+  const handleDateChange = (newValue) => {
+    setSelectedDate(newValue);
+  };
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -69,8 +73,8 @@ const MenuMission = (e) => {
     }
   ];
 
-  if(missionPool === undefined) networkrequest('mission/all/', {}, (data) => (setMissionPool(data.data)))
-  
+  if (missionPool === undefined) networkrequest('mission/all/', {}, (data) => (setMissionPool(data.data)))
+
   const handleAddMissionToTeam = (missionId, teamId) => {
     console.log(missionId, teamId)
     const req = {
@@ -78,7 +82,7 @@ const MenuMission = (e) => {
       teamId: teamId,
       missionId: missionId
     }
-    
+
     networkrequest('mission/assign_team/', req, console.log)
   }
 
@@ -87,29 +91,40 @@ const MenuMission = (e) => {
     if (!teamLists) return [];
     return teamLists.filter(team => team.name.toLowerCase().includes(searchTerm.toLowerCase()));
   };
-  
+
   return (
-    
     <div id="menu-mission-container">
       <div id="menu-mission-header">
-        <span onClick={handleClickOpen}>{selectedTeam}</span>
-        <div id="date">
+        <FormControl id="menu-mission-team-select">
+          <InputLabel id="menu-mission-team-select-label">팀 선택</InputLabel>
+          <Select
+            labelId="team-select-label"
+            value={selectedTeam}
+            label="팀 선택"
+            onChange={(e) => setSelectedTeam(e.target.value)}
+          >
+            {teamLists && teamLists.map((team) => (
+              <MenuItem key={team.team_id} value={team.team_id}>
+                {team.name}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
         <LocalizationProvider dateAdapter={AdapterDayjs}>
           <DemoContainer components={['DesktopDateTimePicker']}>
             <DemoItem>
-              <DesktopDatePicker />
+              <DesktopDatePicker id="menu-mission-date-picker"/>
             </DemoItem>
           </DemoContainer>
         </LocalizationProvider>
-        </div>
       </div>
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>{"미션을 확인할 팀을 선택하세요."}</DialogTitle>
         <DialogContent>
-          <TextField 
-            label="팀 검색" 
-            variant="outlined" 
-            fullWidth 
+          <TextField
+            label="팀 검색"
+            variant="outlined"
+            fullWidth
             onChange={(e) => setSearchTerm(e.target.value)}
           />
           <List>
