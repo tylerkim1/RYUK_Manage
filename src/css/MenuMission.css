@@ -11,6 +11,7 @@
   display: flex;
   flex: 1;
   margin-bottom: 3rem;
+  justify-content: space-between;
 }
 
 #menu-mission-body {
@@ -122,12 +123,7 @@
 }
 
 .menu-mission-select {
-  padding-top: 8px;
-  margin-right: 10px;
-}
-
-.menu-mission-select-label {
-  padding-top: 8px;
+  margin-right: 10px !important;
 }
 
 #menu-mission-team-select {
@@ -136,9 +132,4 @@
 
 #menu-mission-category-select {
   width: 150px;
-}
-
-#menu-mission-date-picker {
-  width: 200px;
-  margin-left: 10px;
 }

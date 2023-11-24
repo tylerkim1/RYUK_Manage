@@ -1,57 +1,64 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
+import '../css/MenuMission.css'
 import missionImage from '../assets/sample.png';
 import { Link } from 'react-router-dom';
 import { DemoContainer, DemoItem } from '@mui/x-date-pickers/internals/demo';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogTitle from '@mui/material/DialogTitle';
-import Button from '@mui/material/Button';
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import TextField from '@mui/material/TextField';
-
-import '../css/MenuMission.css'
 import { networkrequest } from './Header/XHR';
-import { FormControl, InputLabel, MenuItem, Select } from '@mui/material';
+import { FormControl, InputLabel, MenuItem, Select, TextField } from '@mui/material';
+import useMission from './hooks/useMission';
+import dayjs from 'dayjs';
+import { styled } from '@mui/system';
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import Paper from '@mui/material/Paper';
+import Avatar from '@mui/material/Avatar';
+import Chip from '@mui/material/Chip';
+import IconButton from '@mui/material/IconButton';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
+
+// 스타일을 적용한 컴포넌트들을 정의합니다.
+const StyledTableContainer = styled(TableContainer)(({ theme }) => ({
+  marginTop: theme.spacing(3),
+}));
+
+const StyledAvatar = styled(Avatar)(({ theme }) => ({
+  marginRight: theme.spacing(2),
+}));
+
+const StatusChip = styled(Chip)(({ status, theme }) => ({
+  ...(status === 'ontime' && {
+    backgroundColor: theme.palette.success.main,
+    color: theme.palette.common.white,
+  }),
+  ...(status === 'late' && {
+    backgroundColor: theme.palette.error.main,
+    color: theme.palette.common.white,
+  }),
+}));
+
 
 const MenuMission = (e) => {
-  const [missionPool, setMissionPool] = useState();
+  const today = dayjs();
+  const { teams, missionPool } = useMission();
   const [selectedMission, setSelectedMission] = useState();
-  const [selectedTeam, setSelectedTeam] = useState();
-  const [teamLists, setTeamLists] = useState([]);
-  const [open, setOpen] = useState(false);
-  const [searchTerm, setSearchTerm] = useState('');
-  const [selectedCategory, setSelectedCategory] = useState(null);
-  const [startDate, setStartDate] = useState(new Date());
-  const [selectedDate, setSelectedDate] = useState(new Date());
-  const categories = ['매일하력', '시도해력', '마음봄력', '유유자력', '레벨업력'];
+  const [selectedTeam, setSelectedTeam] = useState(null);
+  const [selectedCategory, setSelectedCategory] = useState(0);
+  const [startDate, setStartDate] = useState(null);
+  const [selectedDate, setSelectedDate] = useState(null);
+  const categories = ['전체', '매일하력', '시도해력', '마음봄력', '유유자력', '레벨업력'];
 
-  useEffect(() => {
-    networkrequest('team/all/', {}, (data) => { setTeamLists(data.data); });
-  }, []);
-
-  useEffect(() => {
-    if (teamLists && teamLists.length > 0 && !selectedTeam) {
-      setSelectedTeam(teamLists[0].team_id); // 첫 번째 팀의 ID를 기본값으로 설정
-    }
-  }, [teamLists]);
+  console.log(selectedDate)
 
   const handleDateChange = (newValue) => {
     setSelectedDate(newValue);
   };
-
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
-
 
   // 미션 데이터 배열
   const missions1 = [
@@ -75,8 +82,6 @@ const MenuMission = (e) => {
     }
   ];
 
-  if (missionPool === undefined) networkrequest('mission/all/', {}, (data) => (setMissionPool(data.data)))
-
   const handleAddMissionToTeam = (missionId, teamId) => {
     console.log(missionId, teamId)
     const req = {
@@ -88,75 +93,50 @@ const MenuMission = (e) => {
     networkrequest('mission/assign_team/', req, console.log)
   }
 
-  // 필터링된 팀 리스트를 반환하는 함수
-  const filteredTeams = () => {
-    if (!teamLists) return [];
-    return teamLists.filter(team => team.name.toLowerCase().includes(searchTerm.toLowerCase()));
-  };
-
   return (
     <div id="menu-mission-container">
       <div id="menu-mission-header">
-        <FormControl className="menu-mission-select"  id="menu-mission-team-select">
-          <InputLabel className="menu-mission-select-label"  id="menu-mission-team-select-label">팀 선택</InputLabel>
-          <Select
-            labelId="team-select-label"
-            value={selectedTeam}
-            label="팀 선택"
-            onChange={(e) => setSelectedTeam(e.target.value)}
-          >
-            {teamLists && teamLists.map((team) => (
-              <MenuItem key={team.team_id} value={team.team_id}>
-                {team.name}
-              </MenuItem>
-            ))}
-          </Select>
-        </FormControl>
-        <FormControl className="menu-mission-select" id="menu-mission-category-select">
-          <InputLabel className="menu-mission-select-label" id="menu-mission-category-select-label">카테고리 선택</InputLabel>
-          <Select
-            labelId="category-select-label"
-            value={selectedCategory}
-            label="카테고리 선택"
-            onChange={(e) => setSelectedCategory(e.target.value)}
-          >
-            {categories && categories.map((category, index) => (
-              <MenuItem key={index} value={index}>
-                {category}
-              </MenuItem>
-            ))}
-          </Select>
-        </FormControl>
+        <div id="menu-mission-header-selector">
+          <FormControl className="menu-mission-select" id="menu-mission-team-select">
+            <InputLabel className="menu-mission-select-label" id="menu-mission-team-select-label">팀 선택</InputLabel>
+            <Select
+              labelId="team-select-label"
+              value={selectedTeam}
+              label="팀 선택"
+              onChange={(e) => setSelectedTeam(e.target.value)}
+            >
+              {teams && teams.map((team) => (
+                <MenuItem key={team.team_id} value={team.team_id}>
+                  {team.name}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+          <FormControl className="menu-mission-select" id="menu-mission-category-select">
+            <InputLabel className="menu-mission-select-label" id="menu-mission-category-select-label">카테고리 선택</InputLabel>
+            <Select
+              labelId="category-select-label"
+              value={selectedCategory}
+              label="카테고리 선택"
+              onChange={(e) => setSelectedCategory(e.target.value)}
+            >
+              {categories && categories.map((category, index) => (
+                <MenuItem key={index} value={index}>
+                  {category}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+        </div>
         <LocalizationProvider dateAdapter={AdapterDayjs}>
-          <DemoContainer components={['DesktopDateTimePicker']}>
-            <DemoItem>
-              <DesktopDatePicker id="menu-mission-date-picker" />
-            </DemoItem>
-          </DemoContainer>
+          <DesktopDatePicker
+            value={selectedDate}
+            onChange={handleDateChange}
+            renderInput={(params) => <TextField {...params} />}
+          />
         </LocalizationProvider>
       </div>
-      <Dialog open={open} onClose={handleClose}>
-        <DialogTitle>{"미션을 확인할 팀을 선택하세요."}</DialogTitle>
-        <DialogContent>
-          <TextField
-            label="팀 검색"
-            variant="outlined"
-            fullWidth
-            onChange={(e) => setSearchTerm(e.target.value)}
-          />
-          <List>
-            {filteredTeams().map((team, index) => (
-              <ListItem button key={index} onClick={() => { setSelectedTeam(team.name); handleClose(); }}>
-                {team.name}
-              </ListItem>
-            ))}
-          </List>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose}>취소</Button>
-        </DialogActions>
-      </Dialog>
-      <div id="menu-mission-body">
+      {/* <div id="menu-mission-body">
         <div id="common-mission-list">
           {missions1.map((mission, missionIndex) => (
             <div key={missionIndex} id="common-mission">
@@ -190,7 +170,49 @@ const MenuMission = (e) => {
             </div>
           ))}
         </div>
-      </div>
+      </div> */}
+      (
+      <StyledTableContainer component={Paper}>
+        <Table aria-label="customized table">
+          <TableHead>
+            <TableRow>
+              <TableCell>ID</TableCell>
+              <TableCell>Client</TableCell>
+              <TableCell>Pickup Address</TableCell>
+              <TableCell>Dropoff Address</TableCell>
+              <TableCell>Courier</TableCell>
+              <TableCell>Status</TableCell>
+              <TableCell></TableCell>
+            </TableRow>
+          </TableHead>
+          {/* <TableBody>
+            {rows.map((row) => (
+              <TableRow key={row.id}>
+                <TableCell component="th" scope="row">
+                  {row.id}
+                </TableCell>
+                <TableCell>
+                  <div style={{ display: 'flex', alignItems: 'center' }}>
+                    <StyledAvatar />
+                    {row.client}
+                  </div>
+                </TableCell>
+                <TableCell>{row.pickupAddress}</TableCell>
+                <TableCell>{row.dropoffAddress}</TableCell>
+                <TableCell>{row.courier}</TableCell>
+                <TableCell>
+                  <StatusChip label={row.status} status={row.status} />
+                </TableCell>
+                <TableCell>
+                  <IconButton>
+                    <MoreVertIcon />
+                  </IconButton>
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody> */}
+        </Table>
+      </StyledTableContainer>
       <div>
         <span>미션을 고르세요</span>
         <select value={selectedMission} onChange={(e) => setSelectedMission(e.target.value)}>
@@ -200,7 +222,7 @@ const MenuMission = (e) => {
         </select>
         <span>팀을 고르세요</span>
         <select value={selectedTeam} onChange={(e) => setSelectedTeam(e.target.value)}>
-          {teamLists ? teamLists.map(team => (
+          {teams ? teams.map(team => (
             <option key={team.team_id} value={team.team_id}>{team.name}</option>
           )) : ''}
         </select>
@@ -214,3 +236,4 @@ const MenuMission = (e) => {
 };
 
 export default MenuMission;
+
