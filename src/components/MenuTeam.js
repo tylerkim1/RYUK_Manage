@@ -3,13 +3,14 @@ import '../css/MenuTeam.css';
 import { TextField, IconButton, InputAdornment } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import addTeamWhiteImage from '../assets/addTeam_white.png';
-import useTeam from '../hooks/useTeam.js';
+import useTeam from './hooks/useTeam.js';
 import TeamAddDialog from './Team/TeamAddDialog.js';
 import TeamInfoDialog from './Team/TeamInfoDialog.js';
 import TeamList from './Team/TeamList.js';
+import SearchComponent from './Team/SearchTeam.js';
 
 function MenuTeam() {
-  const { teams, newTeam, setNewTeam, initTeam, addTeam, deleteTeam } = useTeam();
+  const { teams, members, newTeam, setNewTeam, initTeam, addTeam, deleteTeam, getMembers } = useTeam();
   const [searchTerm, setSearchTerm] = useState('');
   const [filteredTeams, setFilteredTeams] = useState([]);
   const [openTeamAdd, setOpenTeamAdd] = useState(false);
@@ -41,16 +42,7 @@ function MenuTeam() {
     // 필터링된 팀 목록으로 상태 업데이트
     setFilteredTeams(filtered);
   };
-
-  // 검색 필드에서 엔터키를 눌렀을 때 검색 실행
-  const handleSearchKeyDown = (event) => {
-    if (event.key === 'Enter') {
-      handleSearch();
-    }
-  };
-
-  const handleSearchChange = (e) => setSearchTerm(e.target.value);
-
+  
   const toggleOpenTeamAdd = () => {
     setOpenTeamAdd((prev) => !prev);
     if (!openTeamAdd) {
@@ -60,6 +52,7 @@ function MenuTeam() {
 
   const toggleOpenTeam = (team) => {
     setSelectedTeam(team);
+    getMembers(team.team_id)
     setOpenTeam((prev) => !prev);
   };
 
@@ -67,27 +60,10 @@ function MenuTeam() {
     <div id="menu-team-container">
       <div id="menu-team-header">
         <div id="menu-team-search" autoComplete="chrome-off">
-          <TextField
-            label="검색"
-            variant="outlined"
-            value={searchTerm}
-            onChange={handleSearchChange}
-            onKeyDown={handleSearchKeyDown}
-            InputProps={{
-              endAdornment: (
-                <InputAdornment position="end">
-                  <IconButton onClick={handleSearch}>
-                    <SearchIcon />
-                  </IconButton>
-                </InputAdornment>
-              ),
-              autocomplete: 'off',
-              form: {
-                autocomplete: 'off',
-              },
-            }}
-            autoComplete="off"
-          />
+          <SearchComponent
+            searchTerm={searchTerm}
+            setSearchTerm={setSearchTerm}
+            onSearch={handleSearch} />
         </div>
         <div className="menu-team-add-button" onClick={toggleOpenTeamAdd}>
           <img src={addTeamWhiteImage} />
@@ -97,7 +73,7 @@ function MenuTeam() {
       <div id="menu-team-body">
         <div className="menu-team-list">
           <TeamList teams={filteredTeams} handleTeamSelect={toggleOpenTeam} handleDeleteTeam={deleteTeam} />
-          <TeamInfoDialog open={openTeam} handleClose={() => setOpenTeam(false)} selectedTeam={selectedTeam} />
+          <TeamInfoDialog open={openTeam} handleClose={() => setOpenTeam(false)} selectedTeam={selectedTeam} members={members} />
           <TeamAddDialog
             open={openTeamAdd}
             handleClose={toggleOpenTeamAdd}

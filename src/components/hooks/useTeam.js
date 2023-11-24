@@ -1,8 +1,9 @@
 import { useState, useEffect } from 'react';
-import { networkrequest } from '../components/Header/XHR';
+import { networkrequest } from '../Header/XHR';
 
 const useTeam = () => {
   const [teams, setTeams] = useState([]);
+  const [members, setMembers] = useState([]);
   const [newTeam, setNewTeam] = useState({
     name: '',
     startDay: null,
@@ -45,7 +46,11 @@ const useTeam = () => {
     networkrequest('team/delete/', { callerId: masterId, teamId: teamId }, console.log);
   };
 
-  return { teams, newTeam, setNewTeam, initTeam, addTeam, deleteTeam };
+  const getMembers = (teamId) => {
+    networkrequest('user/get/', {teamId: teamId}, (data) => setMembers(data.data));
+  }
+
+  return { teams, members, newTeam, setNewTeam, initTeam, addTeam, deleteTeam, getMembers };
 };
 
 export default useTeam;

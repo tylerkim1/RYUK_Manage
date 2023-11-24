@@ -1,7 +1,7 @@
 import React from 'react';
-import { Dialog, DialogTitle, DialogContent, DialogActions, Button } from '@mui/material';
+import { Dialog, DialogTitle, DialogContent, DialogActions, Button, List, ListItem } from '@mui/material';
 
-const TeamInfoDialog = ({ open, handleClose, selectedTeam }) => {
+const TeamInfoDialog = ({ open, handleClose, selectedTeam, members }) => {
   // Dialog 내부의 form elements와 로직은 여기에 포함됩니다.
 
   return (
@@ -13,6 +13,13 @@ const TeamInfoDialog = ({ open, handleClose, selectedTeam }) => {
           <span>카테고리: {selectedTeam?.category}</span>
           <span>소개: {selectedTeam?.introduce}</span>
         </div>
+        <List>
+          {members ? members.map((member, index) => (
+            <ListItem key={index}>
+              {member.user_name}
+            </ListItem>
+          )) : ''}
+        </List>
       </DialogContent>
       <DialogActions>
         <Button onClick={handleClose}>취소</Button>
