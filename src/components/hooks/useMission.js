@@ -20,11 +20,84 @@ const useMission = () => {
     }
   }, [teams]); // teams 배열이 변경될 때마다 이 useEffect가 실행됩니다.
 
-  const getMissions = (date, teamId) => {
-    networkrequest('mission/getTeam/', {date: date, teamId: teamId}, (data) => setMissions(data.data))
+  const getMissions = async (date, teamId) => {
+    
+    // const response = await networkrequest('mission/getTeam/', {date: date, teamId: teamId},console.log);
+    // const missionData = response.data;
+
+    const missionData = [
+      {
+          'user_mission_id': 1, 
+          'user_id': 101, 
+          'mission_id': 1001, 
+          'is_success': true, 
+          'mission_date': "2023-04-01", 
+          'from_team': true, 
+          'title': "Mission One", 
+          'mission_type': "매일하력", 
+          'submit_type': "Online"
+      },
+      {
+          'user_mission_id': 2, 
+          'user_id': 102, 
+          'mission_id': 1002, 
+          'is_success': false, 
+          'mission_date': "2023-04-02", 
+          'from_team': false, 
+          'title': "Mission Two", 
+          'mission_type': "시도해력", 
+          'submit_type': "Offline"
+      },
+      {
+          'user_mission_id': 3, 
+          'user_id': 103, 
+          'mission_id': 1003, 
+          'is_success': true, 
+          'mission_date': "2023-04-03", 
+          'from_team': true, 
+          'title': "Mission Three", 
+          'mission_type': "매일하력", 
+          'submit_type': "Online"
+      }
+  ]
+    
+  // Aggregate data by mission_id
+    const missionMap = {};
+    missionData.forEach(item => {
+      if (!missionMap[item.mission_id]) {
+        missionMap[item.mission_id] = {
+          mission_id: item.mission_id,
+          title: item.title,
+          category: item.mission_type,
+          successCount: 0,
+          totalCount: 0
+        };
+      }
+      missionMap[item.mission_id].totalCount++;
+      if (item.is_success) {
+        missionMap[item.mission_id].successCount++;
+      }
+    });
+    // Compute achievement rate and convert to array
+    const missionsWithRate = Object.values(missionMap).map(mission => {
+      const achievementRate = mission.totalCount > 0 ? `${mission.successCount} / ${mission.totalCount}` : 'N/A';
+      return { ...mission, achievementRate };
+    });
+  
+    setMissions(missionsWithRate);
   }
 
-  return { teams, missionPool, missions, getMissions };
+  const assignMission = (missionId, teamId) => {
+    console.log(missionId, teamId)
+    const req = {
+      date: "2023_11_16",
+      teamId: teamId,
+      missionId: missionId
+    }
+    networkrequest('mission/assign_team/', req, console.log)
+  }
+
+  return { teams, missionPool, missions, getMissions, assignMission };
 };
 
 export default useMission;

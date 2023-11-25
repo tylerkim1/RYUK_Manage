@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import '../css/MenuMission.css'
 import missionImage from '../assets/sample.png';
 import { Link } from 'react-router-dom';
@@ -18,6 +18,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
+import AssignMissionDialog from './Mission/AssginMissionDialog';
 
 // 스타일을 적용한 컴포넌트들을 정의합니다.
 const StyledTableContainer = styled(TableContainer)(({ theme }) => ({
@@ -26,29 +27,37 @@ const StyledTableContainer = styled(TableContainer)(({ theme }) => ({
 }));
 
 const MenuMission = () => {
-  const { teams, missionPool, missions, getMissions } = useMission();
+  const { teams, missionPool, missions, getMissions, assignMission } = useMission();
   const [selectedMission, setSelectedMission] = useState();
   const [selectedTeam, setSelectedTeam] = useState(null);
   const [selectedCategory, setSelectedCategory] = useState(0);
   const [selectedDate, setSelectedDate] = useState(null);
   const categories = ['전체', '매일하력', '시도해력', '마음봄력', '유유자력', '레벨업력'];
+  const [filteredMissions, setFilteredMissions] = useState([]);
+  const [openAssignMission, setOpenAssignMission] = useState(false);
 
-  console.log(selectedDate)
+  useEffect(() => {
+    if (selectedTeam) {
+      getMissions(selectedDate, selectedTeam);
+    }
+  }, [selectedTeam, selectedDate, getMissions]);
+
+  useEffect(() => {
+    if (selectedCategory === 0) { // "전체" category selected
+      setFilteredMissions(missions);
+    } else {
+      const filtered = missions.filter(mission => mission.category === categories[selectedCategory]);
+      setFilteredMissions(filtered);
+    }
+  }, [selectedCategory, missionPool]);
 
   const handleDateChange = (newValue) => {
     setSelectedDate(newValue);
   };
 
-  const handleAddMissionToTeam = (missionId, teamId) => {
-    console.log(missionId, teamId)
-    const req = {
-      date: "2023_11_16",
-      teamId: teamId,
-      missionId: missionId
-    }
-
-    networkrequest('mission/assign_team/', req, console.log)
-  }
+  const toggleOpenMissionAssign = () => {
+    setOpenAssignMission((prev) => !prev);
+  };
 
   return (
     <div id="menu-mission-container">
@@ -85,6 +94,10 @@ const MenuMission = () => {
             </Select>
           </FormControl>
         </div>
+        
+        <div className="menu-team-add-button" onClick={toggleOpenMissionAssign}>
+          <span>미션 할당</span>
+        </div>
         <LocalizationProvider dateAdapter={AdapterDayjs}>
           <DesktopDatePicker
             value={selectedDate}
@@ -103,18 +116,25 @@ const MenuMission = () => {
               <TableCell></TableCell>
             </TableRow>
           </TableHead>
-          {/* <TableBody>
-            {rows.map((row) => (
-              <TableRow key={row.id}>
-                <TableCell>{row.pickupAddress}</TableCell>
-                <TableCell>{row.dropoffAddress}</TableCell>
-                <TableCell>{row.courier}</TableCell>
+          <TableBody>
+            {filteredMissions.map((mission) => (
+              <TableRow key={mission.mission_id}>
+                <TableCell>{mission.title}</TableCell>
+                <TableCell>{mission.category}</TableCell>
+                <TableCell>{mission.achievementRate}</TableCell>
               </TableRow>
             ))}
-          </TableBody> */}
+          </TableBody>
         </Table>
       </StyledTableContainer>
-      <div>
+      <AssignMissionDialog 
+        open={openAssignMission} 
+        teams={teams}
+        missionPool={missionPool}
+        assignMission={assignMission}
+        handleClose={toggleOpenMissionAssign} 
+        />
+      {/* <div>
         <span>미션을 고르세요</span>
         <select value={selectedMission} onChange={(e) => setSelectedMission(e.target.value)}>
           {missionPool ? missionPool.map(mission => (
@@ -131,7 +151,7 @@ const MenuMission = () => {
       </div>
       <Link to={'/mainpage/mission-add'}>
         <button>미션 풀 추가 페이지로 가기</button>
-      </Link>
+      </Link> */}
     </div>
   );
 };
