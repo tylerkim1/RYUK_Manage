@@ -9,11 +9,11 @@ const AddMissionDialog = ({ open, handleClose, addMission }) => {
   const categories = ['매일하력', '시도해력', '마음봄력', '유유자력', '레벨업력'];
 
   return (
-    <Dialog id="menu-team-add-dialog" open={open} onClose={handleClose}>
+    <Dialog id="menu-mission-add-mission-dialog" open={open} onClose={handleClose}>
       <DialogTitle>{"새로운 미션 추가"}</DialogTitle>
-      <DialogContent>
-        <TextField className="menu-mission-add-input" label="미션 제목" variant="outlined" fullWidth value={newMission.title} onChange={(e) => setNewMission({ ...newMission, title: e.target.value })} />
-        <FormControl component="fieldset" className="menu-mission-add-input">
+      <DialogContent id="menu-mission-add-mission-dialog-body">
+        <TextField className="mui-input" label="미션 제목" variant="outlined" fullWidth value={newMission.title} onChange={(e) => setNewMission({ ...newMission, title: e.target.value })} />
+        <FormControl component="fieldset" className="mui-input">
           <FormLabel component="legend">카테고리</FormLabel>
           <RadioGroup
             row
@@ -24,7 +24,7 @@ const AddMissionDialog = ({ open, handleClose, addMission }) => {
           >
             {categories.map((category, index) => (
               <FormControlLabel
-                id='menu-team-add-category-text'
+                className='category-radio-text'
                 key={index}
                 value={category}
                 control={<Radio />}
@@ -35,8 +35,8 @@ const AddMissionDialog = ({ open, handleClose, addMission }) => {
         </FormControl>
       </DialogContent>
       <DialogActions>
-        <div className="menu-mission-add-button" onClick={() => { addMission(newMission); handleClose(); }}>
-          <span>팀 만들기</span>
+        <div id="menu-mission-add-mission-button" onClick={() => { addMission(newMission); handleClose(); setNewMission({title: '', missionType: ''})}}>
+          <span>미션 추가하기</span>
         </div>
         <Button onClick={handleClose}>취소</Button>
       </DialogActions>

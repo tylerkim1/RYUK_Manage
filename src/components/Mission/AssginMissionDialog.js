@@ -11,30 +11,23 @@ const AssignMissionDialog = ({ open, teams, missionPool, assignMission, addMissi
         setOpenAddMission((prev) => !prev);
     }
 
+    const handleAssign = () => {
+        assignMission(selectedMission, selectedTeam); handleClose();
+        setSelectedMission(null);
+        setSelectedTeam(null);
+    }
+
     return (
         <>
             <Dialog id="menu-mission-assign-dialog" open={open} onClose={handleClose}>
-                <DialogTitle>{"미션 할당"}</DialogTitle>
-                <div onClick={toggleAddMissionDialog}>
-                    <span>새로운 미션 추가</span>
-                </div>
-                <DialogContent>
-                    <FormControl className="menu-mission-select" id="menu-mission-team-select">
-                        <InputLabel className="menu-mission-select-label">팀 선택</InputLabel>
-                        <Select
-                            labelId="team-select-label"
-                            value={selectedTeam}
-                            label="팀 선택"
-                            onChange={(e) => setSelectedTeam(e.target.value)}
-                        >
-                            {teams && teams.map((team) => (
-                                <MenuItem key={team.team_id} value={team.team_id}>
-                                    {team.name}
-                                </MenuItem>
-                            ))}
-                        </Select>
-                    </FormControl>
-                    <FormControl className="menu-mission-select" id="menu-mission-team-select">
+                <DialogTitle id="menu-mission-assign-dialog-header">
+                    미션 할당
+                    <div id="menu-mission-add-mission-button" onClick={toggleAddMissionDialog}>
+                        <span>새로운 미션 추가</span>
+                    </div>
+                </DialogTitle>
+                <DialogContent id="menu-mission-assign-dialog-body">
+                    <FormControl className="mui-select" id="mission-select">
                         <InputLabel className="menu-mission-select-label">미션 선택</InputLabel>
                         <Select
                             labelId="mission-select-label"
@@ -49,10 +42,25 @@ const AssignMissionDialog = ({ open, teams, missionPool, assignMission, addMissi
                             ))}
                         </Select>
                     </FormControl>
+                    <FormControl className="mui-select" id="team-select">
+                        <InputLabel className="mui-select-label" id="mui-select-team-label">팀 선택</InputLabel>
+                        <Select
+                            labelId="team-select-label"
+                            value={selectedTeam}
+                            label="팀 선택"
+                            onChange={(e) => setSelectedTeam(e.target.value)}
+                        >
+                            {teams && teams.map((team) => (
+                                <MenuItem key={team.team_id} value={team.team_id}>
+                                    {team.name}
+                                </MenuItem>
+                            ))}
+                        </Select>
+                    </FormControl>
                 </DialogContent>
                 <DialogActions>
-                    <div className="menu-mission-assign-button" onClick={() => { assignMission(selectedMission, selectedTeam); handleClose(); }}>
-                        <span>미션 부여하기</span>
+                    <div className="menu-mission-assign-button" onClick={handleAssign}>
+                        <span>할당</span>
                     </div>
                     <Button onClick={handleClose}>취소</Button>
                 </DialogActions>
@@ -61,7 +69,7 @@ const AssignMissionDialog = ({ open, teams, missionPool, assignMission, addMissi
                 open={openAddMission}
                 handleClose={toggleAddMissionDialog}
                 addMission={addMission}
-                />
+            />
         </>
     );
 };

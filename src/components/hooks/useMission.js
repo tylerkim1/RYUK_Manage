@@ -6,19 +6,38 @@ const useMission = () => {
   const [teams, setTeams] = useState([]);
   const [missionPool, setMissionPool] = useState([]);
   const [missions, setMissions] = useState([]);
-
-  const today = dayjs().format("YYYY_MM_DD");
+  const [selectedTeam, setSelectedTeam] = useState(null);
+  const [selectedCategory, setSelectedCategory] = useState(0);
+  const [selectedDate, setSelectedDate] = useState(dayjs());
+  const [filteredMissions, setFilteredMissions] = useState([]);
+  const categories = ['전체', '매일하력', '시도해력', '마음봄력', '유유자력', '레벨업력'];
 
   useEffect(() => {
     networkrequest('team/all/', {}, (data) => setTeams(data.data));
-    networkrequest('mission/all/', {}, (data) => setMissionPool(data.data));
+    if (teams.length > 0) {
+      setSelectedTeam(teams[0].team_id);
+    }
+    fetchMissionPool();
   }, []);
   
+  // useEffect(() => {
+  //   if (teams.length > 0) {
+  //     setSelectedTeam(teams[0].team_id);
+  //   }
+  // }, [teams]);
+  
   useEffect(() => {
-    if (teams.length > 0) {
-      getMissions(today, teams[0].team_id);
+    if (selectedTeam) {
+      getMissions(selectedDate.format("YYYY_MM_DD"), selectedTeam);
+      filterMissionsByCategory(selectedCategory);
     }
-  }, [teams]); // teams 배열이 변경될 때마다 이 useEffect가 실행됩니다.
+  }, [selectedTeam, selectedDate, selectedCategory]);
+
+  const fetchMissionPool = () => {
+    networkrequest('mission/all/', {}, (data) => {
+      setMissionPool(data.data);
+    });
+  };
 
   const getMissions = async (date, teamId) => {
     
@@ -85,7 +104,18 @@ const useMission = () => {
     });
   
     setMissions(missionsWithRate);
+    // setFilteredMissions(missionsWithRate);
   }
+  
+  const filterMissionsByCategory = (categoryIndex) => {
+    const category = categories[categoryIndex];
+    if (category === '전체') {
+      setFilteredMissions(missions);
+    } else {
+      const filtered = missions.filter(mission => mission.category === category);
+      setFilteredMissions(filtered);
+    }
+  };
 
   const assignMission = (missionId, teamId) => {
     console.log(missionId, teamId)
@@ -94,17 +124,20 @@ const useMission = () => {
       teamId: teamId,
       missionId: missionId
     }
-    networkrequest('mission/assign_team/', req, console.log)
+    networkrequest('mission/assign_team/', req, (data)=>{
+      if (data.status === "ok") alert("할당되었습니다.");
+    })
   }
 
   const addMission = (mission) => {
     console.log(mission);
     networkrequest('mission/add/', mission, (data)=>{
-      alert(data.status);
+      if (data.status === "ok") alert("추가되었습니다.");
+      fetchMissionPool();
     });
   }
 
-  return { teams, missionPool, missions, getMissions, assignMission, addMission };
+  return { teams, missionPool, missions, getMissions, assignMission, addMission, selectedTeam, setSelectedTeam, categories, selectedCategory, setSelectedCategory, selectedDate, setSelectedDate, filteredMissions, filterMissionsByCategory};
 
 };
 

@@ -109,27 +109,79 @@
   font-size: 0.8rem;
 }
 
-/* #date {
-  display: flex;
-  flex: 1;
-  align-items: center;
-  margin-bottom: 48px;
-} */
-
 #date-text {
   font-size: 40px;
   font-weight: 800;
   margin-right: 10px;
 }
 
-.menu-mission-select {
+.mui-select {
   margin-right: 10px !important;
 }
 
-#menu-mission-team-select {
+#team-select {
   width: 200px;
 }
 
-#menu-mission-category-select {
+#category-select {
   width: 150px;
+}
+
+#mission-select {
+  width: auto;
+}
+
+.menu-mission-assign-button {
+  display: flex;
+  flex-direction: row;
+  width: 180px;
+  justify-content: center;
+  align-items: center;
+  background-color: #F3736D;
+  border-radius: 2rem;
+  margin-right: 40px;
+  padding: 0px 30px 0px 30px;
+  cursor: pointer;
+}
+
+.menu-mission-assign-button span {
+  font-size: 20px;
+  font-weight: 800;
+  color: #FFFFFF;
+}
+
+#menu-mission-assign-dialog-header {
+  display: flex;
+  width: 400px;
+  justify-content: space-between;
+}
+
+#menu-mission-add-mission-button span{
+  color: #F3736D;
+  cursor: pointer;
+}
+
+#menu-mission-assign-dialog-body {
+  display: flex;
+  flex-direction: column;
+}
+
+#menu-mission-assign-dialog-body > * {
+  margin: 10px 0;
+}
+
+#menu-mission-assign-dialog-body #team-select {
+  width: auto;
+}
+
+#menu-mission-assign-dialog .menu-mission-assign-button  {
+  justify-content: center;
+  width: 140px;
+  height: 30px;
+  margin-right: 0px;
+  border-radius: 1rem;
+}
+
+#menu-mission-assign-dialog .menu-mission-assign-button span {
+  font-size: 15px;
 }

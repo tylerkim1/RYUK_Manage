@@ -20,10 +20,10 @@ const TeamAddDialog = ({ open, handleClose, newTeam, setNewTeam, addTeam }) => {
     <Dialog id="menu-team-add-dialog" open={open} onClose={handleClose}>
             <DialogTitle>{"팀 추가"}</DialogTitle>
             <DialogContent>
-              <TextField className="menu-team-add-input" label="팀 이름" variant="outlined" fullWidth value={newTeam.name} onChange={(e) => setNewTeam({ ...newTeam, name: e.target.value })} />
-              <TextField className="menu-team-add-input" label="링크" variant="outlined" fullWidth value={newTeam.link} onChange={(e) => setNewTeam({ ...newTeam, link: e.target.value })} />
-              <TextField className="menu-team-add-input" label="팀장 ID" variant="outlined" fullWidth value={newTeam.masterId} onChange={(e) => setNewTeam({ ...newTeam, masterId: e.target.value })} />
-              <FormControl component="fieldset" className="menu-team-add-input">
+              <TextField className="mui-input" label="팀 이름" variant="outlined" fullWidth value={newTeam.name} onChange={(e) => setNewTeam({ ...newTeam, name: e.target.value })} />
+              <TextField className="mui-input" label="링크" variant="outlined" fullWidth value={newTeam.link} onChange={(e) => setNewTeam({ ...newTeam, link: e.target.value })} />
+              <TextField className="mui-input" label="팀장 ID" variant="outlined" fullWidth value={newTeam.masterId} onChange={(e) => setNewTeam({ ...newTeam, masterId: e.target.value })} />
+              <FormControl component="fieldset" className="mui-input">
                 <FormLabel component="legend">카테고리</FormLabel>
                 <RadioGroup
                   row
@@ -34,7 +34,7 @@ const TeamAddDialog = ({ open, handleClose, newTeam, setNewTeam, addTeam }) => {
                 >
                   {categories.map((category, index) => (
                     <FormControlLabel
-                      id='menu-team-add-category-text'
+                      className='category-radio-text'
                       key={index}
                       value={category}
                       control={<Radio />}
@@ -43,7 +43,7 @@ const TeamAddDialog = ({ open, handleClose, newTeam, setNewTeam, addTeam }) => {
                   ))}
                 </RadioGroup>
               </FormControl>
-              <TextField className="menu-team-add-input" label="소개글" variant="outlined" fullWidth value={newTeam.introduce} onChange={(e) => setNewTeam({ ...newTeam, introduce: e.target.value })} />
+              <TextField className="mui-input" label="소개글" variant="outlined" fullWidth value={newTeam.introduce} onChange={(e) => setNewTeam({ ...newTeam, introduce: e.target.value })} />
 
               <div id="menu-team-add-datepicker-wrapper">
                 <LocalizationProvider dateAdapter={AdapterDayjs}>

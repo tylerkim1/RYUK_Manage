@@ -50,7 +50,7 @@ function MainPage() {
                     <Route path="menu-statistics" element={<MenuStatistics />} />
                     {/* <Route path="menu-user" element={<MenuUser />} /> */}
                     <Route path="menu-mission" element={<MenuMission />} />
-                    <Route path="mission-add" element={<MissionAdd />} />
+                    {/* <Route path="mission-add" element={<MissionAdd />} /> */}
                     <Route path="menu-team" element={<MenuTeam />} />
                     <Route path="menu-user" element={<MenuPerson />} />
                     <Route path="*" element={<MenuStatistics />} />

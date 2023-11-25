@@ -21,7 +21,7 @@
     font-size: 20px;
 }
 
-.menu-team-add-input {
+.mui-input {
     margin-top: 15px !important;
 }
 
@@ -112,7 +112,7 @@
     flex-direction: column;
 }
 
-#menu-team-add-category-text span {
+.category-radio-text span {
     font-size: 15px;
 }
 
@@ -130,4 +130,8 @@
 #menu-team-info-dialog-delete-button span {
     font-size: 15px;
     color: #FF0000;
+}
+
+#menu-mission-add-mission-dialog-body > * {
+    margin: 10px 0;
 }
