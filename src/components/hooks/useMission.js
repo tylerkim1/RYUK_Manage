@@ -20,12 +20,6 @@ const useMission = () => {
     fetchMissionPool();
   }, []);
   
-  // useEffect(() => {
-  //   if (teams.length > 0) {
-  //     setSelectedTeam(teams[0].team_id);
-  //   }
-  // }, [teams]);
-  
   useEffect(() => {
     if (selectedTeam) {
       getMissions(selectedDate.format("YYYY_MM_DD"), selectedTeam);

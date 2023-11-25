@@ -14,9 +14,10 @@ const useTeam = (isNumbers = false) => {
     introduce: '',
   });
   const [teamNums, setTeamNums] = useState([]);
+  console.log("teams:", teams)
 
   useEffect(() => {
-    networkrequest('team/all/', {}, (data) => setTeams(data.data));
+    fetchTeams();
   }, []);
 
   useEffect(() => {
@@ -29,6 +30,12 @@ const useTeam = (isNumbers = false) => {
     })
   }, [teams]);
 
+  const fetchTeams = () => {
+    networkrequest('team/all/', {}, (data) => {
+      setTeams(data.data);
+    });
+    // console.log("debug 1")
+  };
 
   const initTeam = () => {
     setNewTeam({
@@ -48,17 +55,24 @@ const useTeam = (isNumbers = false) => {
       if (key === 'startDay' || key === 'endDay') req[key] = req[key].format("YYYY_MM_DD")
     }
 
-    networkrequest('team/add/', req, (data) => setTeams([...teams, data.data]));
+    networkrequest('team/add/', req, (data) => {
+      if (data.status === "ok") alert("추가되었습니다.");
+      fetchTeams();
+    });
     initTeam();
   };
 
   const deleteTeam = (masterId, teamId) => {
-    networkrequest('team/delete/', { callerId: masterId, teamId: teamId }, console.log);
+    networkrequest('team/delete/', { callerId: masterId, teamId: teamId }, (data) => {
+      if (data.status === "ok") alert("삭제되었습니다.");
+      fetchTeams();
+    });
   };
 
   const getMembers = (teamId) => {
     networkrequest('user/get/', {teamId: teamId}, (data) => setMembers(data.data));
   }
+
 
   if (isNumbers) return teamNums
   else return { teams, members, newTeam, setNewTeam, initTeam, addTeam, deleteTeam, getMembers };
