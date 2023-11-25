@@ -14,7 +14,6 @@ const MenuTeam = () => {
   const [openTeamAdd, setOpenTeamAdd] = useState(false);
   const [openTeam, setOpenTeam] = useState(false);
   const [selectedTeam, setSelectedTeam] = useState(null);
-  // console.log(teams)
 
   // 검색어가 변경될 때마다 팀 목록을 필터링합니다.
   useEffect(() => {

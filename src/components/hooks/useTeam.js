@@ -1,20 +1,22 @@
 import { useState, useEffect } from 'react';
 import { networkrequest } from '../Header/XHR';
+import dayjs from 'dayjs';
+
+const today = dayjs();
 
 const useTeam = (isNumbers = false) => {
   const [teams, setTeams] = useState([]);
   const [members, setMembers] = useState([]);
   const [newTeam, setNewTeam] = useState({
     name: '',
-    startDay: null,
-    endDay: null,
+    startDay: today,
+    endDay: today.add(7, 'day'),
     link: '',
     masterId: '',
     category: '',
     introduce: '',
   });
   const [teamNums, setTeamNums] = useState([]);
-  console.log("teams:", teams)
 
   useEffect(() => {
     fetchTeams();
@@ -40,8 +42,8 @@ const useTeam = (isNumbers = false) => {
   const initTeam = () => {
     setNewTeam({
       name: '',
-      startDay: null,
-      endDay: null,
+      startDay: today,
+      endDay: today.add(7, 'day'),
       link: '',
       masterId: '',
       category: '',

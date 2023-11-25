@@ -83,6 +83,7 @@ const MenuMission = () => {
         </div>
         <LocalizationProvider dateAdapter={AdapterDayjs}>
           <DesktopDatePicker
+            label="날짜"
             value={selectedDate}
             onChange={handleDateChange}
             renderInput={(params) => <TextField {...params} />}

@@ -6,7 +6,6 @@ import { DemoContainer, DemoItem } from '@mui/x-date-pickers/internals/demo/Demo
 
 const TeamAddDialog = ({ open, handleClose, newTeam, setNewTeam, addTeam }) => {
   const categories = ['매일하력', '시도해력', '마음봄력', '유유자력', '레벨업력'];
-  // Dialog 내부의 form elements와 로직은 여기에 포함됩니다.
 
   const handleStartDayChange = (newValue) => {
     setNewTeam({ ...newTeam, startDay: newValue });
