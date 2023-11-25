@@ -97,7 +97,15 @@ const useMission = () => {
     networkrequest('mission/assign_team/', req, console.log)
   }
 
-  return { teams, missionPool, missions, getMissions, assignMission };
+  const addMission = (mission) => {
+    console.log(mission);
+    networkrequest('mission/add/', mission, (data)=>{
+      alert(data.status);
+    });
+  }
+
+  return { teams, missionPool, missions, getMissions, assignMission, addMission };
+
 };
 
 export default useMission;

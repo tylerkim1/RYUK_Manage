@@ -27,7 +27,7 @@ const StyledTableContainer = styled(TableContainer)(({ theme }) => ({
 }));
 
 const MenuMission = () => {
-  const { teams, missionPool, missions, getMissions, assignMission } = useMission();
+  const { teams, missionPool, missions, getMissions, assignMission, addMission } = useMission();
   const [selectedMission, setSelectedMission] = useState();
   const [selectedTeam, setSelectedTeam] = useState(null);
   const [selectedCategory, setSelectedCategory] = useState(0);
@@ -133,25 +133,8 @@ const MenuMission = () => {
         missionPool={missionPool}
         assignMission={assignMission}
         handleClose={toggleOpenMissionAssign} 
+        addMission={addMission}
         />
-      {/* <div>
-        <span>미션을 고르세요</span>
-        <select value={selectedMission} onChange={(e) => setSelectedMission(e.target.value)}>
-          {missionPool ? missionPool.map(mission => (
-            <option key={mission.mission_id} value={mission.mission_id}>{mission.title}</option>
-          )) : <div></div>}
-        </select>
-        <span>팀을 고르세요</span>
-        <select value={selectedTeam} onChange={(e) => setSelectedTeam(e.target.value)}>
-          {teams ? teams.map(team => (
-            <option key={team.team_id} value={team.team_id}>{team.name}</option>
-          )) : ''}
-        </select>
-        <button onClick={() => handleAddMissionToTeam(selectedMission, selectedTeam)}>팀에 미션 추가하기</button>
-      </div>
-      <Link to={'/mainpage/mission-add'}>
-        <button>미션 풀 추가 페이지로 가기</button>
-      </Link> */}
     </div>
   );
 };
