@@ -43,9 +43,7 @@ const Home = () => {
       }, []); // 빈 배열을 전달하여 컴포넌트가 마운트될 때만 실행되도록 함
     // console.log(inpval);
     const getdata = (e) => {
-        // console.log(e.target.value);
         const { value, name } = e.target;
-        // console.log(value,name);
         setInpval(() => {
             return {
                 ...inpval,
@@ -122,56 +120,17 @@ const Home = () => {
                     user_name : inpval.name, 
                     nickname : inpval.nickname, 
                     email : inpval.email, 
-                    team_id : null, 
+                    team_id : 0, 
                     is_manager : 1
                 }
                 setData((prevData) => [...prevData, addD]);
                 console.log('setData after', data);
-                // if (result.data !== false){
-                //     setinfo_ma(info_ma => info_ma.concat(
-                //         {
-                //             user_id : result.data.user_id,
-                //             login_id : inpval.login_id, 
-                //             password : inpval.password, 
-                //             user_name : inpval.user_name, 
-                //             nickname : inpval.nickname, 
-                //             email : inpval.email, 
-                //             team_id : inpval.team_id, 
-                //             is_manager : inpval.is_manager
-                //         }
-                //     ))
-                // }
-                // a = result.user_id;
+
             })
             .catch((error) => {
                 console.error('Error:', error.message);
             });
-            // var newPerson = {
-            //     login_id: inpval.id,
-            //     password: inpval.password,
-            //     user_name: inpval.name,
-            //     nickname: inpval.nickname,
-            //     email: inpval.email,
-            //   };
-            // var res = {};
-            // for (let [key, value] of Object.entries(newPerson)) {
 
-            //     res[key] = value.replace(/-/g, '_');
-            // }
-            // networkrequest('user/add/', res, console.log);
-
-
-            // var change = {
-            //     userId : inpval.id
-            // }
-            // var res1 = {};
-            // for (let [key, value] of Object.entries(change)) {
-
-            //     res1[key] = value.replace(/-/g, '_');
-            // }
-            // console.log(res1)
-            // networkrequest('user/add/', res, console.log);
-            // networkrequest('user/makeManager',res1,console.log);
             console.log("성공적으로 회원가입되었습니다");
             history("/login")
             localStorage.setItem("useryoutube",JSON.stringify([...data,inpval]));

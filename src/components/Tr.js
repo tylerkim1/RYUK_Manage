@@ -4,7 +4,7 @@ import Td from './Td';
 const Tr = ({info, handleRemove, handleEdit})=> {
 
     const sortedinfo = info.sort((a, b) => (a.user_name > b.user_name ? 1 : -1));
-    console.log('sort',sortedinfo);
+    // console.log('sort',sortedinfo);
     
     return (
         <tbody>
