@@ -26,7 +26,6 @@ const Modal = ({selectedData, handleCancel, handleEditSubmit})=> {
     
     const onSubmitEdit = (e) => {
         e.preventDefault();
-        console.log(edited)
                 
         // const n = name[i];
         var res = {
@@ -37,6 +36,8 @@ const Modal = ({selectedData, handleCancel, handleEditSubmit})=> {
             email : edited.email,
             teamId : edited.team_id
         }
+
+
         networkrequest('user/changeInfo/', res, console.log);
         console.log('end');
 

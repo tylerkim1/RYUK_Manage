@@ -20,7 +20,7 @@ const Post = ({onSaveData})=> {
             setForm({
                 ...form,
                 [name] : 1,
-                // 'team_id' : null
+                'team_id' : 0
             })
 
         }
@@ -28,6 +28,7 @@ const Post = ({onSaveData})=> {
             setForm({
                 ...form,
                 [name]: 0,
+                'team_id' : 0
             })
         }
         else {
@@ -64,9 +65,9 @@ const Post = ({onSaveData})=> {
             <div className = 'text-left'>
                 {/* <button className='bg-green-600 py-1 text-center px-6 md:px-10 md:py-2 text-white rounded text-xl md:text-base mt-2' type='submit' style={{ position: 'absolute', top: '68px', left: '24.2%', transform: 'translateX(-50%)' }}>추가</button> */}
                 
-                <button className='bg-green-600 py-1 px-6 md:px-10 md:py-2 text-white rounded text-xl md:text-base mt-2' type='submit'>추가</button>
+                <button className='bg-red-400 py-1 px-6 md:px-10 md:py-2 text-white rounded text-xl md:text-base mt-2' type='submit'>추가</button>
             </div>
-            <div style={{ border: '1.5px solid green', padding: '20px', marginTop: '0px' }}>
+            <div style={{ border: '1.5px solid #fe717f', padding: '20px', marginTop: '0px' }}>
                 <div className="flex flex-col md:flex-row mb-1">
                     <label htmlFor = "user_name" className = "w-full flex-1 mx-2 text-xs font-semibold text-gray-600 uppercase">이름
                         <input className = "w-full py-3 px-1 mt-1 text-gray-800 appearance-none border-2 border-gray-100 focus:text-gray-500 focus:outline-none focus:border-gray-200"

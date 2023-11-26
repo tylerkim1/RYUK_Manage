@@ -38,8 +38,14 @@ const Modal2 = ({selectedData, handleCancel, handleEditSubmit})=> {
             password: edited.password,
             user_name : edited.user_name,
             nickname: edited.nickname,
-            email : edited.email
+            email : edited.email,
+            teamId : 0
         }
+        console.log('수정하기',res)
+
+        networkrequest('user/changeInfo/', res, console.log);
+        console.log('end');
+
         
         handleEditSubmit(edited);
     }
