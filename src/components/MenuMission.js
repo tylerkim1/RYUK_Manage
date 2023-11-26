@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import '../css/MenuMission.css'
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
@@ -27,20 +27,21 @@ const MenuMission = () => {
   } = useMission();
   const [openAssignMission, setOpenAssignMission] = useState(false);
 
+  // console.log(selectedTeam, selectedCategory, selectedDate)
+
   const handleDateChange = (newValue) => {
     setSelectedDate(newValue);
   };
   
   const handleTeamChange = (e) => {
     setSelectedTeam(e.target.value)
-    getMissions(selectedDate, e.target.value)
+    console.log("team Id", e.target.value)
+    getMissions(selectedDate.format("YYYY_MM_DD"), e.target.value)
   };
 
   const handleCategoryChange = (e) => {
     setSelectedCategory(e.target.value);
-    filterMissionsByCategory(e.target.value);
   };
-
 
   const toggleOpenMissionAssign = () => {
     setOpenAssignMission((prev) => !prev);
@@ -98,6 +99,7 @@ const MenuMission = () => {
         open={openAssignMission} 
         teams={teams}
         missionPool={missionPool}
+        selectedDate={selectedDate}
         assignMission={assignMission}
         handleClose={toggleOpenMissionAssign} 
         addMission={addMission}

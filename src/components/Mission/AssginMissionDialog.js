@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Dialog, DialogTitle, DialogContent, DialogActions, Button, FormControl, InputLabel, MenuItem, Select } from '@mui/material';
 import AddMissionDialog from './AddMissionDialog';
 
-const AssignMissionDialog = ({ open, teams, missionPool, assignMission, addMission, handleClose }) => {
+const AssignMissionDialog = ({ open, teams, missionPool, selectedDate, assignMission, addMission, handleClose }) => {
     const [selectedMission, setSelectedMission] = useState(null);
     const [selectedTeam, setSelectedTeam] = useState(null);
     const [openAddMission, setOpenAddMission] = useState(false)
@@ -12,7 +12,7 @@ const AssignMissionDialog = ({ open, teams, missionPool, assignMission, addMissi
     }
 
     const handleAssign = () => {
-        assignMission(selectedMission, selectedTeam); handleClose();
+        assignMission(selectedMission, selectedTeam, selectedDate); handleClose();
         setSelectedMission(null);
         setSelectedTeam(null);
     }

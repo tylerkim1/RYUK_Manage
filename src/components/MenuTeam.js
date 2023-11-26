@@ -8,7 +8,7 @@ import TeamList from './Team/TeamList.js';
 import SearchComponent from './Team/SearchComponent.js';
 
 const MenuTeam = () => {
-  const { teams, members, newTeam, setNewTeam, initTeam, addTeam, deleteTeam, getMembers } = useTeam();
+  const { teams, members, newTeam, setNewTeam, initTeam, addTeam, deleteTeam, getMembers, appliedMembers, setAppliedMembers, getAppliedMembers, assignUser } = useTeam();
   const [searchTerm, setSearchTerm] = useState('');
   const [filteredTeams, setFilteredTeams] = useState([]);
   const [openTeamAdd, setOpenTeamAdd] = useState(false);
@@ -49,6 +49,7 @@ const MenuTeam = () => {
   const toggleOpenTeam = (team) => {
     setSelectedTeam(team);
     getMembers(team.team_id)
+    getAppliedMembers(team.team_id)
     setOpenTeam((prev) => !prev);
   };
 
@@ -68,13 +69,18 @@ const MenuTeam = () => {
       </div>
       <div id="menu-team-body">
         <div className="menu-team-list">
-          <TeamList teams={filteredTeams} handleTeamSelect={toggleOpenTeam} handleDeleteTeam={deleteTeam} />
+          <TeamList 
+            teams={filteredTeams} 
+            handleTeamSelect={toggleOpenTeam} 
+            handleDeleteTeam={deleteTeam} />
           <TeamInfoDialog 
             open={openTeam} 
             handleClose={() => setOpenTeam(false)}
             deleteSelectedTeam={deleteTeam}
             selectedTeam={selectedTeam} 
-            members={members} />
+            members={members}
+            appliedMembers={appliedMembers}
+            assignUser={assignUser} />
           <TeamAddDialog
             open={openTeamAdd}
             handleClose={toggleOpenTeamAdd}

@@ -12,20 +12,37 @@ const useMission = () => {
   const [filteredMissions, setFilteredMissions] = useState([]);
   const categories = ['전체', '매일하력', '시도해력', '마음봄력', '유유자력', '레벨업력'];
 
+  console.log(missions, filteredMissions)
   useEffect(() => {
+    console.log(1);
     networkrequest('team/all/', {}, (data) => setTeams(data.data));
-    if (teams.length > 0) {
-      setSelectedTeam(teams[0].team_id);
-    }
     fetchMissionPool();
   }, []);
   
   useEffect(() => {
-    if (selectedTeam) {
-      getMissions(selectedDate.format("YYYY_MM_DD"), selectedTeam);
-      filterMissionsByCategory(selectedCategory);
+    if (teams.length > 0 && !selectedTeam) {
+      console.log(2)
+      setSelectedTeam(teams[0].team_id); // 첫 번째 팀을 선택
+      console.log(3)
+      getMissions(selectedDate.format("YYYY_MM_DD"), teams[0].team_id);
     }
-  }, [selectedTeam, selectedDate, selectedCategory]);
+  }, [teams]);
+
+  useEffect(() => {
+    if (selectedTeam) {
+      console.log(4)
+      getMissions(selectedDate.format("YYYY_MM_DD"), selectedTeam);
+    }
+  }, [selectedTeam, selectedDate]);
+
+  useEffect(() => {
+    console.log("selectedCategory가 업데이트 되었습니다:", selectedCategory);
+    filterMissionsByCategory(selectedCategory);
+  }, [selectedCategory]); // selectedCategory가 변경될 때마다 실행됩니다.
+
+  useEffect(() => {
+    filterMissionsByCategory(selectedCategory)
+  }, [missions])
 
   const fetchMissionPool = () => {
     networkrequest('mission/all/', {}, (data) => {
@@ -34,87 +51,51 @@ const useMission = () => {
   };
 
   const getMissions = async (date, teamId) => {
-    
-    // const response = await networkrequest('mission/getTeam/', {date: date, teamId: teamId},console.log);
-    // const missionData = response.data;
+    networkrequest('mission/getTeam/', {teamId: teamId, date: date}, (data) => {
+      const missionData = data.data;
 
-    const missionData = [
-      {
-          'user_mission_id': 1, 
-          'user_id': 101, 
-          'mission_id': 1001, 
-          'is_success': true, 
-          'mission_date': "2023-04-01", 
-          'from_team': true, 
-          'title': "Mission One", 
-          'mission_type': "매일하력", 
-          'submit_type': "Online"
-      },
-      {
-          'user_mission_id': 2, 
-          'user_id': 102, 
-          'mission_id': 1002, 
-          'is_success': false, 
-          'mission_date': "2023-04-02", 
-          'from_team': false, 
-          'title': "Mission Two", 
-          'mission_type': "시도해력", 
-          'submit_type': "Offline"
-      },
-      {
-          'user_mission_id': 3, 
-          'user_id': 103, 
-          'mission_id': 1003, 
-          'is_success': true, 
-          'mission_date': "2023-04-03", 
-          'from_team': true, 
-          'title': "Mission Three", 
-          'mission_type': "매일하력", 
-          'submit_type': "Online"
-      }
-  ]
-    
-  // Aggregate data by mission_id
-    const missionMap = {};
-    missionData.forEach(item => {
-      if (!missionMap[item.mission_id]) {
-        missionMap[item.mission_id] = {
-          mission_id: item.mission_id,
-          title: item.title,
-          category: item.mission_type,
-          successCount: 0,
-          totalCount: 0
-        };
-      }
-      missionMap[item.mission_id].totalCount++;
-      if (item.is_success) {
-        missionMap[item.mission_id].successCount++;
-      }
+      console.log(5)
+      const missionMap = {};
+      missionData.forEach(item => {
+        if (!missionMap[item.mission_id]) {
+          missionMap[item.mission_id] = {
+            mission_id: item.mission_id,
+            title: item.title,
+            category: item.mission_type,
+            successCount: 0,
+            totalCount: 0
+          };
+        }
+        missionMap[item.mission_id].totalCount++;
+        if (item.is_success) {
+          missionMap[item.mission_id].successCount++;
+        }
+      });
+
+      const missionsWithRate = Object.values(missionMap).map(mission => {
+        const achievementRate = mission.totalCount > 0 ? `${mission.successCount} / ${mission.totalCount}` : 'N/A';
+        return { ...mission, achievementRate };
+      });
+      setMissions(missionsWithRate);
+      // setFilteredMissions(missionsWithRate);
     });
-    // Compute achievement rate and convert to array
-    const missionsWithRate = Object.values(missionMap).map(mission => {
-      const achievementRate = mission.totalCount > 0 ? `${mission.successCount} / ${mission.totalCount}` : 'N/A';
-      return { ...mission, achievementRate };
-    });
-  
-    setMissions(missionsWithRate);
-    // setFilteredMissions(missionsWithRate);
   }
-  
+
   const filterMissionsByCategory = (categoryIndex) => {
     const category = categories[categoryIndex];
     if (category === '전체') {
-      setFilteredMissions(missions);
+      console.log(category, missions)
+      return setFilteredMissions(missions); // 전체 미션 반환
     } else {
-      const filtered = missions.filter(mission => mission.category === category);
-      setFilteredMissions(filtered);
+      console.log(category, missions)
+      return setFilteredMissions(missions.filter(mission => mission.category === category)); // 특정 카테고리에 따른 미션 반환
     }
   };
 
-  const assignMission = (missionId, teamId) => {
-    console.log(missionId, teamId)
+  const assignMission = (missionId, teamId, date) => {
+    console.log(missionId, teamId, date)
     const req = {
-      date: "2023_11_16",
+      date: date.format("YYYY_MM_DD"),
       teamId: teamId,
       missionId: missionId
     }
