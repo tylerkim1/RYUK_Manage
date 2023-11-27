@@ -27,15 +27,12 @@ const MenuMission = () => {
   } = useMission();
   const [openAssignMission, setOpenAssignMission] = useState(false);
 
-  // console.log(selectedTeam, selectedCategory, selectedDate)
-
   const handleDateChange = (newValue) => {
     setSelectedDate(newValue);
   };
   
   const handleTeamChange = (e) => {
     setSelectedTeam(e.target.value)
-    console.log("team Id", e.target.value)
     getMissions(selectedDate.format("YYYY_MM_DD"), e.target.value)
   };
 

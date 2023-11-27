@@ -32,6 +32,7 @@ function Sidebar() {
   const [openWithdrawDialog, setOpenWithdrawDialog] = useState(false);
   const location = useLocation();
 
+  console.log(selectedTab)
   useEffect(() => {
     fetchWithdrawUser();
 
@@ -55,10 +56,6 @@ function Sidebar() {
     }
   }, [location.pathname]); // location.pathname가 변경될 때만 이 효과를 실행합니다.
 
-  useEffect(() => {
-    fetchWithdrawUser();
-  }, [withdrawnUsers]);
-
   const fetchWithdrawUser = () => {
     networkrequest('team/userWithdrawn/', {}, (data) => {
       setWithdrawnUsers(data.data);
@@ -73,6 +70,7 @@ function Sidebar() {
     }
     networkrequest('user/eraseTeam/', req, (data) => {
       if (data.status === "ok") alert("탈퇴하였습니다.");
+      fetchWithdrawUser();
     });
   }
   

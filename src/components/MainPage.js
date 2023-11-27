@@ -1,11 +1,10 @@
 import React from 'react';
 import { Routes, Route, useLocation } from 'react-router-dom';
 import '../css/MainPage.css'
-import MenuUser from './MenuUser';
+// import MenuUser from './MenuUser';
 import MenuMission from './MenuMission';
 import MenuTeam from './MenuTeam';
 import MenuPerson from './MenuPerson';
-import MissionAdd from './MissionAdd';
 import Sidebar from './Sidebar';
 import MenuStatistics from './MenuStatistics';
 
@@ -13,6 +12,7 @@ function MainPage() {
     const location = useLocation();
 
     let currentPath = location.pathname;
+    console.log(currentPath)
     // '/mainpage'로 시작하는 경우 해당 부분을 제거
     if (currentPath.startsWith('/mainpage')) {
       currentPath = currentPath.substring('/mainpage'.length);

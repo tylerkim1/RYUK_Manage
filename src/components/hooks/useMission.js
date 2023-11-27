@@ -12,31 +12,25 @@ const useMission = () => {
   const [filteredMissions, setFilteredMissions] = useState([]);
   const categories = ['전체', '매일하력', '시도해력', '마음봄력', '유유자력', '레벨업력'];
 
-  console.log(missions, filteredMissions)
   useEffect(() => {
-    console.log(1);
     networkrequest('team/all/', {}, (data) => setTeams(data.data));
     fetchMissionPool();
   }, []);
   
   useEffect(() => {
     if (teams.length > 0 && !selectedTeam) {
-      console.log(2)
       setSelectedTeam(teams[0].team_id); // 첫 번째 팀을 선택
-      console.log(3)
       getMissions(selectedDate.format("YYYY_MM_DD"), teams[0].team_id);
     }
   }, [teams]);
 
   useEffect(() => {
     if (selectedTeam) {
-      console.log(4)
       getMissions(selectedDate.format("YYYY_MM_DD"), selectedTeam);
     }
   }, [selectedTeam, selectedDate]);
 
   useEffect(() => {
-    console.log("selectedCategory가 업데이트 되었습니다:", selectedCategory);
     filterMissionsByCategory(selectedCategory);
   }, [selectedCategory]); // selectedCategory가 변경될 때마다 실행됩니다.
 
@@ -54,7 +48,6 @@ const useMission = () => {
     networkrequest('mission/getTeam/', {teamId: teamId, date: date}, (data) => {
       const missionData = data.data;
 
-      console.log(5)
       const missionMap = {};
       missionData.forEach(item => {
         if (!missionMap[item.mission_id]) {
@@ -84,10 +77,8 @@ const useMission = () => {
   const filterMissionsByCategory = (categoryIndex) => {
     const category = categories[categoryIndex];
     if (category === '전체') {
-      console.log(category, missions)
       return setFilteredMissions(missions); // 전체 미션 반환
     } else {
-      console.log(category, missions)
       return setFilteredMissions(missions.filter(mission => mission.category === category)); // 특정 카테고리에 따른 미션 반환
     }
   };
@@ -105,7 +96,6 @@ const useMission = () => {
   }
 
   const addMission = (mission) => {
-    console.log(mission);
     networkrequest('mission/add/', mission, (data)=>{
       if (data.status === "ok") alert("추가되었습니다.");
       fetchMissionPool();
