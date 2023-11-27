@@ -14,6 +14,7 @@ function MenuStatistics() {
   const [unitsubject, setUnitSubjecct] = useState("individual");
 
   const [targetdate, setTargetDate] = useState("2023_11_16");
+  const [targetmonth, setTargetMonth] = useState("2023_11_30");
 
   const [graphdata, setGraphData] = useState({
     status:'ok',
@@ -31,8 +32,19 @@ function MenuStatistics() {
   console.log(graphdata);
 
   const loadGraphData = () => {
-    networkrequest('stats/allDaily', {date:targetdate}, setGraphData);
-    alert("load: " + targetdate);
+    if(unittime == "daily")
+    {
+      networkrequest('stats/allDaily', {date:targetdate}, setGraphData);
+    }
+    else{
+      networkrequest('stats/teamDaily', {date:targetdate}, setGraphData);
+    }
+    alert(unitsubject + "load: " + targetdate);
+  }
+
+  const loadGraphDataMonth = () => {
+    networkrequest('stats/allMonth', {date:targetmonth}, setGraphData);
+    alert(unitsubject + "load: " + targetmonth);
   }
 
   const targetdateChange = (new_targ) => {
@@ -40,9 +52,21 @@ function MenuStatistics() {
     setTargetDate(new_targ.format("YYYY_MM_DD"));
   }
 
+  const targetMonthChange = (new_targ) => {
+    graphdata['isloaded'] = 'no';
+    setTargetMonth(new_targ.format("YYYY_MM_DD"));
+  }
+
   if(graphdata.isloaded == 'no')
   {
-    loadGraphData();
+    if(unittime == "monthly")
+    {
+      loadGraphDataMonth();
+    }
+    else
+    {
+      loadGraphData();
+    }
   }
 
   return (
@@ -67,7 +91,10 @@ function MenuStatistics() {
             <LocalizationProvider dateAdapter={AdapterDayjs}>
               <DemoContainer components={['DesktopDateTimePicker']}>
                 <DemoItem>
-                  <DesktopDatePicker view={'month'} views={['month']} onChange={loadGraphData} />
+                  <DesktopDatePicker view={'month'} views={['month', 'year']}
+                    value={targetdate}
+                    onChange={targetMonthChange} 
+                    renderInput={(params) => <TextField {...params} error={false} />} />
                 </DemoItem>
               </DemoContainer>
             </LocalizationProvider>
@@ -77,14 +104,14 @@ function MenuStatistics() {
           <span style={{paddingLeft: '10px', paddingRight: '10px'}}>
             기간 :
           </span>
-          <select value={unittime} onChange={(e) => setUnitTime(e.target.value)}>
+          <select value={unittime} onChange={(e) => {graphdata['isloaded'] = 'no'; setUnitTime(e.target.value);}}>
             <option key="daily" value={"daily"}>일별</option>
             <option key="monthly" value={"monthly"}>월별</option>
           </select>
           <span style={{padding: '10px', paddingRight: '10px'}}>
             인원 :
           </span>
-          <select value={unitsubject} onChange={(e) => setUnitSubjecct(e.target.value)}>
+          <select value={unitsubject} onChange={(e) => {graphdata['isloaded'] = 'no'; setUnitSubjecct(e.target.value);}}>
             <option key="individual" value={"individual"}>개인별</option>
             <option key="team" value={"team"}>팀별</option>
           </select>
