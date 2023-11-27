@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { styled } from '@mui/system';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -13,23 +13,35 @@ const StyledTableContainer = styled(TableContainer)(({ theme }) => ({
 }));
 
 const MissionTable = ({ missions }) => {
+  const [openRow, setOpenRow] = useState(null);
+
   return (
     <StyledTableContainer component={Paper}>
       <Table aria-label="customized table">
         <TableHead>
           <TableRow>
-            <TableCell>미션 제목</TableCell>
-            <TableCell>카테고리</TableCell>
-            <TableCell>성취율</TableCell>
+            <TableCell style={{width: '60%', fontSize: '17px', fontWeight: '800'}}>미션 제목</TableCell>
+            <TableCell style={{width: '30%', fontSize: '17px', fontWeight: '800'}}>카테고리</TableCell>
+            <TableCell style={{width: '10%', fontSize: '17px', fontWeight: '800'}}>성취율</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {missions.map((mission) => (
-            <TableRow key={mission.mission_id}>
-              <TableCell>{mission.title}</TableCell>
-              <TableCell>{mission.category}</TableCell>
-              <TableCell>{mission.achievementRate}</TableCell>
-            </TableRow>
+            <>
+              <TableRow key={mission.mission_id} onClick={() => setOpenRow(openRow === mission.mission_id ? null : mission.mission_id)}>
+                <TableCell>{mission.title}</TableCell>
+                <TableCell>{mission.category}</TableCell>
+                <TableCell>{mission.achievementRate}</TableCell>
+              </TableRow>
+              {openRow === mission.mission_id && (
+                <TableRow>
+                  <TableCell colSpan={3}>
+                  hello
+
+                  </TableCell>
+                </TableRow>
+              )}
+            </>
           ))}
         </TableBody>
       </Table>

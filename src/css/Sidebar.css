@@ -105,7 +105,7 @@
   cursor: pointer;
 }
 
-#withdrawal-menu #disabled {
+#withdrawal-menu-disabled {
   cursor: default;
 }
 
@@ -134,8 +134,13 @@
   align-items: center;
   cursor: pointer;
   background-color: #CC000010;
+  margin-left: 20px;
 }
 
 #withdrawal-dialog-withdrawl-accept-button span {
   color: #CC0000;
+}
+
+.withdrawn-user-list-item {
+  padding-left: 0px !important;
 }
