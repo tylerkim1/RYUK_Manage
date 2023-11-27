@@ -39,7 +39,7 @@ function MenuStatistics() {
     }
     else{
       // alert("day team " + targetdate);
-      networkrequest('stats/teamDaily', {date:targetdate}, setGraphData);
+      networkrequest('stats/allTeamSumDaily', {date:targetdate}, setGraphData);
     }
   }
 
@@ -52,7 +52,7 @@ function MenuStatistics() {
     }
     else{
       // alert("month team " + netmonth);
-      networkrequest('stats/allMonth', {date:netmonth}, setGraphData);
+      networkrequest('stats/allTeamSumMonth', {date:netmonth}, setGraphData);
     }
   }
 
