@@ -31,12 +31,8 @@ function Sidebar() {
   const [selectedTab, setSelectedTab] = useState(null);
   const [openWithdrawDialog, setOpenWithdrawDialog] = useState(false);
   const location = useLocation();
-  // const userName = JSON.parse(localStorage.getItem('user_login')).user_name;
 
   useEffect(() => {
-    // networkrequest('team/all/', {}, (data) => {
-    //   setTeamLists(data.data);
-    // });
     fetchWithdrawUser();
 
     // 현재 경로를 기반으로 초기 탭을 설정합니다.
@@ -109,11 +105,12 @@ function Sidebar() {
         <MenuItem to="menu-mission" image={missionImage} selectedImage={missionImageSelected} label="미션" isSelected={selectedTab === "menu-mission"} onClick={() => handleTabClick("menu-mission")} />
         <MenuItem to="menu-team" image={teamImage} selectedImage={teamImageSelected} label="팀관리" isSelected={selectedTab === "menu-team"} onClick={() => handleTabClick("menu-team")} />
         <MenuItem to="menu-user" image={userImage} selectedImage={userImageSelected} label="회원관리" isSelected={selectedTab === "menu-user"} onClick={() => handleTabClick("menu-user")} />
-        <div className="menu-item" id="withdrawal-menu" onClick={toggleWithdrawDialog}>
+        <div className="menu-item" id={`withdrawal-menu ${withdrawnUsers.length === 0 ? 'disabled' : ''}`} onClick={withdrawnUsers.length === 0 ? null : toggleWithdrawDialog}>
           <span>탈퇴 요청</span>
+          {withdrawnUsers.length === 0 ? '' : 
           <div id="withdrawal-number">
-            <span>12</span>
-          </div>
+            <span>{withdrawnUsers.length}</span>
+          </div>}
         </div>
       </div>
       <Dialog open={openWithdrawDialog} onClose={() => setOpenWithdrawDialog(false)}>

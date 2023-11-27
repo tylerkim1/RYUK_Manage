@@ -105,6 +105,10 @@
   cursor: pointer;
 }
 
+#withdrawal-menu #disabled {
+  cursor: default;
+}
+
 #withdrawal-number {
   display: flex;
   border-radius: 100%;
