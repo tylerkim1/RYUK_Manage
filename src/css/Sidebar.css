@@ -14,7 +14,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding-bottom: 20px;
+  /* padding-bottom: 20px; */
   border-bottom: solid 1px #e5e5e5;
 }
 
@@ -98,4 +98,40 @@
   font-weight: 700;
   color: inherit;
   padding-left: 0.6rem;
+}
+
+#withdrawal-menu {
+  display: flex;
+  cursor: pointer;
+}
+
+#withdrawal-number {
+  display: flex;
+  border-radius: 100%;
+  width: 20px;
+  height: 20px;
+  background-color: #F3736D;
+  justify-content: center;
+  align-items: center;
+  margin-left: 10px;
+}
+
+.menu-item #withdrawal-number span {
+  color: #FFFFFF;
+  font-size: 12px;
+  padding: 0;
+}
+
+#withdrawal-dialog-withdrawl-accept-button {
+  display: flex;
+  width: 50px;
+  border-radius: 6px;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  background-color: #CC000010;
+}
+
+#withdrawal-dialog-withdrawl-accept-button span {
+  color: #CC0000;
 }

@@ -153,7 +153,6 @@
 #menu-team-info-dialog-applied-accept-button,
 #menu-team-info-dialog-applied-decline-button {
     display: flex;
-    /* background-color: #00CC0010; */
     width: 50px;
     border-radius: 6px;
     justify-content: center;
