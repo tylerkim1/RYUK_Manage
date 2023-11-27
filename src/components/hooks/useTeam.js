@@ -7,6 +7,7 @@ const today = dayjs();
 const useTeam = (isNumbers = false) => {
   const [teams, setTeams] = useState([]);
   const [members, setMembers] = useState([]);
+  const [appliedMembers, setAppliedMembers] = useState([]);
   const [newTeam, setNewTeam] = useState({
     name: '',
     startDay: today,
@@ -16,8 +17,8 @@ const useTeam = (isNumbers = false) => {
     category: '',
     introduce: '',
   });
-  const [teamNums, setTeamNums] = useState([]);
 
+  const [teamNums, setTeamNums] = useState([]);
   useEffect(() => {
     fetchTeams();
   }, []);
@@ -75,9 +76,25 @@ const useTeam = (isNumbers = false) => {
     networkrequest('user/get/', {teamId: teamId}, (data) => setMembers(data.data));
   }
 
+  const getAppliedMembers = (teamId) => {
+    networkrequest('team/userApplied', {}, (data) => {
+      const filteredAppliedUser = data.data.filter(appliedUser => appliedUser.team_id === teamId);
+      setAppliedMembers(filteredAppliedUser);
+    })
+  }
+
+  const assignUser = (userId, teamId, acceptOrNot) => {
+    const req = {
+      userId: userId,
+      teamId: teamId,
+      acceptOrNot: acceptOrNot
+    }
+    networkrequest('user/assignTeam/', req, console.log);
+  }
+
 
   if (isNumbers) return teamNums
-  else return { teams, members, newTeam, setNewTeam, initTeam, addTeam, deleteTeam, getMembers };
+  else return { teams, members, newTeam, setNewTeam, appliedMembers, setAppliedMembers, initTeam, addTeam, deleteTeam, getMembers, getAppliedMembers, assignUser };
 };
 
 export default useTeam;

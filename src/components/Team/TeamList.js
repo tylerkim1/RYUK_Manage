@@ -1,9 +1,8 @@
 import React from 'react';
 import { Grid, Paper, styled } from '@mui/material';
-import deleteImage from '../../assets/delete.png';
 import useTeam from '../hooks/useTeam';
 
-const TeamList = ({ teams, handleTeamSelect, handleDeleteTeam }) => {
+const TeamList = ({ teams, handleTeamSelect }) => {
   const teamNums = useTeam(true);
 
   const Item = styled(Paper)(({ theme }) => ({
@@ -29,7 +28,6 @@ const TeamList = ({ teams, handleTeamSelect, handleDeleteTeam }) => {
                   {team.introduce}
                 </span>
               </div>
-              {/* <img className="delete-button" src={deleteImage} onClick={() => handleDeleteTeam(team.master_id, team.team_id)} /> */}
             </Item>
           </Grid>
         ))) : (

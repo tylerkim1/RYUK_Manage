@@ -12,12 +12,14 @@ import statisticsImageSelected from '../assets/statistic_colored.png'
 import logoImage from '../assets/Logo.png';
 import 'react-datepicker/dist/react-datepicker.css';
 import '../css/Sidebar.css';
+import { Button, Dialog, DialogActions, DialogContent, DialogTitle, IconButton, List, ListItem } from '@mui/material';
+import CloseIcon from '@mui/icons-material/Close';
 
 // 메뉴 아이템 컴포넌트
 const MenuItem = ({ to, image, selectedImage, label, isSelected, onClick }) => (
   <Link to={to} onClick={onClick}>
     <div className='menu-item'>
-      <img src={isSelected ? selectedImage : image} alt={label} />
+      {image ? <img src={isSelected ? selectedImage : image} alt={label} /> : ''}
       <span>{label}</span>
     </div>
   </Link>
@@ -25,17 +27,14 @@ const MenuItem = ({ to, image, selectedImage, label, isSelected, onClick }) => (
 
 // 사이드바 컴포넌트
 function Sidebar() {
-  const [teamLists, setTeamLists] = useState();
+  const [withdrawnUsers, setWithdrawnUsers] = useState([]);
   const [selectedTab, setSelectedTab] = useState(null);
+  const [openWithdrawDialog, setOpenWithdrawDialog] = useState(false);
   const location = useLocation();
-  const userName = JSON.parse(localStorage.getItem('user_login')).user_name;
-  if(teamLists === undefined) networkrequest('team/all/', {}, (data) => {setTeamLists(data.data);});
 
+  console.log(selectedTab)
   useEffect(() => {
-    // 네트워크 요청은 컴포넌트가 마운트될 때 한 번만 실행됩니다.
-    networkrequest('team/all/', {}, (data) => {
-      setTeamLists(data.data);
-    });
+    fetchWithdrawUser();
 
     // 현재 경로를 기반으로 초기 탭을 설정합니다.
     let currentPath = location.pathname.replace('/mainpage', '');
@@ -56,26 +55,83 @@ function Sidebar() {
         setSelectedTab('menu-statistics');
     }
   }, [location.pathname]); // location.pathname가 변경될 때만 이 효과를 실행합니다.
+
+  const fetchWithdrawUser = () => {
+    networkrequest('team/userWithdrawn/', {}, (data) => {
+      setWithdrawnUsers(data.data);
+    })
+  }
+
+  const withdrawUser = (userId, teamId, acceptOrNot) => {
+    const req = {
+      userId: userId,
+      teamId: teamId,
+      acceptOrNot: acceptOrNot
+    }
+    networkrequest('user/eraseTeam/', req, (data) => {
+      if (data.status === "ok") alert("탈퇴하였습니다.");
+      fetchWithdrawUser();
+    });
+  }
   
   // 탭을 클릭할 때 상태를 변경하는 함수
   const handleTabClick = (tabName) => {
     setSelectedTab(tabName);
   };
 
+  const toggleWithdrawDialog = () => {
+    setOpenWithdrawDialog((prev) => !prev);
+  }
+
+  const handleWithdraw = (userId, teamId, isAccept) => {
+    withdrawUser(userId, teamId, isAccept)
+    // setOpenApplyConfirm((prev) => !prev)
+    // handleClose();
+  }
+
+
   return (
     <div id="sidebar">
       <div id="sidebar-header-wrapper">
         <img id="sidebar-logo" src={logoImage} />
-        <div id="sidebar-user">
+        {/* <div id="sidebar-user">
           <span>환영합니다, {userName}님.</span>
-        </div>
+        </div> */}
       </div>
       <div id="sidebar-menu-wrapper">
         <MenuItem to="menu-statistics" image={statisticsImage} selectedImage={statisticsImageSelected} label="통계" isSelected={selectedTab === "menu-statistics"} onClick={() => handleTabClick("menu-statistics")} />
         <MenuItem to="menu-mission" image={missionImage} selectedImage={missionImageSelected} label="미션" isSelected={selectedTab === "menu-mission"} onClick={() => handleTabClick("menu-mission")} />
         <MenuItem to="menu-team" image={teamImage} selectedImage={teamImageSelected} label="팀관리" isSelected={selectedTab === "menu-team"} onClick={() => handleTabClick("menu-team")} />
         <MenuItem to="menu-user" image={userImage} selectedImage={userImageSelected} label="회원관리" isSelected={selectedTab === "menu-user"} onClick={() => handleTabClick("menu-user")} />
+        <div className="menu-item" id={`withdrawal-menu ${withdrawnUsers.length === 0 ? 'disabled' : ''}`} onClick={withdrawnUsers.length === 0 ? null : toggleWithdrawDialog}>
+          <span>탈퇴 요청</span>
+          {withdrawnUsers.length === 0 ? '' : 
+          <div id="withdrawal-number">
+            <span>{withdrawnUsers.length}</span>
+          </div>}
+        </div>
       </div>
+      <Dialog open={openWithdrawDialog} onClose={() => setOpenWithdrawDialog(false)}>
+        <DialogTitle>탈퇴 요청 목록</DialogTitle>
+        <DialogContent>
+          <List>
+            {withdrawnUsers ? withdrawnUsers.map((user) => {
+              <ListItem>
+                <IconButton onClick={() => handleWithdraw(user.user_id, user.team_id, 0)}>
+                  <CloseIcon />
+                </IconButton>
+                {user.nickname}님이 {user.team_name}에서 나가고 싶어합니다.
+                <div id="withdrawal-dialog-withdrawl-accept-button" onClick={() => handleWithdraw(user.user_id, user.team_id, 1)}>
+                  <span>탈퇴</span>
+                </div>
+              </ListItem>
+            }) : ''}
+          </List>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => setOpenWithdrawDialog(false)}>취소</Button>
+        </DialogActions>
+      </Dialog>
       <div id="sidebar-footer">
         <Link to="/login">
           <div id="logout-button">

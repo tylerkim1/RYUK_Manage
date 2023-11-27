@@ -12,8 +12,8 @@ export const networkrequest = (path, data, onReturn) =>
     requestURL = requestURL.substring(0, requestURL.length - 1);
 
     const xhr = new XMLHttpRequest();
-    console.log(requestURL);
-    console.log(xhr.status);
+    // console.log(requestURL);
+    // console.log(xhr.status);
     xhr.open('GET', requestURL, true);
     xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
 

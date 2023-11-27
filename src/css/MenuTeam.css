@@ -135,3 +135,43 @@
 #menu-mission-add-mission-dialog-body > * {
     margin: 10px 0;
 }
+
+#menu-team-info-dialog-applied-member {
+    display: flex;
+    justify-content: space-between;
+    background-color: #F3736D10;
+}
+
+#menu-team-info-dialog-applied-buttons-wrapper {
+    display: flex;
+}
+
+#menu-team-info-dialog-applied-buttons-wrapper > * {
+    margin: 5px
+}
+
+#menu-team-info-dialog-applied-accept-button,
+#menu-team-info-dialog-applied-decline-button {
+    display: flex;
+    width: 50px;
+    border-radius: 6px;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+#menu-team-info-dialog-applied-accept-button {
+    background-color: #00CC0010;
+}
+
+#menu-team-info-dialog-applied-accept-button span {
+    color: #00CC00;
+}
+
+#menu-team-info-dialog-applied-decline-button {
+    background-color: #CC000010;
+}
+
+#menu-team-info-dialog-applied-decline-button span {
+    color: #CC0000;
+}
