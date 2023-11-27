@@ -32,19 +32,28 @@ function MenuStatistics() {
   console.log(graphdata);
 
   const loadGraphData = () => {
-    if(unittime == "daily")
+    if(unitsubject == "individual")
     {
+      alert("day indiv " + targetdate);
       networkrequest('stats/allDaily', {date:targetdate}, setGraphData);
     }
     else{
+      alert("day team " + targetdate);
       networkrequest('stats/teamDaily', {date:targetdate}, setGraphData);
     }
-    alert(unitsubject + "load: " + targetdate);
   }
 
   const loadGraphDataMonth = () => {
-    networkrequest('stats/allMonth', {date:targetmonth}, setGraphData);
-    alert(unitsubject + "load: " + targetmonth);
+    const netmonth = targetmonth.substring(0, targetmonth.length - 2) + '31';
+    if(unitsubject == "individual")
+    {
+      alert("month indiv " + netmonth);
+      networkrequest('stats/allMonth', {date:netmonth}, setGraphData);
+    }
+    else{
+      alert("month team " + netmonth);
+      networkrequest('stats/allMonth', {date:netmonth}, setGraphData);
+    }
   }
 
   const targetdateChange = (new_targ) => {
@@ -53,6 +62,7 @@ function MenuStatistics() {
   }
 
   const targetMonthChange = (new_targ) => {
+    console.log(new_targ);
     graphdata['isloaded'] = 'no';
     setTargetMonth(new_targ.format("YYYY_MM_DD"));
   }
@@ -91,7 +101,7 @@ function MenuStatistics() {
             <LocalizationProvider dateAdapter={AdapterDayjs}>
               <DemoContainer components={['DesktopDateTimePicker']}>
                 <DemoItem>
-                  <DesktopDatePicker view={'month'} views={['month', 'year']}
+                  <DesktopDatePicker views={['month', 'year']}
                     value={targetdate}
                     onChange={targetMonthChange} 
                     renderInput={(params) => <TextField {...params} error={false} />} />
