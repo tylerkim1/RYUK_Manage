@@ -22,8 +22,7 @@ const MenuMission = () => {
     setSelectedCategory,
     selectedDate,
     setSelectedDate,
-    filteredMissions,
-    filterMissionsByCategory
+    filteredMissions
   } = useMission();
   const [openAssignMission, setOpenAssignMission] = useState(false);
 
@@ -49,11 +48,11 @@ const MenuMission = () => {
       <div id="menu-mission-header">
         <div id="menu-mission-header-selector">
           <FormControl className="mui-select" id="team-select">
-            <InputLabel className="mui-select-label" id="mui-select-team-label">팀 선택</InputLabel>
+            <InputLabel className="mui-select-label" id="mui-select-team-label">팀</InputLabel>
             <Select
               labelId="mui-select-team-label"
               value={selectedTeam}
-              label="팀 선택"
+              label="팀"
               onChange={handleTeamChange}
             >
               {teams && teams.map((team) => (
@@ -64,11 +63,11 @@ const MenuMission = () => {
             </Select>
           </FormControl>
           <FormControl className="mui-select" id="category-select">
-            <InputLabel className="mui-select-label" id="mui-select-category-label">카테고리 선택</InputLabel>
+            <InputLabel className="mui-select-label" id="mui-select-category-label">카테고리</InputLabel>
             <Select
               labelId="mui-select-category-label"
               value={selectedCategory}
-              label="카테고리 선택"
+              label="카테고리"
               onChange={handleCategoryChange}
             >
               {categories && categories.map((category, index) => (

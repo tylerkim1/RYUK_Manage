@@ -6,14 +6,17 @@ const useMission = () => {
   const [teams, setTeams] = useState([]);
   const [missionPool, setMissionPool] = useState([]);
   const [missions, setMissions] = useState([]);
-  const [selectedTeam, setSelectedTeam] = useState(null);
+  const [selectedTeam, setSelectedTeam] = useState(0);
   const [selectedCategory, setSelectedCategory] = useState(0);
   const [selectedDate, setSelectedDate] = useState(dayjs());
   const [filteredMissions, setFilteredMissions] = useState([]);
   const categories = ['전체', '매일하력', '시도해력', '마음봄력', '유유자력', '레벨업력'];
 
   useEffect(() => {
-    networkrequest('team/all/', {}, (data) => setTeams(data.data));
+    networkrequest('team/all/', {}, (data) => {
+      setSelectedTeam(data.data[0].team_id); // 첫 번째 팀을 선택
+      setTeams(data.data)
+    });
     fetchMissionPool();
   }, []);
   
@@ -56,9 +59,15 @@ const useMission = () => {
             title: item.title,
             category: item.mission_type,
             successCount: 0,
-            totalCount: 0
+            totalCount: 0,
+            users: [] 
           };
         }
+        missionMap[item.mission_id].users.push({
+          user_id: item.user_id,
+          // nickname: item.nickname,
+          is_success: item.is_success
+        });
         missionMap[item.mission_id].totalCount++;
         if (item.is_success) {
           missionMap[item.mission_id].successCount++;

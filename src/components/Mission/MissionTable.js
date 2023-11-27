@@ -7,6 +7,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
+import { List, ListItem } from '@mui/material';
 
 const StyledTableContainer = styled(TableContainer)(({ theme }) => ({
   width: "100%",
@@ -20,9 +21,9 @@ const MissionTable = ({ missions }) => {
       <Table aria-label="customized table">
         <TableHead>
           <TableRow>
-            <TableCell style={{width: '60%', fontSize: '17px', fontWeight: '800'}}>미션 제목</TableCell>
-            <TableCell style={{width: '30%', fontSize: '17px', fontWeight: '800'}}>카테고리</TableCell>
-            <TableCell style={{width: '10%', fontSize: '17px', fontWeight: '800'}}>성취율</TableCell>
+            <TableCell style={{ width: '60%', fontSize: '17px', fontWeight: '800' }}>미션 제목</TableCell>
+            <TableCell style={{ width: '30%', fontSize: '17px', fontWeight: '800' }}>카테고리</TableCell>
+            <TableCell style={{ width: '10%', fontSize: '17px', fontWeight: '800' }}>성취율</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -35,10 +36,13 @@ const MissionTable = ({ missions }) => {
               </TableRow>
               {openRow === mission.mission_id && (
                 <TableRow>
-                  <TableCell colSpan={3}>
-                  hello
-
-                  </TableCell>
+                  {mission.users ? mission.users.map((user) => (
+                    <List>
+                      <ListItem id="menu-mission-table-user-list-item">
+                        {user.user_id} {user.is_success === 1 ? "미달" : ""}
+                      </ListItem>
+                    </List>
+                  )) : ''}
                 </TableRow>
               )}
             </>

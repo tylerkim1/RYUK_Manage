@@ -185,3 +185,12 @@
 #menu-mission-assign-dialog .menu-mission-assign-button span {
   font-size: 15px;
 }
+
+.menu-mission-table-user {
+  background-color: aliceblue;
+}
+
+#menu-mission-table-user-list-item {
+  display: flex;
+  justify-content: space-between;
+}
