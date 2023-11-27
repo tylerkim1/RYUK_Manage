@@ -34,11 +34,11 @@ function MenuStatistics() {
   const loadGraphData = () => {
     if(unitsubject == "individual")
     {
-      alert("day indiv " + targetdate);
+      // alert("day indiv " + targetdate);
       networkrequest('stats/allDaily', {date:targetdate}, setGraphData);
     }
     else{
-      alert("day team " + targetdate);
+      // alert("day team " + targetdate);
       networkrequest('stats/teamDaily', {date:targetdate}, setGraphData);
     }
   }
@@ -47,11 +47,11 @@ function MenuStatistics() {
     const netmonth = targetmonth.substring(0, targetmonth.length - 2) + '31';
     if(unitsubject == "individual")
     {
-      alert("month indiv " + netmonth);
+      // alert("month indiv " + netmonth);
       networkrequest('stats/allMonth', {date:netmonth}, setGraphData);
     }
     else{
-      alert("month team " + netmonth);
+      // alert("month team " + netmonth);
       networkrequest('stats/allMonth', {date:netmonth}, setGraphData);
     }
   }
