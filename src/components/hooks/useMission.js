@@ -70,7 +70,6 @@ const useMission = () => {
         return { ...mission, achievementRate };
       });
       setMissions(missionsWithRate);
-      // setFilteredMissions(missionsWithRate);
     });
   }
 

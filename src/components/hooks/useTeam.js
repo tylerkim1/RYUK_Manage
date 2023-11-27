@@ -4,10 +4,11 @@ import dayjs from 'dayjs';
 
 const today = dayjs();
 
-const useTeam = (isNumbers = false) => {
+const useTeam = () => {
   const [teams, setTeams] = useState([]);
   const [members, setMembers] = useState([]);
   const [appliedMembers, setAppliedMembers] = useState([]);
+  const [withdrawnUsers, setWithdrawnUsers] = useState([]);
   const [newTeam, setNewTeam] = useState({
     name: '',
     startDay: today,
@@ -21,9 +22,14 @@ const useTeam = (isNumbers = false) => {
   const [teamNums, setTeamNums] = useState([]);
   useEffect(() => {
     fetchTeams();
+    fetchWithdrawUser();
   }, []);
 
   useEffect(() => {
+    fetchMemberNums();
+  }, [teams, members, withdrawnUsers]);
+
+  const fetchMemberNums = () => {
     networkrequest('team/getNum/', {}, (data) => {
       const numbersByTeamId = data.data.reduce((acc, item) => {
         acc[item.team_id] = item.team_member_num;
@@ -31,7 +37,7 @@ const useTeam = (isNumbers = false) => {
       }, {});
       setTeamNums(numbersByTeamId);
     })
-  }, [teams]);
+  }
 
   const fetchTeams = () => {
     networkrequest('team/all/', {}, (data) => {
@@ -73,7 +79,10 @@ const useTeam = (isNumbers = false) => {
   };
 
   const getMembers = (teamId) => {
-    networkrequest('user/get/', {teamId: teamId}, (data) => setMembers(data.data));
+    networkrequest('user/get/', {teamId: teamId}, (data) => {
+      setMembers(data.data);
+      fetchMemberNums();
+    });
   }
 
   const getAppliedMembers = (teamId) => {
@@ -89,12 +98,32 @@ const useTeam = (isNumbers = false) => {
       teamId: teamId,
       acceptOrNot: acceptOrNot
     }
-    networkrequest('user/assignTeam/', req, console.log);
+    networkrequest('user/assignTeam/', req, (data) => {
+      if (data.status === "ok") alert("추가되었습니다.");
+      fetchMemberNums();
+    });
   }
 
+  const fetchWithdrawUser = () => {
+    networkrequest('team/userWithdrawn/', {}, (data) => {
+      setWithdrawnUsers(data.data);
+    })
+  }
+  
+  const withdrawUser = (userId, teamId, acceptOrNot) => {
+    const req = {
+      userId: userId,
+      teamId: teamId,
+      acceptOrNot: acceptOrNot
+    }
+    networkrequest('user/eraseTeam/', req, (data) => {
+      if (acceptOrNot && data.status === "ok") alert("탈퇴되었습니다.");
+      fetchWithdrawUser();
+      fetchMemberNums();
+    });
+  }
 
-  if (isNumbers) return teamNums
-  else return { teams, members, newTeam, setNewTeam, appliedMembers, setAppliedMembers, initTeam, addTeam, deleteTeam, getMembers, getAppliedMembers, assignUser };
+  return { teams, teamNums, members, withdrawnUsers, newTeam, setNewTeam, appliedMembers, setAppliedMembers, initTeam, addTeam, deleteTeam, getMembers, getAppliedMembers, assignUser, fetchWithdrawUser, withdrawUser };
 };
 
 export default useTeam;

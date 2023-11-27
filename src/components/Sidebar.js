@@ -14,6 +14,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 import '../css/Sidebar.css';
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, IconButton, List, ListItem } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
+import useTeam from './hooks/useTeam';
 
 // 메뉴 아이템 컴포넌트
 const MenuItem = ({ to, image, selectedImage, label, isSelected, onClick }) => (
@@ -27,12 +28,12 @@ const MenuItem = ({ to, image, selectedImage, label, isSelected, onClick }) => (
 
 // 사이드바 컴포넌트
 function Sidebar() {
-  const [withdrawnUsers, setWithdrawnUsers] = useState([]);
+  // const [withdrawnUsers, setWithdrawnUsers] = useState([]);
+  const { withdrawnUsers, fetchWithdrawUser, withdrawUser } = useTeam();
   const [selectedTab, setSelectedTab] = useState(null);
   const [openWithdrawDialog, setOpenWithdrawDialog] = useState(false);
   const location = useLocation();
 
-  console.log(selectedTab)
   useEffect(() => {
     fetchWithdrawUser();
 
@@ -55,24 +56,6 @@ function Sidebar() {
         setSelectedTab('menu-statistics');
     }
   }, [location.pathname]); // location.pathname가 변경될 때만 이 효과를 실행합니다.
-
-  const fetchWithdrawUser = () => {
-    networkrequest('team/userWithdrawn/', {}, (data) => {
-      setWithdrawnUsers(data.data);
-    })
-  }
-
-  const withdrawUser = (userId, teamId, acceptOrNot) => {
-    const req = {
-      userId: userId,
-      teamId: teamId,
-      acceptOrNot: acceptOrNot
-    }
-    networkrequest('user/eraseTeam/', req, (data) => {
-      if (data.status === "ok") alert("탈퇴하였습니다.");
-      fetchWithdrawUser();
-    });
-  }
   
   // 탭을 클릭할 때 상태를 변경하는 함수
   const handleTabClick = (tabName) => {
@@ -85,25 +68,19 @@ function Sidebar() {
 
   const handleWithdraw = (userId, teamId, isAccept) => {
     withdrawUser(userId, teamId, isAccept)
-    // setOpenApplyConfirm((prev) => !prev)
-    // handleClose();
   }
-
 
   return (
     <div id="sidebar">
       <div id="sidebar-header-wrapper">
         <img id="sidebar-logo" src={logoImage} />
-        {/* <div id="sidebar-user">
-          <span>환영합니다, {userName}님.</span>
-        </div> */}
       </div>
       <div id="sidebar-menu-wrapper">
         <MenuItem to="menu-statistics" image={statisticsImage} selectedImage={statisticsImageSelected} label="통계" isSelected={selectedTab === "menu-statistics"} onClick={() => handleTabClick("menu-statistics")} />
         <MenuItem to="menu-mission" image={missionImage} selectedImage={missionImageSelected} label="미션" isSelected={selectedTab === "menu-mission"} onClick={() => handleTabClick("menu-mission")} />
         <MenuItem to="menu-team" image={teamImage} selectedImage={teamImageSelected} label="팀관리" isSelected={selectedTab === "menu-team"} onClick={() => handleTabClick("menu-team")} />
         <MenuItem to="menu-user" image={userImage} selectedImage={userImageSelected} label="회원관리" isSelected={selectedTab === "menu-user"} onClick={() => handleTabClick("menu-user")} />
-        <div className="menu-item" id={`withdrawal-menu ${withdrawnUsers.length === 0 ? 'disabled' : ''}`} onClick={withdrawnUsers.length === 0 ? null : toggleWithdrawDialog}>
+        <div className="menu-item" id={`withdrawal-menu${withdrawnUsers.length === 0 ? '-disabled' : ''}`} onClick={withdrawnUsers.length === 0 ? null : toggleWithdrawDialog}>
           <span>탈퇴 요청</span>
           {withdrawnUsers.length === 0 ? '' : 
           <div id="withdrawal-number">
@@ -115,8 +92,8 @@ function Sidebar() {
         <DialogTitle>탈퇴 요청 목록</DialogTitle>
         <DialogContent>
           <List>
-            {withdrawnUsers ? withdrawnUsers.map((user) => {
-              <ListItem>
+            {withdrawnUsers ? withdrawnUsers.map((user, index) => (
+              <ListItem className="withdrawn-user-list-item" key={index}>
                 <IconButton onClick={() => handleWithdraw(user.user_id, user.team_id, 0)}>
                   <CloseIcon />
                 </IconButton>
@@ -125,7 +102,7 @@ function Sidebar() {
                   <span>탈퇴</span>
                 </div>
               </ListItem>
-            }) : ''}
+            )) : ''}
           </List>
         </DialogContent>
         <DialogActions>
