@@ -150,10 +150,14 @@
   color: #FFFFFF;
 }
 
-#menu-mission-assign-dialog-header {
+.menu-mission-dialog-header {
   display: flex;
   width: 400px;
   justify-content: space-between;
+}
+
+.menu-mission-dialog-header#manage {
+  width: 600px;
 }
 
 #menu-mission-add-mission-button span{
@@ -190,7 +194,76 @@
   background-color: aliceblue;
 }
 
+#menu-mission-table-user-row {
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1); 
+}
+
+/* #menu-mission-table-user-list{
+  display: flex;
+  flex: 1;
+} */
+
+#menu-mission-table-user-list-header {
+  display: flex;
+  flex: 1;
+  justify-content: space-between;
+  align-items: center;
+  height: 30px;
+  padding: 0px 50px;
+}
+
+#menu-mission-table-user-list-header #index-span {
+  display: flex;
+  flex: 1;
+}
+
+#menu-mission-table-user-list-header #user-span {
+  display: flex;
+  flex: 7;
+}
+
+#menu-mission-table-user-list-header #is-success-span {
+  display: flex;
+  flex: 1;
+}
+
+#menu-mission-table-user-list > * {
+  margin-bottom: 10px;
+}
+
 #menu-mission-table-user-list-item {
   display: flex;
-  justify-content: space-between;
+  flex: 1;
+  align-items: center;
+  height: 45px;
+  padding: 0px 50px;
+}
+
+#menu-mission-table-user-list-item #index-span {
+  display: flex;
+  flex: 1;
+}
+
+#menu-mission-table-user-list-item #user-span {
+  display: flex;
+  flex: 7;
+}
+
+#menu-mission-table-user-list-item #is-success-span {
+  display: flex;
+  flex: 1;
+}
+
+.success-background {
+  background-color: #ddf7dc;
+}
+
+.failure-background {
+  background-color: #faeaea;
+}
+
+#menu-mission-manage-mission-dialog-body {
+  padding: 20px 40px;
+  /* border-top: solid 1px black; */
+  /* border-bottom: solid 1px black; */
 }

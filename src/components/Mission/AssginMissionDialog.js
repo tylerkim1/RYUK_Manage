@@ -1,14 +1,18 @@
 import React, { useState } from 'react';
 import { Dialog, DialogTitle, DialogContent, DialogActions, Button, FormControl, InputLabel, MenuItem, Select } from '@mui/material';
-import AddMissionDialog from './AddMissionDialog';
+import ManageMissionPool from './ManageMissionPoolDialog';
+import useMission from '../hooks/useMission';
 
-const AssignMissionDialog = ({ open, teams, missionPool, selectedDate, assignMission, addMission, handleClose }) => {
+const AssignMissionDialog = ({ open, teams, selectedDate, assignMission, addMission, handleClose }) => {
     const [selectedMission, setSelectedMission] = useState(null);
     const [selectedTeam, setSelectedTeam] = useState(null);
-    const [openAddMission, setOpenAddMission] = useState(false)
+    const [openManageMissionPool, setOpenManageMissionPool] = useState(false)
+    
+    const { missionPool } = useMission()
+    console.log("hello")
 
-    const toggleAddMissionDialog = () => {
-        setOpenAddMission((prev) => !prev);
+    const toggleManageMissionPoolDialog = () => {
+        setOpenManageMissionPool((prev) => !prev);
     }
 
     const handleAssign = () => {
@@ -20,10 +24,10 @@ const AssignMissionDialog = ({ open, teams, missionPool, selectedDate, assignMis
     return (
         <>
             <Dialog id="menu-mission-assign-dialog" open={open} onClose={handleClose}>
-                <DialogTitle id="menu-mission-assign-dialog-header">
+                <DialogTitle className="menu-mission-dialog-header">
                     미션 할당
-                    <div id="menu-mission-add-mission-button" onClick={toggleAddMissionDialog}>
-                        <span>새로운 미션 추가</span>
+                    <div id="menu-mission-add-mission-button" onClick={toggleManageMissionPoolDialog}>
+                        <span>미션 풀 관리</span>
                     </div>
                 </DialogTitle>
                 <DialogContent id="menu-mission-assign-dialog-body">
@@ -65,9 +69,9 @@ const AssignMissionDialog = ({ open, teams, missionPool, selectedDate, assignMis
                     <Button onClick={handleClose}>취소</Button>
                 </DialogActions>
             </Dialog>
-            <AddMissionDialog
-                open={openAddMission}
-                handleClose={toggleAddMissionDialog}
+            <ManageMissionPool
+                open={openManageMissionPool}
+                handleClose={toggleManageMissionPoolDialog}
                 addMission={addMission}
             />
         </>

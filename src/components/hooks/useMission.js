@@ -110,7 +110,14 @@ const useMission = () => {
     });
   }
 
-  return { teams, missionPool, missions, getMissions, assignMission, addMission, selectedTeam, setSelectedTeam, categories, selectedCategory, setSelectedCategory, selectedDate, setSelectedDate, filteredMissions, filterMissionsByCategory};
+  const deleteMission = (missionId) => {
+    networkrequest('mission/delete/', {missionId: missionId}, (data)=>{
+      if (data.status === "ok") alert("삭제되었습니다.");
+      fetchMissionPool();
+    });
+  }
+
+  return { teams, missionPool, missions, getMissions, assignMission, addMission, selectedTeam, setSelectedTeam, categories, selectedCategory, setSelectedCategory, deleteMission, selectedDate, setSelectedDate, filteredMissions, filterMissionsByCategory};
 
 };
 
