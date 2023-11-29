@@ -7,12 +7,12 @@ const AssignMissionDialog = ({ open, teams, selectedDate, assignMission, addMiss
     const [selectedMission, setSelectedMission] = useState(null);
     const [selectedTeam, setSelectedTeam] = useState(null);
     const [openManageMissionPool, setOpenManageMissionPool] = useState(false)
-    
+
     const { missionPool } = useMission()
-    console.log("hello")
 
     const toggleManageMissionPoolDialog = () => {
         setOpenManageMissionPool((prev) => !prev);
+        handleClose();
     }
 
     const handleAssign = () => {
