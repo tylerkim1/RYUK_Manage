@@ -13,7 +13,7 @@ function MenuStatistics() {
   const [unitsubject, setUnitSubjecct] = useState("individual");
 
   const [targetdate, setTargetDate] = useState(dayjs().format("YYYY_MM_DD"));
-  const [targetmonth, setTargetMonth] = useState("2023_11_30");
+  const [targetmonth, setTargetMonth] = useState(dayjs().format("YYYY_MM_DD"));
 
   const [graphdata, setGraphData] = useState({
     status: 'ok',
