@@ -35,7 +35,7 @@ const AddMissionDialog = ({ open, handleClose, addMission }) => {
         </FormControl>
       </DialogContent>
       <DialogActions>
-        <div id="menu-mission-add-mission-button" onClick={() => { addMission(newMission); handleClose(); setNewMission({title: '', missionType: ''}); window.location.reload();}}>
+        <div id="menu-mission-add-mission-button" onClick={() => { addMission(newMission); handleClose(); setNewMission({title: '', missionType: ''});}}>
           <span>미션 추가하기</span>
         </div>
         <Button onClick={handleClose}>취소</Button>
