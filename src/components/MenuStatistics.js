@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
@@ -12,7 +12,7 @@ function MenuStatistics() {
   const [unittime, setUnitTime] = useState("daily");
   const [unitsubject, setUnitSubjecct] = useState("individual");
 
-  const [targetdate, setTargetDate] = useState(dayjs());
+  const [targetdate, setTargetDate] = useState(dayjs().format("YYYY_MM_DD"));
   const [targetmonth, setTargetMonth] = useState("2023_11_30");
 
   const [graphdata, setGraphData] = useState({
@@ -29,6 +29,9 @@ function MenuStatistics() {
   });
 
   console.log(graphdata);
+  useEffect(() => {
+    loadGraphData();
+  }, [])
 
   const loadGraphData = () => {
     if (unitsubject === "individual") {
@@ -64,6 +67,7 @@ function MenuStatistics() {
   }
 
   if (graphdata.isloaded === 'no') {
+    console.log(targetdate);
     if (unittime === "monthly") {
       loadGraphDataMonth();
     }
