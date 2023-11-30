@@ -231,7 +231,7 @@ function MenuPerson() {
         var res = {};
         res['userId'] = user_id;
         console.log('userid', res)
-        networkrequest('user/delete/', res, console.log);
+        networkrequest('user/delete/', res, (data) => {if (data.status === "ok") alert("삭제되었습니다.")});
         setInfo(info => info.filter(item => item.user_id !== user_id));
         setInfo_ma(info_ma => info_ma.filter(item => item.user_id !== user_id));
     }

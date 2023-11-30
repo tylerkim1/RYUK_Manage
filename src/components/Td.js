@@ -2,17 +2,21 @@ import {React, useState, useEffect} from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPenToSquare, faTrashCan  } from '@fortawesome/free-regular-svg-icons';
 import oc from 'open-color';
-import { withStyles, TableRow, TableCell } from "@mui/material";
+import { withStyles, TableRow, TableCell, Dialog, DialogContent, DialogActions, Button } from "@mui/material";
 import { networkrequest } from './Header/XHR.js';
-
 
 const Td = ({key,item,handleRemove, handleEdit}) => {
     const [teamdata, setteamdata] = useState([]);  
+    const [openDelete, setOpenDelete] = useState(false);
     useEffect(() => {
         networkrequest('team/all/', {}, (data) => {
             setteamdata(data.data.map(({ team_id, name }) => ({ team_id, name })));
         })
     }, []);
+
+    const toggleConfirmDialog = () => {
+        setOpenDelete((prev) => !prev);
+    }
 
     // console.log('td',item);
     const onRemove = () => {
@@ -35,10 +39,20 @@ const Td = ({key,item,handleRemove, handleEdit}) => {
             <td onClick={onEdit} className='text-center text-black-400 cursor-pointer show-modal'>
                 <FontAwesomeIcon icon={faPenToSquare} />
             </td>
-            <td onClick={onRemove} className='text-center text-black-400 cursor-pointer'>
+            <td onClick={toggleConfirmDialog} className='text-center text-black-400 cursor-pointer'>
                 <FontAwesomeIcon icon={faTrashCan} />
             </td>  
             </TableRow>
+            
+            <Dialog onClose={() => setOpenDelete(false)} open={openDelete}>
+                <DialogContent>
+                정말 삭제하시겠습니까?
+                </DialogContent>
+                <DialogActions>
+                <Button onClick={onRemove}>네</Button>
+                <Button onClick={() => setOpenDelete(false)}>취소</Button>
+                </DialogActions>
+            </Dialog>
 
         </>
     )
