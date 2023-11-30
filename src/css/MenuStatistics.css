@@ -1,47 +1,56 @@
 #menu-stat-root {
+    display: flex;
+    flex-direction: column;
     width: 100%;
-    height: 90%;
-    background-color: lightblue;
-
-    position: relative;
+    padding: 20px;
 }
 
 #ms-upper {
-    height: 15%;
-
-    display: block;
-    background-color: lightgray;
+    display: flex;
+    flex: 1;
+    margin-bottom: 3rem;
+    background-color: #ffffff;
+    
 }
-#ms-lower {
-    height: 85%;
-    background-color: lightsalmon;
 
-    overflow-y: scroll;
+#ms-lower {
+    display: flex;
+    flex-direction: column;
+    flex: 7;
+    height: 85%;
+    /* background-color: #F3736D; */
+    /* overflow-y: scroll; */
+    /* border: solid 1px black; */
 }
 
 #ms-datebar {
-    height: 70%;
-    padding-left: 10%;
-    padding-right: 10%;
-    width: 34%;
+    /* padding-right: 10%; */
+    width: 200px;
 }
-#ms-optionbar {
+/* #ms-optionbar {
     height: 25%;
-}
+} */
 
 .graphbar-bg{
     width: 100%;
-    height: 30px;
-
+    height: 50px;
     display: flex;
     align-items: center;
     justify-content: flex-start;
-
-    border-bottom: solid 1px;
+    border-left: solid 1px #dedcdb;
+    /* border-radius: 10px; */
+    margin-bottom: 5px;
 }
 .graphbar-item{
-    height: 80%;
-    background-color: greenyellow;
-
+    height: 100%;
+    /* border-radius: 10px; */
+    background-color: #fce3e1;
     text-wrap: nowrap;
+    /* overflow: hidden;
+    white-space: nowrap; */
+}
+
+.graphbar-item:hover {
+/* hover 상태일 때 텍스트를 보여줍니다 */
+    overflow: visible;
 }
