@@ -313,8 +313,8 @@ function MenuPerson() {
                         <TableCell>#</TableCell>
                         <TableCell>이름</TableCell>
                         <TableCell align="left">ID</TableCell>
-                        <TableCell align="left">이메일</TableCell>
                         <TableCell align="left">닉네임</TableCell>
+                        <TableCell align="left">이메일</TableCell>
                         {/* <TableCell align="left">비밀번호</TableCell> */}
                         <TableCell align="center">수정</TableCell>
                         <TableCell align="center">삭제</TableCell>
