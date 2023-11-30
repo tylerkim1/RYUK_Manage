@@ -25,7 +25,7 @@ const useMission = () => {
       setSelectedTeam(teams[0].team_id); // 첫 번째 팀을 선택
       getMissions(selectedDate.format("YYYY_MM_DD"), teams[0].team_id);
     }
-  }, [teams]);
+  }, [teams, selectedTeam, selectedDate]);
 
   useEffect(() => {
     if (selectedTeam) {

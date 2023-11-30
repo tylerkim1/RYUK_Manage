@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from 'react';
-import { DemoContainer, DemoItem } from '@mui/x-date-pickers/internals/demo';
+import React, { useState } from 'react';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
@@ -32,8 +31,7 @@ function MenuStatistics() {
   console.log(graphdata);
 
   const loadGraphData = () => {
-    if (unitsubject == "individual") {
-      // alert("day indiv " + targetdate);
+    if (unitsubject === "individual") {
       networkrequest('stats/allDaily', { date: targetdate }, setGraphData);
     }
     else {
@@ -44,7 +42,7 @@ function MenuStatistics() {
 
   const loadGraphDataMonth = () => {
     const netmonth = targetmonth.substring(0, targetmonth.length - 2) + '31';
-    if (unitsubject == "individual") {
+    if (unitsubject === "individual") {
       // alert("month indiv " + netmonth);
       networkrequest('stats/allMonth', { date: netmonth }, setGraphData);
     }
@@ -65,8 +63,8 @@ function MenuStatistics() {
     setTargetMonth(new_targ.format("YYYY_MM_DD"));
   }
 
-  if (graphdata.isloaded == 'no') {
-    if (unittime == "monthly") {
+  if (graphdata.isloaded === 'no') {
+    if (unittime === "monthly") {
       loadGraphDataMonth();
     }
     else {
@@ -103,9 +101,8 @@ function MenuStatistics() {
             </Select>
           </FormControl>
         </div>
-        {/* <div id="ms-datebar"> */}
         {
-          (unittime == "daily") ?
+          (unittime === "daily") ?
             <LocalizationProvider dateAdapter={AdapterDayjs}>
               <DesktopDatePicker
                 label="날짜"
@@ -113,7 +110,6 @@ function MenuStatistics() {
                 onChange={targetdateChange}
                 renderInput={(params) => <TextField {...params} />}
               />
-              {/* <DesktopDatePicker onChange={loadGraphData} /> */}
             </LocalizationProvider> :
             <LocalizationProvider dateAdapter={AdapterDayjs}>
               <DesktopDatePicker
@@ -123,39 +119,10 @@ function MenuStatistics() {
                 onChange={targetMonthChange}
                 renderInput={(params) => <TextField {...params} />}
               />
-              {/* <DesktopDatePicker onChange={loadGraphData} /> */}
             </LocalizationProvider>
-          // <LocalizationProvider dateAdapter={AdapterDayjs}>
-          //   <DemoContainer components={['DesktopDateTimePicker']}>
-          //     <DemoItem>
-          //       <DesktopDatePicker
-          //         label="날짜"
-          //         value={targetdate}
-          //         onChange={targetdateChange}
-          //         renderInput={(params) => <TextField {...params} error={false} />} />
-          //       {/* <DesktopDatePicker onChange={loadGraphData} /> */}
-          //     </DemoItem>
-          //   </DemoContainer>
-          // </LocalizationProvider>
-          // :
-          // <LocalizationProvider dateAdapter={AdapterDayjs}>
-          //   <DemoContainer components={['DesktopDateTimePicker']}>
-          //     <DemoItem>
-          //       <DesktopDatePicker views={['month', 'year']}
-          //         label="날짜"
-          //         value={targetdate}
-          //         onChange={targetMonthChange}
-          //         renderInput={(params) => <TextField {...params} error={false} />} />
-          //     </DemoItem>
-          //   </DemoContainer>
-          // </LocalizationProvider>
-        }
-        {/* </div> */}
+          }
       </div>
       <div id="ms-lower">
-        {/* {console.log(graphdata.data)}
-        { graphdata.data ? graphdata.data.filter(it => it.num_mission != 0).map((it) => GraphBar(it.nickname, it.num_success, it.num_mission, it.percentage)) : "결과가 없습니다."
-        } */}
         {graphdata.data && graphdata.data.some(it => it.num_mission !== 0) ?
           graphdata.data
           .filter(it => it.num_mission !== 0)

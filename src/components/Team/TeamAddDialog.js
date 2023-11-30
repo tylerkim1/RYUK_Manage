@@ -1,11 +1,11 @@
 import React from 'react';
-import { TextField, Dialog, DialogTitle, DialogContent, DialogActions, Button,FormControl, FormLabel, RadioGroup, FormControlLabel, Radio } from '@mui/material';
+import { TextField, Dialog, DialogTitle, DialogContent, DialogActions, Button } from '@mui/material';
 import { DesktopDatePicker, LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DemoContainer, DemoItem } from '@mui/x-date-pickers/internals/demo/DemoContainer.js';
 
 const TeamAddDialog = ({ open, handleClose, newTeam, setNewTeam, addTeam }) => {
-  const categories = ['매일하력', '시도해력', '마음봄력', '유유자력', '레벨업력'];
+  // const categories = ['매일하력', '시도해력', '마음봄력', '유유자력', '레벨업력'];
 
   const handleStartDayChange = (newValue) => {
     setNewTeam({ ...newTeam, startDay: newValue });
