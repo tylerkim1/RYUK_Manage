@@ -28,6 +28,7 @@ const Td = ({key,item,handleRemove, handleEdit}) => {
             <TableCell align="left">{item.user_id}</TableCell>
             <TableCell align="left">{item.user_name}</TableCell>
             <TableCell align="left">{item.login_id}</TableCell>
+            <TableCell align="left">{item.nickname}</TableCell>
             <TableCell align="left">{item.email}</TableCell>
             {/* <TableCell align="left">  </TableCell> */}
             <TableCell align="left">{teamdata.find((team) => team.team_id == item.team_id)?.name}</TableCell>
@@ -50,6 +51,7 @@ const Td = ({key,item,handleRemove, handleEdit}) => {
             <TableCell align="left">{item.user_id}</TableCell>
             <TableCell align="left">{item.user_name}</TableCell>
             <TableCell align="left">{item.login_id}</TableCell>
+            <TableCell align="left">{item.nickname}</TableCell>
             <TableCell align="left">{item.email}</TableCell>
             <td onClick={onEdit} className='text-center text-black-400 cursor-pointer show-modal'>
                 <FontAwesomeIcon icon={faPenToSquare} />
