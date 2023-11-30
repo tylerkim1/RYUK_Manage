@@ -75,7 +75,7 @@
 
 하지만, 해당 팀 혹은 개인이 력습지에 가입되기 전 날짜는 선택이 불가능합니다. 현재 시점 이후의 날짜 또한 고를 수 없습니다.
 <p align="center">
-<img src="https://github.com/tylerkim1/RYUK_Manage/assets/125373555/5f963310-26cd-4e72-82ef-e99a845a0050" width="250"> <img src = "https://github.com/tylerkim1/RYUK_Manage/assets/125373555/44d0edf8-fb03-4775-9e2b-eb7d1fbc83a9" width = "250">
+<img src="https://github.com/tylerkim1/RYUK_Manage/assets/125373555/5f963310-26cd-4e72-82ef-e99a845a0050" width="200"> <img src = "https://github.com/tylerkim1/RYUK_Manage/assets/125373555/44d0edf8-fb03-4775-9e2b-eb7d1fbc83a9" width = "200">
 </p>
 <br>
 
@@ -234,7 +234,7 @@
 
 <br>
 
-<img src="https://github.com/tylerkim1/RYUK_Manage/assets/125373555/bd20aa4b-191f-4bd5-98b0-5ee7dd976249" >
+<img src="https://github.com/tylerkim1/RYUK_Manage/assets/125373555/bd20aa4b-191f-4bd5-98b0-5ee7dd976249" width="500" >
 해당 목록은 이름의 내림차순 순서대로 정렬되며, 팀관리 탭과 동일하게 사용자 이름을 이용하여 원하는 사용자를 검색할 수 있습니다.
 
 또한, 회원 정보 우측에 존재하는 버튼을 사용하여 회원의 정보를 수정하거나, 회원을 삭제할 수 있습니다. 삭제는 단순히 버튼을 누를 시 실행됩니다. 수정은 **회원 정보 수정**에서 자세히 설명할 것입니다.
@@ -246,7 +246,7 @@
 
 <br>
 
-<img src= "https://github.com/tylerkim1/RYUK_Manage/assets/125373555/4bdbf757-71e6-4b5a-a420-3a2486eb735f" >
+<img src= "https://github.com/tylerkim1/RYUK_Manage/assets/125373555/4bdbf757-71e6-4b5a-a420-3a2486eb735f" width="500" >
 
 <br> 
 
