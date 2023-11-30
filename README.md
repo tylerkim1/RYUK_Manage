@@ -67,8 +67,9 @@
 
 <br>
 
-![20231201_021604](https://github.com/tylerkim1/RYUK_Manage/assets/125373555/138b1788-aa8e-4b58-a03e-ac0500809433)
-
+<p align="center">
+<img src = "https://github.com/tylerkim1/RYUK_Manage/assets/125373555/138b1788-aa8e-4b58-a03e-ac0500809433" width="800">
+</p>
 
 
 #### 📅날짜
@@ -93,7 +94,10 @@
 
 <br>
 
-![20231201_021512](https://github.com/tylerkim1/RYUK_Manage/assets/125373555/010b0c93-ae73-4049-a5f0-a9eb7ec7bf04)
+<p align="center">
+<img src = "https://github.com/tylerkim1/RYUK_Manage/assets/125373555/010b0c93-ae73-4049-a5f0-a9eb7ec7bf04" width="800">
+</p>
+
 
 여기서도 동일하게 3가지 설정을 자유롭게 선택하여 원하는 데이터를 얻을 수 있습니다.
 
@@ -158,7 +162,9 @@
 
 <br>
 
-<img src = "https://github.com/tylerkim1/RYUK_Manage/assets/125373555/aa39b92f-3f8b-4897-b092-12d40f9cab47" >
+<p align="center">
+<img src = "https://github.com/tylerkim1/RYUK_Manage/assets/125373555/aa39b92f-3f8b-4897-b092-12d40f9cab47" width="800" >
+</p>
 
 좌측 상단에는 팀명에 대한 **검색창**도 존재합니다. 팀의 개수가 많아, 특정 팀을 찾기 힘들 때, 검색을 통해 쉽게 팀을 찾을 수 있습니다.
 
@@ -208,8 +214,9 @@
 
 <br>
 
-<img src="https://github.com/tylerkim1/RYUK_Manage/assets/125373555/bce3b98b-4e3f-4e78-a344-665dd99a1cd1">
-
+<p align="center">
+<img src="https://github.com/tylerkim1/RYUK_Manage/assets/125373555/bce3b98b-4e3f-4e78-a344-665dd99a1cd1" width="800">
+</p>
 
 
 #### 🔥회원 추가
@@ -219,7 +226,9 @@
 
 <br>
 
-<img src="https://github.com/tylerkim1/RYUK_Manage/assets/125373555/ac8b75ed-d8b2-4038-ba28-895fafb11b63" >
+<p align="center">
+<img src="https://github.com/tylerkim1/RYUK_Manage/assets/125373555/ac8b75ed-d8b2-4038-ba28-895fafb11b63" width="800">
+</p>
 
 좌측 상단에 ***추가*** 버튼을 누를 시, 해당 정보를 가진 회원이 추가됩니다. 
 
@@ -267,7 +276,9 @@
 
 <br>
 
-<img src="https://github.com/tylerkim1/RYUK_Manage/assets/125373555/d926a2e0-dd76-435d-bfe0-e92c15eeb2bf" >
+<p align="center">
+<img src="https://github.com/tylerkim1/RYUK_Manage/assets/125373555/d926a2e0-dd76-435d-bfe0-e92c15eeb2bf"  width ="800">
+</p>
 
 어떤 사용자 한 명이 팀에서 탈퇴를 누르면, 위의 사진처럼 탈퇴 요청 목록에 사람이 한 명 추가되며, 팝업창에는 탈퇴를 누른 사용자의 이름과 탈퇴할 팀의 이름이 보여집니다. 여기서 ***탈퇴*** 버튼을 누를 시, 해당 사용자는 속한 팀에서 나가게 됩니다. 탈퇴를 원하는 사람이 여러명의 경우, 탈퇴 요청 목록에 여러 개의 요청이 뜹니다. **탈퇴 요청** 칸 옆에 뜨는 숫자는 탈퇴를 요청한 사용자의 수를 의미합니다.
 
