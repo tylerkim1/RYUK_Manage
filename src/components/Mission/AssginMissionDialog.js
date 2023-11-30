@@ -12,13 +12,13 @@ const AssignMissionDialog = ({ open, teams, selectedDate, assignMission, addMiss
 
     const toggleManageMissionPoolDialog = () => {
         setOpenManageMissionPool((prev) => !prev);
-        handleClose();
     }
 
     const handleAssign = () => {
         assignMission(selectedMission, selectedTeam, selectedDate); handleClose();
         setSelectedMission(null);
         setSelectedTeam(null);
+        window.location.reload();
     }
 
     return (
@@ -26,7 +26,8 @@ const AssignMissionDialog = ({ open, teams, selectedDate, assignMission, addMiss
             <Dialog id="menu-mission-assign-dialog" open={open} onClose={handleClose}>
                 <DialogTitle className="menu-mission-dialog-header">
                     미션 할당
-                    <div id="menu-mission-add-mission-button" onClick={toggleManageMissionPoolDialog}>
+                    <div id="menu-mission-add-mission-button" onClick={() => {toggleManageMissionPoolDialog();
+        handleClose();}}>
                         <span>미션 풀 관리</span>
                     </div>
                 </DialogTitle>

@@ -20,7 +20,8 @@ const ManageMissionPool = ({ open, addMission, handleClose }) => {
 
   return (
     <>
-      <Dialog id="menu-mission-manage-mission-dialog" open={open} onClose={handleClose}>
+      <Dialog id="menu-mission-manage-mission-dialog" open={open} onClose={() => {handleClose();  
+        window.location.reload();}}>
         <DialogTitle className="menu-mission-dialog-header" id="manage">
           <span style={{ fontSize: '24px'}}>미션 풀 관리</span>
           <div id="menu-mission-add-mission-button" onClick={toggleAddMissionDialog}>
@@ -44,7 +45,8 @@ const ManageMissionPool = ({ open, addMission, handleClose }) => {
           </List>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose}>취소</Button>
+          <Button onClick={() => {handleClose(); 
+        window.location.reload();}}>취소</Button>
         </DialogActions>
       </Dialog>
       <AddMissionDialog
