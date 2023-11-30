@@ -110,7 +110,7 @@ function MenuStatistics() {
             <LocalizationProvider dateAdapter={AdapterDayjs}>
               <DesktopDatePicker
                 label="날짜"
-                value={targetdate}
+                value={dayjs(targetdate, "YYYY_MM_DD")}
                 onChange={targetdateChange}
                 renderInput={(params) => <TextField {...params} />}
               />
@@ -119,7 +119,7 @@ function MenuStatistics() {
               <DesktopDatePicker
                 views={['month', 'year']}
                 label="날짜"
-                value={targetdate}
+                value={dayjs(targetdate, "YYYY_MM_DD")}
                 onChange={targetMonthChange}
                 renderInput={(params) => <TextField {...params} />}
               />
