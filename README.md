@@ -37,8 +37,9 @@
 
 <br>
 
-![20231201_020834](https://github.com/tylerkim1/RYUK_Manage/assets/125373555/f59ea4ef-1dec-4fa2-a8b0-4ff94fcd1f90)
-
+<p align="center">
+<img src = "https://github.com/tylerkim1/RYUK_Manage/assets/125373555/f59ea4ef-1dec-4fa2-a8b0-4ff94fcd1f90" width="600">
+</p>
 
 위의 화면처럼 **기간 범위, 사용자 범위, 날짜**를 선택하면 해당 선택에 맞는 미션 성취율을 보여줍니다. 
 
