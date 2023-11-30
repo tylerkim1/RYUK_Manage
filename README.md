@@ -297,7 +297,10 @@
 |송민우|KAIST|20|'통계 탭' 기능, API 연결|
 
 
-### 5. 사용 기술
+## 5. 사용 기술
 - 디자인: figma
 - TOOL : React
 - JavaScript
+
+<img src="https://img.shields.io/badge/React-61DAFB?style=flat&logo=React&logoColor=white"/>
+
