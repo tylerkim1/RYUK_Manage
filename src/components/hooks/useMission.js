@@ -53,6 +53,7 @@ const useMission = () => {
 
       const missionMap = {};
       missionData.forEach(item => {
+        if (!item.from_team) return false;
         if (!missionMap[item.mission_id]) {
           missionMap[item.mission_id] = {
             mission_id: item.mission_id,
