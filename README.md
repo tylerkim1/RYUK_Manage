@@ -241,7 +241,7 @@
 
 <br>
 <p align="center">
-<img src="https://github.com/tylerkim1/RYUK_Manage/assets/125373555/bd20aa4b-191f-4bd5-98b0-5ee7dd976249" width="500" >
+<img src="https://github.com/tylerkim1/RYUK_Manage/assets/125373555/bd20aa4b-191f-4bd5-98b0-5ee7dd976249" width="700" >
 </p>
 해당 목록은 이름의 내림차순 순서대로 정렬되며, 팀관리 탭과 동일하게 사용자 이름을 이용하여 원하는 사용자를 검색할 수 있습니다.
 
@@ -254,7 +254,7 @@
 
 <br>
 <p align="center">
-<img src= "https://github.com/tylerkim1/RYUK_Manage/assets/125373555/4bdbf757-71e6-4b5a-a420-3a2486eb735f" width="500" >
+<img src= "https://github.com/tylerkim1/RYUK_Manage/assets/125373555/4bdbf757-71e6-4b5a-a420-3a2486eb735f" width="700" >
 </p>
 
 
