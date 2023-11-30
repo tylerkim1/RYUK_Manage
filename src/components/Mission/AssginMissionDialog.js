@@ -18,7 +18,6 @@ const AssignMissionDialog = ({ open, teams, selectedDate, assignMission, addMiss
         assignMission(selectedMission, selectedTeam, selectedDate); handleClose();
         setSelectedMission(null);
         setSelectedTeam(null);
-        window.location.reload();
     }
 
     return (
