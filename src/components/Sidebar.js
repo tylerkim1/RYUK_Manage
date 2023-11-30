@@ -109,13 +109,13 @@ function Sidebar() {
           <Button onClick={() => setOpenWithdrawDialog(false)}>취소</Button>
         </DialogActions>
       </Dialog>
-      <div id="sidebar-footer">
+      {/* <div id="sidebar-footer">
         <Link to="/login">
           <div id="logout-button">
             <span>로그아웃</span>
           </div>
         </Link>
-      </div>
+      </div> */}
     </div>
   );
 }
