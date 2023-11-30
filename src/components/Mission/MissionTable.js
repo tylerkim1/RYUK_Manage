@@ -52,8 +52,8 @@ const MissionTable = ({ missions }) => {
                         if (a.is_success > b.is_success) return 1;
                         
                         // is_success가 같으면 user_id를 문자열로 변환하여 비교
-                        let userA = String(a.user_id);
-                        let userB = String(b.user_id);
+                        let userA = String(a.nickname);
+                        let userB = String(b.nickname);
                         return userA.localeCompare(userB);
                       })
                       .map((user, index) => (
@@ -62,7 +62,7 @@ const MissionTable = ({ missions }) => {
                           className={user.is_success === 1 ? 'success-background' : 'failure-background'}
                         >
                           <span id="index-span">{index+1}</span>
-                          <span id="user-span">{user.user_id}</span>
+                          <span id="user-span">{user.nickname}</span>
                           <span id="is-success-span">{user.is_success === 1 ? "O" : "X"}</span>
                         </ListItem>
                       )) : ''}

@@ -65,7 +65,7 @@ const useMission = () => {
         }
         missionMap[item.mission_id].users.push({
           user_id: item.user_id,
-          // nickname: item.nickname,
+          nickname: item.nickname,
           is_success: item.is_success
         });
         missionMap[item.mission_id].totalCount++;
